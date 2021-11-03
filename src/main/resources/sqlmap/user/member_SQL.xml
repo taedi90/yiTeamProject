@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.user.mapper.MemberMapper">
+
+    <resultMap type="kr.or.yi.teamProject.user.dto.Member" id="memberMap">
+        <id property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="emailConfirm" column="email_confirm"/>
+        <result property="phone" column="phone"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="withdrawalDate" column="withdrawal_date"/>
+        <result property="social" column="social"/>
+        <result property="tempPass" column="temp_pass"/>
+        <result property="enabled" column="enabled"/>
+        <collection property="authority" ofType="kr.or.yi.teamProject.user.dto.Auth">
+            <result property="username" column="username"/>
+            <result property="authority" column="authority"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="read" resultMap="memberMap">
+        <![CDATA[
+        SELECT mem.`username`, `password`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social, temp_pass, enabled, authority
+        FROM `member` mem LEFT OUTER JOIN `auth` authority
+                                             ON mem.`username` = authority.`username`
+        WHERE mem.`username` = #{username}
+        ]]>
+    </select>
+
+    <insert id="insertSocialMember" parameterType="kr.or.yi.teamProject.user.dto.Member">
+        <![CDATA[
+            INSERT INTO `member` (`username`, `password`, `name`, `email`, `email_confirm`, `social`)
+            VALUES (#{username}, #{password}, #{name}, #{email}, 1, 1)
+        ]]>
+    </insert>
+
+    <!-- id : Dao 메서드와 동일하게 -->
+    <!-- parameterType (입력 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+    <!-- resultType (결과 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+
+
+</mapper>

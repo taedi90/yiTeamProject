@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.user.mapper.AuthMapper">
+
+    <insert id="insertAuth" parameterType="kr.or.yi.teamProject.user.dto.Auth">
+        <![CDATA[
+        INSERT INTO `auth` (`username`, `authority`)
+        VALUES (#{username}, #{authority})
+        ]]>
+    </insert>
+
+</mapper>

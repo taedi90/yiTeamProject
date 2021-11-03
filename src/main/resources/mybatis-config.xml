@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <!-- db snake_case to java camelCase -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 해시맵 사이즈 달라지는 문제 방지 -->
+        <setting name="callSettersOnNulls" value="true"/>
+        <!-- 파라미터가 null 일 경우 -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
+</configuration>
