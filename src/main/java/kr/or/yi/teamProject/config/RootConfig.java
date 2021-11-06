@@ -21,7 +21,12 @@ import javax.sql.DataSource;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"kr.or.yi.teamProject"})
-@MapperScan(basePackages = {"kr.or.yi.teamProject"})
+@MapperScan(basePackages = {
+        "kr.or.yi.teamProject.user.mapper",
+        "kr.or.yi.teamProject.manage.mapper",
+        "kr.or.yi.teamProject.order.mapper",
+        "kr.or.yi.teamProject.payment.mapper",
+        "kr.or.yi.teamProject.product.mapper"})
 @EncryptablePropertySource(name = "EncryptedProperties", value = "classpath:/config.properties")
 //@PropertySource("classpath:/config.properties")
 public class RootConfig {
@@ -58,7 +63,7 @@ public class RootConfig {
         sqlSessionFactory.setMapperLocations(
                 new PathMatchingResourcePatternResolver().
                         getResources("classpath:/sqlmap/**/*_SQL.xml"));
-        return (SqlSessionFactory) sqlSessionFactory.getObject();
+        return sqlSessionFactory.getObject();
     }
 
     @Bean
