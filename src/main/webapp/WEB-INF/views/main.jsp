@@ -28,11 +28,12 @@
 
     <main>
 
-        <a href="login">로그인</a>
-        <a href="logout">로그아웃</a>
-
+        <sec:authorize access="isAnonymous()">
+            <a href="login">로그인</a>
+        </sec:authorize>
 
         <sec:authorize access="isAuthenticated()">
+            <a href="logout">로그아웃</a>
             <p>principal : <sec:authentication property="principal.member"/></p>
             <p>아이디 : <sec:authentication property="principal.username"/></p>
             <p>이름 : <sec:authentication property="principal.member.name"/></p>

@@ -31,11 +31,9 @@ import java.util.Map;
 @Service
 public class OAuth2CustomUserDetailsService extends DefaultOAuth2UserService {
 
-    @Autowired
-    private MemberMapper memberMapper;
+    private final MemberMapper memberMapper;
 
-    @Autowired
-    private AuthMapper authMapper;
+    private final AuthMapper authMapper;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
