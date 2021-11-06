@@ -16,8 +16,10 @@ public class CommonController {
 
     //요청 거부 페이지
     @GetMapping("/access-denied")
-    public void accessDenied(Authentication auth, Model model) {
+    public String accessDenied(Authentication auth, Model model) {
         model.addAttribute("msg", "Access Denied");
+
+        return "error/access-denied";
     }
 }
 

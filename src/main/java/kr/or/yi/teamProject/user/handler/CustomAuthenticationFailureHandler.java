@@ -50,7 +50,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
 
         // 리다이렉트
-        request.getSession().setAttribute("test", errorMessage);
-        redirectStrategy.sendRedirect(request, response,"/login?error=");
+        request.getSession().setAttribute("loginErrorMessage", errorMessage);
+        redirectStrategy.sendRedirect(request, response,"/login?error");
     }
 }

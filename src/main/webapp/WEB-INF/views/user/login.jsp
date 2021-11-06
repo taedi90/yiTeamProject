@@ -25,14 +25,15 @@
     <a href="register">회원가입</a>
 </form>
 
-<p>${message}</p>
+<p>${loginErrorMessage}</p>
 
 <h3>소셜 로그인 :</h3>
-<c:forEach var="url" items="${urls}" varStatus="status">
-    <p>
-        <a href="${url.value}">${url.key}</a>
-    </p>
-</c:forEach>
+
+<a href="oauth2/authorization/google">
+    <div>
+        구글 로그인
+    </div>
+</a>
 
 
 <jsp:include page="../division/main/footer.jsp" />

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -52,6 +53,7 @@ public class ServletConfig implements WebMvcConfigurer {
         mappings.setProperty(NoHandlerFoundException.class.getName(), "/error/error"); //404
         mappings.setProperty(NullPointerException.class.getName(), "/error/error"); //500
         mappings.setProperty(ClassNotFoundException.class.getName(), "/error/error"); //500
+        mappings.setProperty(AccessDeniedException.class.getName(), "/error/error"); //Security 권한 인가 예외
         mappings.setProperty(Exception.class.getName(), "/error/error"); //그 외
         resolver.setExceptionMappings(mappings);
         // Set specific HTTP codes

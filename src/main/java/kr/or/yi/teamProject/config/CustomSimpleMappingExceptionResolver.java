@@ -1,6 +1,7 @@
 package kr.or.yi.teamProject.config;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -56,6 +57,11 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
                         NullPointerException.class.getName()
                 )
         );
+        ArrayList<String> accessException = new ArrayList<String>(
+                Arrays.asList(
+                        AccessDeniedException.class.getName()
+                )
+        );
 
         String userExceptionDetail = ex.toString();
         String errorDescription = "";
@@ -71,6 +77,12 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
             errorDescription = "내부적 문제로 요청하신 내용을 처리할 수 없습니다.";
             errorTitle = "요청을 처리할 수 없습니다.";
             userExceptionDetail = "The current page refuses to load due to an internal error";
+            mav.setViewName("/error/error");
+            mav.addObject("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        } else if (accessException.contains(exceptionType)) {
+            errorDescription = "요청하신 사항을 접근할 수 있는 권한이 없습니다.";
+            errorTitle = "요청을 처리할 수 없습니다.";
+            userExceptionDetail = String.format("You don't have a permission to access the page %s", request.getRequestURL());
             mav.setViewName("/error/error");
             mav.addObject("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         } else {
