@@ -23,7 +23,7 @@
     </resultMap>
 
 
-    <select id="read" resultMap="memberMap">
+    <select id="selectMember" resultMap="memberMap">
         <![CDATA[
         SELECT mem.`username`, `password`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social, temp_pass, enabled, authority
         FROM `member` mem LEFT OUTER JOIN `auth` authority

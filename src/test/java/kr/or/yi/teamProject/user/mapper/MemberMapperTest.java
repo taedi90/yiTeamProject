@@ -3,7 +3,6 @@ package kr.or.yi.teamProject.user.mapper;
 import junit.framework.TestCase;
 import kr.or.yi.teamProject.config.RootConfig;
 import kr.or.yi.teamProject.user.dto.Member;
-import kr.or.yi.teamProject.user.mapper.MemberMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,7 @@ public class MemberMapperTest extends TestCase {
 
     @Test
     public void testRead(){
-        Member dto = mapper.read("test");
+        Member dto = mapper.selectMember("test");
 
         log.info(dto.toString());
 

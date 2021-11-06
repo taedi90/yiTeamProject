@@ -5,6 +5,11 @@ import lombok.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 회원 정보 전달 용 클래스
+ *
+ * @author taedi
+ */
 @Data
 @Builder
 @NoArgsConstructor
@@ -22,5 +27,5 @@ public class Member {
     private boolean tempPass;
     private boolean enabled;
     private List<Auth> authority;
-//    private String authority;
 }
+

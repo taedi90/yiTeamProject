@@ -5,12 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * 공통 부분 컨트롤러
+ *
+ * @author taedi
+ */
+
 @Controller
 public class CommonController {
-    @GetMapping("/accessError")
-    public void accessDenied(Authentication auth, Model model) {
-        System.out.println("access Denied : " + auth);
 
+    //요청 거부 페이지
+    @GetMapping("/access-denied")
+    public void accessDenied(Authentication auth, Model model) {
         model.addAttribute("msg", "Access Denied");
     }
 }

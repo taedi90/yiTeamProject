@@ -34,7 +34,7 @@
 
         <sec:authorize access="isAuthenticated()">
             <p>principal : <sec:authentication property="principal.member"/></p>
-            <p>아이디 : <sec:authentication property="principal.member.username"/></p>
+            <p>아이디 : <sec:authentication property="principal.username"/></p>
             <p>이름 : <sec:authentication property="principal.member.name"/></p>
             <p>이메일 : <sec:authentication property="principal.member.email"/></p>
             <p>권한 : <sec:authentication property="principal.member.authority"/></p>
@@ -46,6 +46,6 @@
         <jsp:include page="division/main/footer.jsp" />
     </footer>
 
-    <script src="${path}/js/jquery-3.6.0.min.js"></script>
+    <script src="${path}/js/payment/jquery-3.6.0.min.js"></script>
 </body>
 </html>

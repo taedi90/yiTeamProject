@@ -1,14 +1,11 @@
 package kr.or.yi.teamProject.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.context.WebApplicationContext;
+
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
-import java.util.Properties;
+import javax.servlet.ServletRegistration;
 
 
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -35,20 +32,10 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         return new Filter[] {characterEncodingFilter};
     }
 
-    @Bean(name="customMappingExceptionResolver")
-    public SimpleMappingExceptionResolver customMappingExceptionResolver() {
-        SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
-
-        r.setDefaultErrorView("error/error");
-
-        Properties mappings = new Properties();
-        mappings.setProperty("DatabaseException", "databaseError");
-        mappings.setProperty("DemoException", "demoError");
-
-        r.setExceptionMappings(mappings);
-        r.setDefaultErrorView("error/error");
-        r.setExceptionAttribute("ex");
-        return r;
+    //에러페이지 핸들링 - 404 에러를 DispatcherServlet 에서 처리하지 않고 throw 하도록 설정
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
     }
 
 }

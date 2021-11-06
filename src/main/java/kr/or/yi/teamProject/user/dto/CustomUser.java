@@ -13,19 +13,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
+/**
+ * Security 용 Custom User 클래스
+ *
+ * - 일반 로그인 사용자 및 OAuth2 사용자 모두 사용
+ * @author taedi
+ */
 @Getter
 @Setter
 @ToString
-public class CustomOAuth2User extends User implements OAuth2User {
+public class CustomUser extends User implements OAuth2User {
 
+    // 공통
+    private Member member;
+
+    // OAuth2 용
     private List<GrantedAuthority> authorities;
     private Map<String, Object> attribute;
 
-    private Member member;
+    // 일반 사용자용 생성자
+    public CustomUser(Member dto){
+        super(dto.getUsername(),
+                dto.getPassword(),
+                dto.getAuthority().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuthority().toString())).collect(Collectors.toList()));
+        this.member = dto;
+    }
 
-
-    public CustomOAuth2User(Member dto, Map<String, Object> attribute){
+    // OAuth2 사용자용 생성자
+    public CustomUser(Member dto, Map<String, Object> attribute){
         super(dto.getUsername(),
                 dto.getPassword(),
                 dto.getAuthority().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuthority().toString())).collect(Collectors.toList()));
@@ -36,6 +51,7 @@ public class CustomOAuth2User extends User implements OAuth2User {
         this.member = dto;
     }
 
+    // 아래는 OAuth2User impl을 위한 메서드
     @Override
     public Map<String, Object> getAttributes() {
 

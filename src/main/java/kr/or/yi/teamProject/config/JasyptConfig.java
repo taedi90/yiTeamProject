@@ -7,7 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-//DB properties 암호화 용
+/**
+ * properties 암호화 모듈
+ *
+ * - 환경변수에 TAEDI_ENC_KEY 값 등록해야 사용 가능
+ * @author taedi
+ */
 @Configuration
 public class JasyptConfig {
 

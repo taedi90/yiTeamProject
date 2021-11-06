@@ -25,6 +25,8 @@
     <a href="register">회원가입</a>
 </form>
 
+<p>${message}</p>
+
 <h3>소셜 로그인 :</h3>
 <c:forEach var="url" items="${urls}" varStatus="status">
     <p>
@@ -35,6 +37,6 @@
 
 <jsp:include page="../division/main/footer.jsp" />
 
-<script src="${path}/js/jquery-3.6.0.min.js"></script>
+<script src="/shop/js/common/jquery-3.6.0.min.js"></script>
 </body>
 </html>
