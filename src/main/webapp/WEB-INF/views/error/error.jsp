@@ -11,16 +11,24 @@
 <c:set var="response" value="<%= response.getStatus() %>"/>
 <html>
 <head>
-    <title>에러페이지</title>
+    <title>에러 페이지</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+    <link rel="stylesheet" href="${path}/css/common/error.css">
 </head>
 <body>
 
-<h2>${errorTitle}</h2>
-<p>${errorDescription}</p>
-<p>이용에 불편을 드려 죄송합니다.</p>
-<p>(에러 상세 : ${exception})</p>
+<div id="wrap">
+    <img id="error_img" src="${path}/img/common/error.png" alt="에러 이미지">
+    <h1>${errorTitle}</h1>
+    <h3>${errorDescription}<br>이용에 불편을 드려 죄송합니다.</h3>
+    <p id="exception">(Cause - ${exception})</p>
+    <br>
+    <h3><a href="${path}">HOME</a></h3>
+</div>
 
-<a href="${path}">HOME</a>
+
 
 </body>
 </html>

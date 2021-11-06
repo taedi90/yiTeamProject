@@ -1,0 +1,52 @@
+@media (min-width: 768.1px) {
+    /* 가로 768px 초과시 1rem == 10px  */
+    html { font-size: 62.5%; }
+}
+@media (max-width: 768px)  {
+    /* 가로 768px 이하 1rem == 8.75px  */
+    html { font-size: 54.6875%; }
+}
+
+html{
+    /* 배경색 */
+    --bg-color-1: #715d74;
+    --bg-color-2: #a08aa3;
+    --bg-color-3: #d1bad4;
+    --bg-color-4: #d1bad470;
+    --bg-color-5: #ffffff;
+
+    /* 글자색 */
+    --txt-color-1: black;
+    --txt-color-2: rgb(59, 59, 59);
+    --txt-color-3: grey;
+    --txt-color-4: rgb(214, 212, 212);
+    --txt-color-5: white;
+    --txt-color-warn: rgb(215, 68, 68);
+
+    /* 폰트 사이즈 */
+    --font-xs: 1.2rem;
+    --font-sm: 1.4rem;
+    --font-base: 1.6rem;
+    --font-lg: 1.8rem;
+    --font-xl: 2rem;
+}
+
+#wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: var(--font-base);
+    min-height: -moz-available;
+    min-height: -webkit-fill-available;
+    min-height: available;
+}
+
+#error_img {
+    width: 40rem;
+}
+
+#exception {
+    color: lightgray;
+    font-size: var(--font-xs);
+}
