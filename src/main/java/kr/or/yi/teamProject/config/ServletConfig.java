@@ -21,6 +21,7 @@ import java.util.Properties;
 @EnableWebMvc
 @ComponentScan(basePackages = {"kr.or.yi.teamProject"})
 public class ServletConfig implements WebMvcConfigurer {
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry)  {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
@@ -66,4 +67,5 @@ public class ServletConfig implements WebMvcConfigurer {
         resolver.setExceptionAttribute("exception");
         return resolver;
     }
+
 }

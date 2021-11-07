@@ -41,7 +41,7 @@ public class RootConfig {
     private String dsPassword;
 
     // 커넥션 pool을 사용할 dataSource bean
-    @Bean
+    @Bean("dataSource")
     public DataSource dataSource() {
 
         BasicDataSource dataSource = new BasicDataSource();

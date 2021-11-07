@@ -7,6 +7,8 @@ import kr.or.yi.teamProject.user.service.CustomUserDetailsService;
 import kr.or.yi.teamProject.user.service.OAuth2CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -24,9 +26,12 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,6 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final OAuth2CustomUserDetailsService oAuth2CustomUserDetailsService;
 
     private final CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    @Qualifier("dataSource")
+    private DataSource dataSource;
+
 
     //접근 제한 처리
     @Override
@@ -79,6 +89,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/")
                 .deleteCookies("remember-me", "JSESSION_ID");
+
+        //자동 로그인
+        http
+                .rememberMe()
+                .key("yiTeamProject")
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(60 * 60 * 24 * 7)
+                .authenticationSuccessHandler(successHandler());
+                //.userDetailsService(customUserDetailsService);
+
     }
 
 
@@ -165,6 +185,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
 
+    }
+
+    //자동 로그인 저장 릴레이션
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
     }
 
 }

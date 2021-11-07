@@ -37,6 +37,7 @@ public class CustomUser extends User implements OAuth2User {
                 dto.getPassword(),
                 dto.getAuthority().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuthority().toString())).collect(Collectors.toList()));
         this.member = dto;
+        this.member.setPassword(null);
     }
 
     // OAuth2 사용자용 생성자
@@ -49,6 +50,7 @@ public class CustomUser extends User implements OAuth2User {
         this.attribute = attribute;
 
         this.member = dto;
+        this.member.setPassword(null);
     }
 
     // 아래는 OAuth2User impl을 위한 메서드

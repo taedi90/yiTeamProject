@@ -20,9 +20,10 @@
     <input type="text" name="username" placeholder="아이디"><br>
     <input type="password" name="password" placeholder="비밀번호"><br>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <input type="checkbox" name="remember-me">로그인 유지<br>
     <button type="submit">로그인하기</button>
     <br>
-    <a href="register">회원가입</a>
+    <a href="register">회원가입</a><br>
     <a href="email-confirm">이메일 인증 메일 발송</a>
 </form>
 
@@ -35,9 +36,6 @@
         구글 로그인
     </div>
 </a>
-
-
-<jsp:include page="../division/main/footer.jsp" />
 
 <script src="/shop/js/common/jquery-3.6.0.min.js"></script>
 </body>
