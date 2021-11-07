@@ -22,37 +22,12 @@
     <input type="password" name="password" placeholder="비밀번호"><br>
     <input type="password" placeholder="비밀번호 확인"><br>
     <input type="email" name="email" placeholder="이메일"><br>
-    <input type="text" name="phone" placeholder="핸드폰번호" maxlength="11"><br>
+    <input type="text" name="phone" placeholder="핸드폰번호" maxlength="11" required><br>
     <button type="button" onclick="doRegister()">회원가입</button>
 </form>
 
-<%--<script src="${path}/js/jquery-3.6.0.min.js"></script>--%>
-<script src="${path}/js/common/ajax.js"></script>
-<script>
+<script src="${path}/js/common/ajax.js" defer></script>
+<script src="${path}/js/user/register.js" defer></script>
 
-    // 버튼 눌렀을 때 액션
-    function doRegister(){
-        let data = {
-            username: document.form.username.value,
-            name: document.form.name.value,
-            password: document.form.password.value,
-            email: document.form.email.value,
-        }
-
-        ajax('register', data, endRegister);
-        // 로딩창 뜨게
-
-    }
-
-    // ajax 통신 성공했을 때 액션
-    function endRegister(result){
-        alert(result);
-
-        window.location.href = result;
-    }
-
-
-
-</script>
 </body>
 </html>

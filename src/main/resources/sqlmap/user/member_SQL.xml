@@ -39,6 +39,13 @@
         ]]>
     </insert>
 
+    <insert id="insertNormalMember" parameterType="kr.or.yi.teamProject.user.dto.Member">
+        <![CDATA[
+        INSERT INTO `member` (`username`, `password`, `name`, `email`, `email_confirm`, `phone`, `social`)
+        VALUES (#{username}, #{password}, #{name}, #{email}, 1, #{phone}, 0)
+        ]]>
+    </insert>
+
     <!-- id : Dao 메서드와 동일하게 -->
     <!-- parameterType (입력 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
     <!-- resultType (결과 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
