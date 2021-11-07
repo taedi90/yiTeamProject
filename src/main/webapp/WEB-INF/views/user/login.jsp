@@ -23,6 +23,7 @@
     <button type="submit">로그인하기</button>
     <br>
     <a href="register">회원가입</a>
+    <a href="email-confirm">이메일 인증 메일 발송</a>
 </form>
 
 <p>${loginErrorMessage}</p>

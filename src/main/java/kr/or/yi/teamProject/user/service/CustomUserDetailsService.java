@@ -30,7 +30,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("Load User By Username : " + username);
 
-        Member member = memberMapper.selectMember(username);
+        Member member = memberMapper.selectMember(
+                Member.builder().username(username).build()
+        );
 
 
         if(member == null) {

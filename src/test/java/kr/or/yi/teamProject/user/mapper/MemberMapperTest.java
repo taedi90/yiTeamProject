@@ -20,7 +20,9 @@ public class MemberMapperTest extends TestCase {
 
     @Test
     public void testRead(){
-        Member dto = mapper.selectMember("test");
+        Member dto = mapper.selectMember(
+                Member.builder().username("test").build()
+        );
 
         log.info(dto.toString());
 

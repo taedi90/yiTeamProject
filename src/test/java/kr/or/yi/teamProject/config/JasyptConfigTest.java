@@ -35,7 +35,7 @@ public class JasyptConfigTest extends TestCase {
     @Before
     public void setUp() throws Exception {
         // 암호화 할 값 입력
-        arr.add("jdbc:mysql://taesoo.ga:20111/project?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8");
+        arr.add("test");
     }
 
     @After

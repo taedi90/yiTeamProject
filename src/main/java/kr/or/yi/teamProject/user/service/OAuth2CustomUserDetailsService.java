@@ -60,7 +60,9 @@ public class OAuth2CustomUserDetailsService extends DefaultOAuth2UserService {
             );
         }
 
-        Member member = memberMapper.selectMember(username);
+        Member member = memberMapper.selectMember(
+                Member.builder().username(username).build()
+        );
 
 
 
@@ -91,7 +93,9 @@ public class OAuth2CustomUserDetailsService extends DefaultOAuth2UserService {
 
             authMapper.insertAuth(auth);
 
-            member = memberMapper.selectMember(username);
+            member = memberMapper.selectMember(
+                    Member.builder().username(username).build()
+            );
 
         }
 
