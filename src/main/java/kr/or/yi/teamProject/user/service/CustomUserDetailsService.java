@@ -46,7 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 이메일 미인증
         if(member.isEmailConfirm() == false) {
-            throw new LockedException("이메일 인증을 완료해주세요.");
+            throw new LockedException("이메일 인증을 완료해주세요.<br><a href=\"email-confirm\">인증 메일 재발송</a>");
         }
 
         // 탈퇴

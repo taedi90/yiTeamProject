@@ -152,7 +152,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         if (client.equals("google")) {
             return CommonOAuth2Provider.GOOGLE.getBuilder(client)
-//                    .clientId(clientId).clientSecret(clientSecret).build();
                     .clientId(clientId).clientSecret(clientSecret).scope(scopeArr).build();
         }
         if (client.equals("facebook")) {

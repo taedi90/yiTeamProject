@@ -11,37 +11,47 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="${path}/css/user/login.css">
 </head>
 <body>
-<h1>로그인 하기</h1>
-<h2><c:out value="${error}" /> </h2>
-<h2><c:out value="${logout}"/> </h2>
-<form action="login" method="post">
-    <input type="text" name="username" placeholder="아이디"><br>
-    <input type="password" name="password" placeholder="비밀번호"><br>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    <input type="checkbox" name="remember-me">로그인 유지<br>
-    <button type="submit">로그인하기</button>
-    <br>
-    <a href="register">회원가입</a><br>
-    <a href="email-confirm">이메일 인증 메일 발송</a>
-</form>
-
-<p>${loginErrorMessage}</p>
-
-<h3>소셜 로그인 :</h3>
-
-<a href="oauth2/authorization/google">
-    <div>
-        구글 로그인
+<div id="wrap">
+    <div id="login_title">
+        Login
     </div>
-</a>
-<a href="oauth2/authorization/kakao">
-    <div>
-        카카오 로그인
-    </div>
-</a>
 
-<script src="/shop/js/common/jquery-3.6.0.min.js"></script>
+    <div id="login_form">
+
+        <form action="login" method="post">
+            <input type="text" class="login_input" name="username" placeholder="아이디">
+            <input type="password" class="login_input" name="password" placeholder="비밀번호">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="checkbox" name="remember-me">로그인 유지
+            <button type="submit">로그인하기</button>
+            <a href="register">회원가입</a><br>
+
+        </form>
+
+    </div>
+
+    <div id="login_error">
+        <p>${loginErrorMessage}</p>
+    </div>
+
+    <div id="from_social">
+        <a href="oauth2/authorization/google">
+            <div class="social_login_button">
+                구글 로그인
+            </div>
+        </a>
+        <a href="oauth2/authorization/kakao">
+            <div class="social_login_button">
+                카카오 로그인
+            </div>
+        </a>
+    </div>
+
+
+</div>
+
 </body>
 </html>

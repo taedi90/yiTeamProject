@@ -1,0 +1,114 @@
+@media (min-width: 768.1px) {
+    /* 가로 768px 초과시 1rem == 10px  */
+    html { font-size: 62.5%; }
+}
+@media (max-width: 768px)  {
+    /* 가로 768px 이하 1rem == 8.75px  */
+    html { font-size: 54.6875%; }
+}
+
+html{
+    /* 배경색 */
+    --bg-color-1: #715d74;
+    --bg-color-2: #a08aa3;
+    --bg-color-3: #d1bad4;
+    --bg-color-4: #d1bad470;
+    --bg-color-5: #ffffff;
+
+    /* 글자색 */
+    --txt-color-1: black;
+    --txt-color-2: rgb(59, 59, 59);
+    --txt-color-3: grey;
+    --txt-color-4: rgb(214, 212, 212);
+    --txt-color-5: white;
+    --txt-color-warn: rgb(215, 68, 68);
+
+    /* 폰트 사이즈 */
+    --font-xs: 1.2rem;
+    --font-sm: 1.4rem;
+    --font-base: 1.6rem;
+    --font-lg: 1.8rem;
+    --font-xl: 2rem;
+    --font-2xl: 3rem;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-base);
+}
+a {
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+#wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 40rem;
+    border: black solid 0.1rem;
+    border-radius: 1rem;
+    padding: 3rem;
+}
+
+#login_title {
+    text-align: center;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    font-size: var(--font-2xl);
+    border-bottom: black solid 0.2rem;
+}
+
+#login_form {
+    padding: 3rem 2rem 0rem 2rem;
+    width: 100%;
+    text-align: center;
+}
+
+
+
+#login_form .login_input {
+    width: 100%;
+    padding: 1rem;
+    border: 0;
+    border-bottom: 0.1rem solid black;
+    font-size: var(--font-base);
+    margin-bottom: 1rem;
+}
+
+#login_form button {
+    padding: 1rem;
+    border: 0.1rem solid black;
+    width: 100%;
+    font-size: var(--font-base);
+    margin: 1rem 0 1rem 0;
+}
+
+#login_error {
+    text-align: center;
+    color: darkred;
+}
+
+#from_social {
+    width: 100%;
+    padding: 1rem;
+}
+
+#from_social a {
+    text-decoration: none;
+}
+
+.social_login_button {
+    text-align: center;
+    padding: 1rem;
+    border: 0.1rem solid black;
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--font-base);
+}
