@@ -38,10 +38,6 @@ public class MailConfig {
         mailSender.setDefaultEncoding("utf-8");
         mailSender.setJavaMailProperties(properties);
 
-        log.info(env.getProperty("mailSender.host"));
-        log.info(env.getProperty("mailSender.username"));
-        log.info(env.getProperty("mailSender.password"));
-
         return mailSender;
 
     }

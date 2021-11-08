@@ -9,7 +9,7 @@ import kr.or.yi.teamProject.user.mapper.AuthMapper;
 import kr.or.yi.teamProject.user.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -37,20 +37,12 @@ public class OAuth2CustomUserDetailsService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        log.info("----------------------------------");
-        log.info("userRequest: " + userRequest);
 
         // OAuth2 공급자 명
         String clientName = userRequest.getClientRegistration().getClientName().toLowerCase();
 
+
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
-        // 이용자 정보 저장
-        Map<String, Object> userInfo = oAuth2User.getAttributes();
-
-        String username = clientName + "_" + userInfo.get("email");
-
-
 
         // 널 값이면 반환하기
         if(oAuth2User == null){
@@ -60,20 +52,45 @@ public class OAuth2CustomUserDetailsService extends DefaultOAuth2UserService {
             );
         }
 
+        // 이용자 정보 저장
+        Map<String, Object> userInfo = oAuth2User.getAttributes();
+        userInfo.forEach((k, v) -> log.info(k + " : " + v));
+
+
+        // 이용자 정보 파싱
+        String username = null;
+        String name = null;
+        String email = null;
+        if(clientName.equals("kakao")){
+            Map<String, Object> kakaoAccount = (Map<String, Object>)userInfo.get("kakao_account");
+            Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
+
+            if(kakaoAccount.get("email") == null){
+                throw new InternalAuthenticationServiceException("이메일 정보를 공개하여야 가입이 가능합니다.");
+            }
+
+            username = clientName + "_" + kakaoAccount.get("email");
+            name = (String) kakaoProfile.get("nickname");
+            email = (String) kakaoAccount.get("email");
+
+        }
+        if(clientName.equals("google")){
+            username = clientName + "_" + userInfo.get("email");
+            name = (String) userInfo.get("name");
+            email = (String) userInfo.get("email");
+        }
+
+
+        // 회원 여부 확인 및 신규 생성
         Member member = memberMapper.selectMember(
                 Member.builder().username(username).build()
         );
 
-
-
-        // 회원이 아니면 추가하기
         if (member == null){
 
             RandomStringCreateUtil rsUtil = new RandomStringCreateUtil();
 
-            String name = (String) userInfo.get("name");
             String password = new BCryptPasswordEncoder().encode(rsUtil.getSecureRand());
-            String email = (String) userInfo.get("email");
 
             member = Member.builder()
                     .username(username)

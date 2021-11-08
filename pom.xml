@@ -300,9 +300,8 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>5.2.0.RELEASE</version>
+            <version>${org.springframework-version}</version>
         </dependency>
-
 
     </dependencies>
 

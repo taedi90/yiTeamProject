@@ -1,6 +1,7 @@
 package kr.or.yi.teamProject.config;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EncryptablePropertySource;
+import kr.or.yi.teamProject.common.enums.CustomOAuth2Provider;
 import kr.or.yi.teamProject.user.handler.CustomAuthenticationFailureHandler;
 import kr.or.yi.teamProject.user.handler.CustomAuthenticationSuccessHandler;
 import kr.or.yi.teamProject.user.service.CustomUserDetailsService;
@@ -47,7 +48,7 @@ import java.util.stream.Collectors;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static List<String> clients = Arrays.asList("google", "facebook");
+    private static List<String> clients = Arrays.asList("google", "facebook", "kakao");
 
     private final OAuth2CustomUserDetailsService oAuth2CustomUserDetailsService;
 
@@ -157,6 +158,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if (client.equals("facebook")) {
             return CommonOAuth2Provider.FACEBOOK.getBuilder(client)
                     .clientId(clientId).clientSecret(clientSecret).scope(scopeArr).build();
+        }
+        if (client.equals("kakao")) {
+            return CustomOAuth2Provider.KAKAO.getBuilder(client)
+                    .clientId(clientId).clientSecret(clientSecret).build();
         }
 
         return null;

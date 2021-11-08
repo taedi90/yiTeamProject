@@ -36,6 +36,11 @@
         구글 로그인
     </div>
 </a>
+<a href="oauth2/authorization/kakao">
+    <div>
+        카카오 로그인
+    </div>
+</a>
 
 <script src="/shop/js/common/jquery-3.6.0.min.js"></script>
 </body>
