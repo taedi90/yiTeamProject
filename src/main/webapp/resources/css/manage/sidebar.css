@@ -1,0 +1,110 @@
+.menu_item {
+    display: flex;
+    height: fit-content;
+    cursor: pointer;
+}
+
+
+.icon_holder {
+    display: inline;
+    z-index: 99;
+}
+
+.icon_holder img {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: block;
+    margin: 1rem;
+}
+
+.description_holder {
+    display: flex;
+    width: 13rem;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-lg);
+    color: var(--txt-color-base);
+    font-weight: 500;
+    /* margin-left: 1rem; */
+    z-index: 98;
+}
+
+
+
+.sidebar_section {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: var(--font-base);
+    text-align: center;
+}
+
+/* 구분선 */
+.sidebar_section hr {
+    border: 0.1rem solid var(--txt-color-base);
+    width: 80%;
+}
+
+/* 마우스 오버 효과 */
+.menu_item:hover {
+    background-color: var(--bg-color-base-hover);
+
+}
+
+.menu_item:hover .description_holder{
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: #5f4343;
+}
+
+/* 아이콘 뒤집기 */
+.revert {
+    transform:rotate(0deg);
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+/* 툴팁 */
+.tooltip[data-tooltip]:before {
+    position : absolute;
+    content : attr(data-tooltip);
+    opacity : 0;
+}
+
+.tooltip[data-tooltip]:hover:before {
+    opacity : 0.9;
+    left: 5.5rem;
+    text-align: center;
+    /* background-color: lightgoldenrodyellow; */
+    background-color: var(--bg-color-base-hover);
+    font-size: var(--font-xl);
+    font-weight: 600;
+    color: var(--txt-color-base-hover);
+    width: 13rem;
+    /* margin-left: 1rem; */
+    height: 5.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 사이드바 늘리기 줄이기 */
+.hidden {
+    display: none !important;
+}
+
+.appear{animation: appear 0.3s linear 1 ;}
+@keyframes appear{
+    0%{transform: translateX(-100%); opacity: 0;}
+    100%{transform: translateX(0%); opacity: 1;}
+}
+
+.disappear{animation: disappear 0.3s linear 1 ;}
+@keyframes disappear{
+    0%{transform: translateX(0%); opacity: 1;}
+    100%{transform: translateX(-100%); opacity: 0;}
+}

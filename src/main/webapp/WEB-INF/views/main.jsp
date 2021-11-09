@@ -18,13 +18,7 @@
 </head>
 <body>
 
-    <header>
-        <jsp:include page="division/main/header.jsp" />
-    </header>
 
-    <nav>
-        <jsp:include page="division/main/nav.jsp" />
-    </nav>
 
     <main>
 
@@ -43,9 +37,6 @@
 
     </main>
 
-    <footer>
-        <jsp:include page="division/main/footer.jsp" />
-    </footer>
 
     <script src="${path}/js/payment/jquery-3.6.0.min.js"></script>
 </body>
