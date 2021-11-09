@@ -2,10 +2,10 @@ package kr.or.yi.teamProject.config;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EncryptablePropertySource;
 import kr.or.yi.teamProject.common.enums.CustomOAuth2Provider;
-import kr.or.yi.teamProject.user.handler.CustomAuthenticationFailureHandler;
-import kr.or.yi.teamProject.user.handler.CustomAuthenticationSuccessHandler;
-import kr.or.yi.teamProject.user.service.CustomUserDetailsService;
-import kr.or.yi.teamProject.user.service.OAuth2CustomUserDetailsService;
+import kr.or.yi.teamProject.security.handler.CustomAuthenticationFailureHandler;
+import kr.or.yi.teamProject.security.handler.CustomAuthenticationSuccessHandler;
+import kr.or.yi.teamProject.security.service.CustomUserDetailsService;
+import kr.or.yi.teamProject.security.service.OAuth2CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

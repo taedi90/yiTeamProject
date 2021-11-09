@@ -1,8 +1,8 @@
-package kr.or.yi.teamProject.user.service;
+package kr.or.yi.teamProject.security.service;
 
 import kr.or.yi.teamProject.common.util.RandomStringCreateUtil;
 import kr.or.yi.teamProject.user.dto.Auth;
-import kr.or.yi.teamProject.user.dto.CustomUser;
+import kr.or.yi.teamProject.security.dto.CustomUser;
 import kr.or.yi.teamProject.user.dto.Member;
 import kr.or.yi.teamProject.user.enums.Role;
 import kr.or.yi.teamProject.user.mapper.AuthMapper;

@@ -1,6 +1,6 @@
-package kr.or.yi.teamProject.user.handler;
+package kr.or.yi.teamProject.security.handler;
 
-import kr.or.yi.teamProject.user.dto.CustomUser;
+import kr.or.yi.teamProject.security.dto.CustomUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
