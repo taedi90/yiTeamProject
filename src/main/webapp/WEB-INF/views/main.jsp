@@ -12,15 +12,120 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
     <title>메인페이지</title>
 </head>
 <body>
+	
+	<div id="wrap">
+	<%@ include file="division/common/header.jsp" %>
+	<%@ include file="division/common/nav.jsp" %>
 
 
+	<!-- content -->
+    <div class="content">
 
-    <main>
+        <div class="event_banner">
+
+        </div>
+
+        <div class="best">
+
+            <div>
+
+                <h1>지금 가장 인기있는 상품</h1><br><br><br>
+
+            </div>
+
+            <table border="1" class="best_product_table">
+
+                <tr class="best_product_img">
+                    <td> img 1 </td>
+                    <td> img 2 </td>
+                    <td> img 3 </td>
+                    <td> img 4 </td>
+                </tr>
+
+                <tr class="best_product_name">
+                    <td> con 1 </td>
+                    <td> con 2 </td>
+                    <td> con 3 </td>
+                    <td> con 4 </td>
+                </tr>
+
+                <tr class="best_product_img">
+                    <td> img 5 </td>
+                    <td> img 6 </td>
+                    <td> img 7 </td>
+                    <td> img 8 </td>
+                </tr>
+
+                <tr class="best_product_name">
+                    <td> con 5 </td>
+                    <td> con 6 </td>
+                    <td> con 7 </td>
+                    <td> con 8 </td>
+                </tr>
+
+            </table>
+
+            <table border="1" class="mobile_best_product_table">
+
+                <tr class="best_product_img">
+                    <td> img 1 </td>
+                    <td> img 2 </td>
+                </tr>
+
+                <tr class="best_product_name">
+                    <td> 이름 <br>
+                        가격 </td>
+                    <td> con 2 </td>
+                </tr>
+
+                <tr class="best_product_img">
+                    <td> img 3 </td>
+                    <td> img 4 </td>
+                </tr>
+
+                <tr class="best_product_name">
+                    <td> con 3 </td>
+                    <td> con 4 </td>
+                </tr>
+
+                <tr class="best_product_img">
+                    <td> img 5 </td>
+                    <td> img 6 </td>
+                </tr>
+
+                <tr class="best_product_name">
+                    <td> con 5 </td>
+                    <td> con 6 </td>
+                </tr>
+
+                <tr class="best_product_img">
+                    <td> img 7 </td>
+                    <td> img 8 </td>
+                </tr>
+
+                <tr class="best_product_name">
+                    <td> con 7 </td>
+                    <td> con 8 </td>
+                </tr>
+
+
+            </table>
+
+        </div>
+
+    </div>
+	
+
+
+   <%--  <main>
 
         <sec:authorize access="isAnonymous()">
             <a href="login">로그인</a>
@@ -35,7 +140,17 @@
             <p>권한 : <sec:authentication property="principal.member.authority"/></p>
         </sec:authorize>
 
-    </main>
+    </main> --%>
+    
+    
+    <div class="content" style="height:1000px">
+    
+    </div>
+    
+    
+    
+    	<%@ include file="division/common/footer.jsp" %>
+    </div>
 
 
     <script src="${path}/js/payment/jquery-3.6.0.min.js"></script>
