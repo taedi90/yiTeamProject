@@ -50,22 +50,15 @@ public class MemberServiceImpl implements MemberService {
     public RegisterResult insertNormalMember(Member member) {
 
         // 필수항목 입력 확인
-        if(member.getUsername() == null ||
-                member.getName() == null ||
-                member.getPassword() == null ||
-                member.getEmail() == null ||
-                member.getPhone() == null
+        if(member.getUsername().equals("") ||
+                member.getName().equals("") ||
+                member.getPassword().equals("") ||
+                member.getEmail().equals("") ||
+                member.getPhone().equals("")
         ) {
             return RegisterResult.NULL_ERROR;
         }
 
-        // 아이디 중복 확인
-        Member dbResult = memberMapper.selectMember(
-                Member.builder().username(member.getUsername()).build()
-        );
-        if (dbResult != null){
-            return RegisterResult.DUPLICATE_ERROR;
-        }
 
         // 아이디 형식 확인
         if(checkUsername(member.getUsername()) != true){
@@ -87,7 +80,13 @@ public class MemberServiceImpl implements MemberService {
             return RegisterResult.PHONE_ERROR;
         }
 
-
+        // 아이디 중복 확인
+        Member dbResult = memberMapper.selectMember(
+                Member.builder().username(member.getUsername()).build()
+        );
+        if (dbResult != null){
+            return RegisterResult.DUPLICATE_ERROR;
+        }
 
         // 패스워드 변환
         member.setPassword(

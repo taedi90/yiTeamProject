@@ -60,7 +60,7 @@ a:visited {
     padding: 3rem;
 }
 
-#login_title {
+#register_title {
     text-align: center;
     padding-bottom: 0.5rem;
     width: 100%;
@@ -68,7 +68,7 @@ a:visited {
     border-bottom: black solid 0.2rem;
 }
 
-#login_form {
+#register_form {
     padding: 3rem 2rem 0rem 2rem;
     width: 100%;
     text-align: center;
@@ -76,7 +76,7 @@ a:visited {
 
 
 
-#login_form .login_input {
+.register_input {
     width: 100%;
     padding: 1rem;
     border: 0;
@@ -85,38 +85,11 @@ a:visited {
     margin-bottom: 1rem;
 }
 
-#login_form button {
+#button_holder button {
     padding: 1rem;
     border: 0.1rem solid black;
     width: 100%;
     font-size: var(--font-base);
     margin: 1rem 0 1rem 0;
     cursor: pointer;
-}
-
-#login_error {
-    text-align: center;
-    color: darkred;
-}
-
-#from_social {
-    width: 100%;
-    padding: 1rem;
-}
-
-#from_social a {
-    text-decoration: none;
-}
-
-.social_login_button {
-    text-align: center;
-    padding: 1rem;
-    border: 0.1rem solid black;
-    border-radius: 1rem;
-    margin-bottom: 0.5rem;
-    font-size: var(--font-base);
-}
-
-.social_login_button:hover {
-    background-color: darkgray;
 }

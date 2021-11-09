@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static List<String> clients = Arrays.asList("google", "facebook", "kakao");
+    private static List<String> clients = Arrays.asList("google", "kakao");
 
     private final OAuth2CustomUserDetailsService oAuth2CustomUserDetailsService;
 
@@ -67,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated(); // 그 외에는 인증 된 사용자만 접근 가능
+
 
 
         http

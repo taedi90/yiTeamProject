@@ -14,17 +14,39 @@
 <html>
 <head>
     <title>회원가입</title>
+    <link rel="stylesheet" href="${path}/css/user/register.css">
 </head>
 <body>
-<form action="register" method="post" name="form">
-    <input type="text" name="username" placeholder="아이디"><br>
-    <input type="text" name="name" placeholder="이름"><br>
-    <input type="password" name="password" placeholder="비밀번호"><br>
-    <input type="password" placeholder="비밀번호 확인"><br>
-    <input type="email" name="email" placeholder="이메일"><br>
-    <input type="text" name="phone" placeholder="핸드폰번호" maxlength="11" required><br>
-    <button type="button" onclick="doRegister()">회원가입</button>
-</form>
+
+<div id="wrap">
+    <div id="register_title">
+        Register
+    </div>
+
+    <div id="register_form">
+        <div id="input_holder">
+            <form action="register" method="post" name="form">
+                <input type="text" class="register_input" name="username" placeholder="아이디">
+                <input type="text" class="register_input" name="name" placeholder="이름" autocomplete="username">
+                <input type="password" class="register_input" name="password" placeholder="비밀번호" autocomplete="new-password">
+                <input type="password" class="register_input" name="passwordConfirm" placeholder="비밀번호 확인" autocomplete="new-password">
+                <input type="email" class="register_input" name="email" placeholder="이메일">
+                <input type="text" class="register_input" name="phone" placeholder="핸드폰번호" maxlength="11" required>
+            </form>
+        </div>
+        <div id="error_holder">
+
+        </div>
+        <div id="button_holder">
+            <button type="button" onclick="doRegister()">회원가입</button>
+        </div>
+        <div><a href="login">로그인으로 돌아가기</a></div>
+    </div>
+
+
+
+</div>
+
 
 <script src="${path}/js/common/ajax.js" defer></script>
 <script src="${path}/js/user/register.js" defer></script>

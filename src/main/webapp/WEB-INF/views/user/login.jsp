@@ -27,7 +27,8 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="checkbox" name="remember-me">로그인 유지
             <button type="submit">로그인하기</button>
-            <a href="register">회원가입</a><br>
+            <p>아직 회원이 아니신가요? <a href="register">회원가입</a></p>
+
 
         </form>
 
@@ -40,12 +41,12 @@
     <div id="from_social">
         <a href="oauth2/authorization/google">
             <div class="social_login_button">
-                구글 로그인
+                구글 계정으로 로그인
             </div>
         </a>
         <a href="oauth2/authorization/kakao">
             <div class="social_login_button">
-                카카오 로그인
+                카카오 계정으로 로그인
             </div>
         </a>
     </div>
