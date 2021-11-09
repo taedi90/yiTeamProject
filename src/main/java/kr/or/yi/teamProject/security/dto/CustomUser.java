@@ -1,5 +1,6 @@
-package kr.or.yi.teamProject.user.dto;
+package kr.or.yi.teamProject.security.dto;
 
+import kr.or.yi.teamProject.user.dto.Member;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

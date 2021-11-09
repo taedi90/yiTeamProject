@@ -1,6 +1,6 @@
-package kr.or.yi.teamProject.user.service;
+package kr.or.yi.teamProject.security.service;
 
-import kr.or.yi.teamProject.user.dto.CustomUser;
+import kr.or.yi.teamProject.security.dto.CustomUser;
 import kr.or.yi.teamProject.user.dto.Member;
 import kr.or.yi.teamProject.user.mapper.MemberMapper;
 import lombok.extern.slf4j.Slf4j;
