@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.product.mapper.ProductInfoAnnounceMapper">
+
+    <insert id="insertProductInfoAnnounce" parameterType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce">
+        INSERT INTO `product_info_announce` (`title`, `text`)
+        VALUES (#{title}, #{text})
+    </insert>
+
+    <update id="updateProductInfoAnnounce" parameterType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce">
+        UPDATE `product_info_announce`
+        <set>
+            <if test="title != null" >
+                `title` = #{title},
+            </if>
+            <if test="text != null" >
+                `text` = #{text}
+            </if>
+        </set>
+        WHERE `pia_no` = #{piaNo}
+    </update>
+
+    <delete id="deleteProductInfoAnnounce" parameterType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce">
+        DELETE
+        FROM `product_info_announce`
+        WHERE `pia_no` = #{piaNo}
+    </delete>
+
+    <select id="selectProductInfoAnnounce" parameterType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce"
+            resultType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce">
+        SELECT `pia_no`, `title`, `text`, `reg_date`
+        FROM `product_info_announce`
+        <where>
+            <if test="piaNo != null and piaNo != 0" >
+                `pia_no` = #{piaNo}
+            </if>
+            <if test="title != null" >
+                AND `title` = #{title}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectProductInfoAnnounceList" resultType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce">
+        SELECT `pia_no`, `title`, `text`, `reg_date`
+        FROM `product_info_announce`
+    </select>
+    
+</mapper>
