@@ -33,10 +33,33 @@
         <level value="info" />
     </logger>
 
+    <!-- Query Loggers -->
+    <logger name="jdbc.sqltiming" additivity="false">
+        <level value="off"/>
+    </logger>
+
+    <logger name="jdbc.audit" additivity="false">
+        <level value="off"/>
+    </logger>
+
+    <logger name="jdbc.resultset" additivity="false">
+        <level value="off"/>
+    </logger>
+
+    <logger name="jdbc.resultsettable" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="jdbc.connection" additivity="false">
+        <level value="off"/>
+    </logger>
+
     <!-- Root Logger -->
     <root>
-        <priority value="all" />
+        <priority value="info" />
         <appender-ref ref="console" />
     </root>
+
 
 </log4j:configuration>
