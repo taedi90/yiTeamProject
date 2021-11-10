@@ -1,6 +1,9 @@
 package kr.or.yi.teamProject.config;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EncryptablePropertySource;
+import net.sf.log4jdbc.Log4jdbcProxyDataSource;
+import net.sf.log4jdbc.tools.Log4JdbcCustomFormatter;
+import net.sf.log4jdbc.tools.LoggingType;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -41,9 +44,32 @@ public class RootConfig {
     private String dsPassword;
 
     // 커넥션 pool을 사용할 dataSource bean
+//    @Bean("dataSource")
+//    public DataSource dataSource() {
+//
+//        BasicDataSource dataSource = new BasicDataSource();
+//        dataSource.setDriverClassName(dsDriver);
+//        dataSource.setUrl(dsUrl);
+//        dataSource.setUsername(dsUsername);
+//        dataSource.setPassword(dsPassword);
+//
+//        return dataSource;
+//    }
+
     @Bean("dataSource")
     public DataSource dataSource() {
+        Log4jdbcProxyDataSource dataSource = new Log4jdbcProxyDataSource(dataSourceSpied());
 
+        Log4JdbcCustomFormatter formatter = new Log4JdbcCustomFormatter();
+        formatter.setLoggingType(LoggingType.MULTI_LINE);
+        formatter.setSqlPrefix("SQL         :  ");
+
+        dataSource.setLogFormatter(formatter);
+        return dataSource;
+    }
+
+    @Bean("dataSourceSpied")
+    public DataSource dataSourceSpied() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(dsDriver);
         dataSource.setUrl(dsUrl);

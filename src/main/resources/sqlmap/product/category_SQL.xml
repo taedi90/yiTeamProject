@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.product.mapper.CategoryMapper">
+
+    <insert id="insertCategory" parameterType="kr.or.yi.teamProject.product.dto.Category">
+        INSERT INTO `category` (`title`)
+        VALUES (#{title})
+    </insert>
+
+    <update id="updateCategory" parameterType="kr.or.yi.teamProject.product.dto.Category">
+        UPDATE `category`
+        SET `title` = #{title}
+        WHERE `category_no` = #{categoryNo}
+    </update>
+
+    <delete id="deleteCategory" parameterType="kr.or.yi.teamProject.product.dto.Category">
+        DELETE
+        FROM `category`
+        WHERE `category_no` = #{categoryNo}
+    </delete>
+
+    <select id="selectCategory" parameterType="kr.or.yi.teamProject.product.dto.Category"
+            resultType="kr.or.yi.teamProject.product.dto.Category">
+        SELECT `category_no`, `title`
+        FROM `category`
+        <where>
+            <if test="categoryNo != null and categoryNo != 0" >
+                `category_no` = #{categoryNo}
+            </if>
+            <if test="title != null" >
+                AND `title` = #{title}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCategoryList" resultType="kr.or.yi.teamProject.product.dto.Category">
+        SELECT `category_no`, `title`
+        FROM `category`
+    </select>
+
+</mapper>
