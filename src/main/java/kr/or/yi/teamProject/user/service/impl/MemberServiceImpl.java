@@ -146,7 +146,7 @@ public class MemberServiceImpl implements MemberService {
 
 
         //이메일 발송
-        boolean result = sendEmail(username, authKey);
+        boolean result = sendEmail(member, authKey);
 
 
         //결과 확인
@@ -183,7 +183,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
-    public boolean sendEmail(String username, String authKey) {
+    public boolean sendEmail(Member member, String authKey) {
         try {
             MailUtil sendMail = new MailUtil(mailSender);
             sendMail.setSubject("[yiTeamProject] 이메일 인증 메일 발송");
@@ -191,13 +191,13 @@ public class MemberServiceImpl implements MemberService {
                     .append("<p>가입해 주셔서 감사합니다.</p>")
                     .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
                     .append("<a href='http://localhost:8080/shop/email-confirm?id=")
-                    .append(username)
+                    .append(member.getUsername())
                     .append("&confirm=")
                     .append(authKey)
                     .append("' target='_blenk'>이메일 인증 확인</a>")
                     .toString());
             sendMail.setFrom("no-reply@taedi.net", "발송용");
-            sendMail.setTo("taedi90@gmail.com");
+            sendMail.setTo(member.getEmail());
             sendMail.send();
 
             return true;
