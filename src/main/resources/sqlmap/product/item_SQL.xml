@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.product.mapper.ItemMapper">
+
+    <insert id="insertItem" parameterType="kr.or.yi.teamProject.product.dto.Item" useGeneratedKeys="true" keyProperty="itemNo">
+        INSERT INTO `item` (`category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`)
+        VALUES (#{category.categoryNo}, #{name}, #{price}, #{discount}, #{startDiscount}, #{endDiscount}, #{title}, #{text}, #{image}, #{productInfoAnnounce.piaNo}, #{couponAllow}, #{hide})
+    </insert>
+
+    <update id="updateItem" parameterType="kr.or.yi.teamProject.product.dto.Item">
+        UPDATE `item`
+        <set>
+            <if test="category != null and category.categoryNo != null">
+                `category_no` = #{category.categoryNo},
+            </if>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="price != null">
+                `price` = #{price},
+            </if>
+            <if test="discount != null">
+                `discount` = #{discount},
+            </if>
+            <if test="startDiscount != null">
+                `start_discount` = #{startDiscount},
+            </if>
+            <if test="endDiscount != null">
+                `end_discount` = #{endDiscount},
+            </if>
+            <if test="title != null">
+                `title` = #{title},
+            </if>
+            <if test="text != null">
+                `text` = #{text},
+            </if>
+            <if test="image != null">
+                `image` = #{image},
+            </if>
+            <if test="productInfoAnnounce != null and productInfoAnnounce.piaNo != null">
+                `pia_no` = #{productInfoAnnounce.piaNo},
+            </if>
+            <if test="couponAllow != null">
+                `coupon_allow` = #{couponAllow},
+            </if>
+            <if test="hide != null">
+                `hide` = #{hide}
+            </if>
+        </set>
+        WHERE `item_no` = #{itemNo}
+    </update>
+
+    <delete id="deleteItem" parameterType="kr.or.yi.teamProject.product.dto.Item">
+        DELETE
+        FROM `item`
+        WHERE `item_no` = #{itemNo}
+    </delete>
+
+    <select id="selectItem" parameterType="kr.or.yi.teamProject.product.dto.Item"
+    resultType="kr.or.yi.teamProject.product.dto.Item">
+        SELECT `item_no`, `category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`
+        FROM `item`
+        <where>
+            <if test="itemNo != null and itemNo != 0">
+                `item_no` = #{itemNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectItemList" parameterType="kr.or.yi.teamProject.product.dto.Item"
+            resultType="kr.or.yi.teamProject.product.dto.Item">
+        SELECT `item_no`, `category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`
+        FROM `item`
+    </select>
+
+</mapper>

@@ -4,7 +4,7 @@
 <!-- mapper 클래스 경로 -->
 <mapper namespace="kr.or.yi.teamProject.product.mapper.ProductInfoAnnounceMapper">
 
-    <insert id="insertProductInfoAnnounce" parameterType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce">
+    <insert id="insertProductInfoAnnounce" parameterType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce" useGeneratedKeys="true" keyProperty="piaNo">
         INSERT INTO `product_info_announce` (`title`, `text`)
         VALUES (#{title}, #{text})
     </insert>

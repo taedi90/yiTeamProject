@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Category {
-    private int categoryNo; //카테고리 번호
+    private int categoryNo; //카테고리 번호 auto_increment pk, unique
     private String title; //카테고리 명
 }
