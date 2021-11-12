@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 상품정보 전달 용 클래스
@@ -30,4 +31,7 @@ public class Item {
     private ProductInfoAnnounce productInfoAnnounce; //상품 정보 제공고시
     private boolean couponAllow; //쿠폰 할인 가능여부
     private boolean hide; //상품 숨기기
+
+    //추가
+    private List<Option> options; //상품옵션
 }

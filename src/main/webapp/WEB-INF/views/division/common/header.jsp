@@ -7,7 +7,13 @@
 
 
         <div class="user">
-            로그인 | 회원가입 | 마이페이지 | 장바구니
+            <sec:authorize access="isAnonymous()">
+                <a href="login">로그인</a>&nbsp;|&nbsp;<a href="register">회원가입</a>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <a href="logout">로그아웃</a>
+            </sec:authorize>
+            &nbsp;| 마이페이지 | 장바구니
         </div>
 
         <!-- 모바일 메뉴 -->

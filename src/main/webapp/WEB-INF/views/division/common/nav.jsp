@@ -14,18 +14,17 @@
 
             <ul>
                 <li  class="main_menu">
-                    <a href="#">메뉴1</a>
+                    <a href="#">About</a>
                 </li>
 
                 <li  class="main_menu">
-                    <a href="#">메뉴2</a>
+                    <a href="#">Product</a>
 
                     <ul class="sub_menu">
-                        <li><a href="#">메뉴2-1</a></li>
-                        <li><a href="#">메뉴2-2</a></li>
-                        <li><a href="#">메뉴2-3</a></li>
-                        <li><a href="#">메뉴2-4</a></li>
-                        <li><a href="#">메뉴2-5</a></li>
+                        <li><a href="#">아우터</a></li>
+                        <li><a href="#">상의</a></li>
+                        <li><a href="#">하의</a></li>
+                        <li><a href="#">원피스</a></li>
                     </ul>
                 </li>
 

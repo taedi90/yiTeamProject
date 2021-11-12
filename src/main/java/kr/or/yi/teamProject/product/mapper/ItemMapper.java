@@ -4,6 +4,7 @@ import kr.or.yi.teamProject.product.dto.Item;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Mapper
 public interface ItemMapper {
@@ -11,6 +12,8 @@ public interface ItemMapper {
     int updateItem(Item item);
     int deleteItem(Item item);
 
-    Item selectItem(Item item);
+    ArrayList<Item> selectItem(Item item);
     ArrayList<Item> selectItemList();
+
+    List<Item> selectItemListForMain();
 }

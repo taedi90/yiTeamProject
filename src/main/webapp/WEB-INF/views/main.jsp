@@ -17,6 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+    <link rel="stylesheet" href="${path}/css/common/common.css">
     <title>메인페이지</title>
 </head>
 <body>
@@ -122,7 +123,21 @@
         </div>
 
     </div>
-	
+
+${items}
+<c:forEach var="item" items="${items}" varStatus="status">
+    <p>${item.image}</p>
+    <h2>${item.title}</h2>
+    <h4>${item.category.title}</h4>
+    <p>${item.price}원</p>
+    <c:forEach var="option" items="${item.options}" varStatus="status">
+        <p>${option.name}</p>
+    </c:forEach>
+
+</c:forEach>
+
+
+
 
 
    <%--  <main>

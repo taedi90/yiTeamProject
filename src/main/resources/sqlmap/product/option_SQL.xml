@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.product.mapper.OptionMapper">
+    <insert id="insertOption" parameterType="kr.or.yi.teamProject.product.dto.Option" useGeneratedKeys="true" keyProperty="optionNo">
+        INSERT INTO `option` (`item_no`, `category_no`, `name`, `option_price`, `stock`)
+        VALUES (#{item.itemNo}, #{item.category.categoryNo}, #{name}, #{optionPrice}, #{stock})
+    </insert>
+</mapper>

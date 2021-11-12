@@ -32,6 +32,10 @@ html{
     --font-xl: 2rem;
 }
 
+body {
+    font-size: var(--font-base);
+}
+
 *{margin: 0;
 padding: 0;
 }

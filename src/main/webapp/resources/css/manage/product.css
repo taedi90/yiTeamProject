@@ -1,0 +1,58 @@
+#table_wrap {
+    display: inline-block;
+    max-width: 130rem;
+    min-width: 100rem;
+    width: fit-content;
+    font-size: var(--font-base);
+    text-align: left;
+    padding: 3rem 0 3rem 0;
+}
+
+#table_wrap > div {
+    border: 0.1rem solid black;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 3rem;
+}
+
+.value_col input{
+    padding: 1rem;
+    border: 0;
+    border-bottom: solid 0.1rem black;
+    width: 100%;
+    max-width: 60rem;
+    font-size: var(--font-lg);
+}
+
+.value_col input:focus{
+    background: var(--bg-color-base-hover);
+    outline: none;
+}
+
+.value_col select{
+    padding: 1rem;
+    font-size: var(--font-lg);
+    max-width: 30rem;
+    width: 100%;
+}
+
+.row{
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 1rem;
+}
+
+.key_col{
+    font-size: var(--font-xl);
+    min-width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.value_col{
+    font-size: var(--font-lg);
+    width: 80%;
+    display: flex;
+    flex-wrap: nowrap;
+}

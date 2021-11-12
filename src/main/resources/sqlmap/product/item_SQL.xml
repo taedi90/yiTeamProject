@@ -4,6 +4,8 @@
 <!-- mapper 클래스 경로 -->
 <mapper namespace="kr.or.yi.teamProject.product.mapper.ItemMapper">
 
+
+
     <insert id="insertItem" parameterType="kr.or.yi.teamProject.product.dto.Item" useGeneratedKeys="true" keyProperty="itemNo">
         INSERT INTO `item` (`category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`)
         VALUES (#{category.categoryNo}, #{name}, #{price}, #{discount}, #{startDiscount}, #{endDiscount}, #{title}, #{text}, #{image}, #{productInfoAnnounce.piaNo}, #{couponAllow}, #{hide})
@@ -73,6 +75,56 @@
             resultType="kr.or.yi.teamProject.product.dto.Item">
         SELECT `item_no`, `category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`
         FROM `item`
+    </select>
+
+
+    <resultMap id="itemMap" type="kr.or.yi.teamProject.product.dto.Item">
+<!--        <constructor>-->
+<!--            <idArg column="item_no" javaType="int"/>-->
+<!--        </constructor>-->
+        <id property="itemNo" column="item_no" />
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <result property="discount" column="discount"/>
+        <result property="startDiscount" column="start_discount"/>
+        <result property="endDiscount" column="end_discount"/>
+        <result property="title" column="title"/>
+        <result property="text" column="text"/>
+        <result property="image" column="image"/>
+        <result property="couponAllow" column="coupon_allow"/>
+        <result property="hide" column="hide"/>
+        <association property="category" javaType="kr.or.yi.teamProject.product.dto.Category">
+            <id property="categoryNo" column="category_no" />
+            <result property="title" column="c_title" />
+        </association>
+        <association property="productInfoAnnounce" javaType="kr.or.yi.teamProject.product.dto.ProductInfoAnnounce">
+            <id property="piaNo" column="pia_no" />
+            <result property="title" column="p_title" />
+            <result property="text" column="p_text" />
+            <result property="regDate" column="p_reg_date" />
+        </association>
+        <collection property="options" ofType="kr.or.yi.teamProject.product.dto.Option">
+            <id property="optionNo" column="option_no"/>
+            <result property="name" column="o_name"/>
+            <result property="optionPrice" column="option_price"/>
+            <result property="stock" column="o_stock"/>
+        </collection>
+
+<!--        <discriminator javaType="int" column="draft">-->
+<!--            <case value="1" resultType="DraftPost"/>-->
+<!--        </discriminator>-->
+    </resultMap>
+
+    <select id="selectItemListForMain" parameterType="kr.or.yi.teamProject.product.dto.Item"
+            resultMap="itemMap">
+        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, i.`title`, `i`.`text`, `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`,
+                `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock
+        FROM `item` i
+            LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
+            LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
+            LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
+        WHERE `hide` IS NOT TRUE
+        ORDER BY `item_no` ASC
     </select>
 
 </mapper>

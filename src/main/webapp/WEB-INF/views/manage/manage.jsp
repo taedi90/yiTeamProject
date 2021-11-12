@@ -24,12 +24,15 @@
   </div>
 
   <div id="main">
-    <%@ include file="content/example.jsp" %>
+<%--    <%@ include file="content/example.jsp" %>--%>
+    <%@ include file="content/product/editor.jsp" %>
   </div>
 
 </div>
 
-<script src="${path}/js/manage/manage.js"></script>
+<script src="${path}/js/common/ajax.js" defer></script>
+<script src="${path}/js/manage/manage.js" defer></script>
+
 
 </body>
 </html>

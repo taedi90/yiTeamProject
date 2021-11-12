@@ -62,6 +62,7 @@ body {
     flex-wrap: nowrap;
 
     background-color: var(--bg-color-base);
+    height: 100vh;
 }
 
 #main {
@@ -69,6 +70,8 @@ body {
     width: 100%;
     text-align: center;
     overflow-x: auto;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 
