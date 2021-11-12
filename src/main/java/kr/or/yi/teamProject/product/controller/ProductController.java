@@ -6,9 +6,11 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
@@ -25,4 +27,14 @@ public class ProductController {
         productService.createProduct(item);
 
     }
+
+    @PostMapping("/upload-img")
+    public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
+        for (MultipartFile multipartFile : uploadFile) {
+            log.info("-------------------------------------");
+            log.info("Upload File Name: " +multipartFile.getOriginalFilename());
+            log.info("Upload File Size: " +multipartFile.getSize());
+        }
+    }
+
 }

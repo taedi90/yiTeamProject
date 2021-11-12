@@ -117,7 +117,14 @@
 
         <div class="row">
             <div class="key_col"><label for="">썸네일</label></div>
-            <div class="value_col"><input type="file"></div>
+            <div class="value_col"><input type="file">
+                <form action="manage/product/upload-img" method="post" enctype="multipart/form-data">
+                    <input type="file" name="uploadFile" multiple>
+                    <button>업로드</button>
+                </form>
+
+
+            </div>
         </div>
 
         <div class="row">
