@@ -1,6 +1,5 @@
 package kr.or.yi.teamProject.product.service.impl;
 
-import com.sun.tools.javac.main.Option;
 import kr.or.yi.teamProject.common.enums.CommonResult;
 import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.mapper.CategoryMapper;

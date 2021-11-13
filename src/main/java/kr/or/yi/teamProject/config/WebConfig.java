@@ -1,6 +1,7 @@
 package kr.or.yi.teamProject.config;
 
 
+import kr.or.yi.teamProject.common.util.ImageUtil;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -39,7 +40,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 
         //파일 업로드 (1mb * 20, 40mb, 20mb)
-        MultipartConfigElement multipartConfig = new MultipartConfigElement("upload", 20971520,41943040,20971520);
+        MultipartConfigElement multipartConfig = new MultipartConfigElement(ImageUtil.UPLOAD_PATH, 20971520,41943040,20971520);
         registration.setMultipartConfig(multipartConfig);
     }
 
