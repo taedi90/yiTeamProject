@@ -5,6 +5,7 @@ import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.service.ProductService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 
 @Slf4j
 @Controller
@@ -49,6 +55,13 @@ public class ProductController {
             File saveFile = new File(ImageUtil.UPLOAD_PATH, multipartFile.getOriginalFilename());
             try {
                 multipartFile.transferTo(saveFile);
+
+                BufferedImage img = ImageIO.read(multipartFile.getInputStream());
+
+                ImageUtil imageUtil = new ImageUtil();
+                //imageUtil.resizeGif(saveFile);
+
+
             } catch (Exception e) {
                 log.error(e.getMessage());
             }

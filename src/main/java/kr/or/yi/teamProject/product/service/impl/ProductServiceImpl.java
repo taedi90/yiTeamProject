@@ -55,9 +55,13 @@ public class ProductServiceImpl implements ProductService {
             optionMapper.insertOption(o);
         });
 
+        return null;
+    }
 
-
+    public CommonResult uploadThumb(Item item) {
 
         return null;
     }
+
+
 }

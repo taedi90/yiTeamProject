@@ -323,6 +323,27 @@
             <version>${org.springframework-version}</version>
         </dependency>
 
+        <!-- 이미지 리사이즈 -->
+        <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib -->
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.sksamuel.scrimage/scrimage-core -->
+        <dependency>
+            <groupId>com.sksamuel.scrimage</groupId>
+            <artifactId>scrimage-core</artifactId>
+            <version>4.0.22</version>
+        </dependency>
 
 
     </dependencies>
