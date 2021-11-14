@@ -1,13 +1,16 @@
 'use strict';
 
 /**
- * 모달창
+ * 모달창 생성 스크립트
  *
- * 사용할 html 페이지에 "modal_container" 아이디의 div를 생성
- * div 이후에 js import 하여 사용
+ * @param {string} html - (optional) 모달창 내용
+ * @param {int} kind - (optional) 버튼 종류 (1: 확인, 2: 예&아니오)
+ * @param {function} confirmCallback - (optional) 확인, 예 클릭 후 실행 함수
+ * @param {function} cancelCallback -  (optional) 아니오 클릭 후 실행 함수
  *
+ * @requires <div id="modal_container"></div>
  *
- * @author taedi
+ * @author taedi <taedi90@gmail.com>
  */
 
 const modalContainer = document.querySelector("#modal_container"); //모달창이 들어갈 부모요소
@@ -17,57 +20,34 @@ let zIndexStart = 100; //다른 요소보다 뒤에 표시되면 값을 상향 �
 let callbackObject = new Object(); //콜백 함수를 저장해둘 객체
 
 //버튼 종류
-const buttonAlert = `<button class="modal_button" type="button" onclick="closeModal(this)">예</button>`;
+const buttonAlert = `<button class="modal_button" type="button" onclick="confirmFunc(this)">확인</button>`;
 const buttonConfirm =
-    `<button type="button" class="modal_button" onclick="yesFunc(this)">예</button>
-<button type="button" class="modal_button" onclick="closeModal(this)">아니오</button> `;
+    `<button type="button" class="modal_button" onclick="confirmFunc(this)">예</button>
+<button type="button" class="modal_button" onclick="cancelFunc(this)">아니오</button>`;
 
 //모달컨테이너 초기화
 modalContainer.innerHTML = ``;
 
-
-//모달창 닫기
-function closeModal(elem) {
-
-    const modal = elem.parentElement.parentElement;
-
-    //드래그 이벤트 제거
-    modal.removeEventListener('mousedown', (e) => startPointing(e, modal));
-    modal.removeEventListener('touchstart', (e) => startPointing(e, modal), {passive: false});
-
-    //모달창 요소 삭제
-    modal.remove();
-
-    //모달창이 하나도 없으면 오버레이 지우기
-    const modals = modalContainer.querySelectorAll(".modal_window");
-    if (modals.length <= 0) {
-        modalContainer.querySelector("#modal_overlay").remove();
-        modalContainer.style = ``;
-    }
-
-}
-
-
 //모달창 생성하기
-function newModal(html = "", kind = 1, callback = () => {
-}) {
+function newModal(html = "", kind = 1, confirmCallback = () => {}, cancelCallback = () => {}) {
 
     const id = "modal" + idNum++;
 
     let buttonType;
 
-    //버튼 종류 설정
+    //버튼 종류 설정(1 : 확인, 2 : 예 & 아니오)
     if (kind == 1) {
         buttonType = buttonAlert;
+        callbackObject[id] = {confirmCallback:confirmCallback};
     } else if (kind == 2) {
         buttonType = buttonConfirm;
-        callbackObject[id] = callback;
+        callbackObject[id] = {confirmCallback:confirmCallback,cancelCallback:cancelCallback};
     } else {
         buttonType = ``;
     }
 
     const modalWindow =
-        `<div id="${id}" class="modal_window" callback="${callback}"
+        `<div id="${id}" class="modal_window"
             style="
             background-color: white;
             padding: 2.5rem 5rem;
@@ -107,22 +87,52 @@ function newModal(html = "", kind = 1, callback = () => {
         modal.addEventListener('touchstart', (e) => startPointing(e, modal), {passive: false});
     });
 
-};
+}
 
-function yesFunc(elem) {
+//모달창 닫기
+function closeModal(elem) {
 
     const modal = elem.parentElement.parentElement;
 
-    callbackObject[modal.id]();
+    //드래그 이벤트 제거
+    modal.removeEventListener('mousedown', (e) => startPointing(e, modal));
+    modal.removeEventListener('touchstart', (e) => startPointing(e, modal), {passive: false});
+
+    //모달창 요소 삭제
+    modal.remove();
+
+    //모달창이 하나도 없으면 오버레이 지우기
+    const modals = modalContainer.querySelectorAll(".modal_window");
+    if (modals.length <= 0) {
+        modalContainer.querySelector("#modal_overlay").remove();
+        modalContainer.style = ``;
+    }
+
+}
+
+
+function confirmFunc(elem) {
+
+    const modal = elem.parentElement.parentElement;
+
+    callbackObject[modal.id].confirmCallback();
     delete callbackObject[modal.id];
 
     closeModal(elem)
 }
 
-function test(){
-    console.log("hi");
+function cancelFunc(elem) {
+
+    const modal = elem.parentElement.parentElement;
+
+    callbackObject[modal.id].cancelCallback();
+    delete callbackObject[modal.id];
+
+    closeModal(elem)
 }
 
+
+//사용자가 가르키는 좌표를 받아오는 함수
 function getCoordinates(e) {
 
     let clientX = undefined;
@@ -144,38 +154,36 @@ function getCoordinates(e) {
 
 
 //포인팅 시작(touchstart, mousedown)
-function startPointing(e, modal) {
+function startPointing(e, elem) {
     //e.preventDefault();
     e.stopPropagation();
 
+    //사용자 포인팅 지점 가져오기
     const coordiantes = getCoordinates(e);
+    const clientX = coordiantes.clientX;
+    const clientY = coordiantes.clientY;
 
-    let clientY = coordiantes.clientY;
-    let clientX = coordiantes.clientX;
+    //선택한 요소의 좌표 가져오기
+    const elemPos = elem.getBoundingClientRect();
+    const elemX = elemPos.x;
+    const elemY = elemPos.y;
 
+    //사용자 좌표와 요소 간의 갭 구하기
+    const gapX = clientX - elemX;
+    const gapY = clientY - elemY;
 
-    // 사이드바의 X좌표
-    const modalPos = modal.getBoundingClientRect();
-    const modalX = modalPos.x;
-    const modalY = modalPos.y;
+    elem.setAttribute("gap-x", gapX);
+    elem.setAttribute("gap-y", gapY);
 
-    // 사이드바 안에 있는 마우스 커서의 X좌표
-    const gapX = clientX - modalX;
-    const gapY = clientY - modalY;
+    //선택한 요소에 'hold'클래스 부여
+    elem.classList.add("hold");
 
-    modal.setAttribute("gap-x", gapX);
-    modal.setAttribute("gap-y", gapY);
+    //클릭한 요소를 최상단에 유지
+    const elems = modalContainer.querySelectorAll(".modal_window");
 
-
-    //
-    modal.classList.add("hold");
-
-    //클릭한 모달창을 최상단에 유지
-    const modals = modalContainer.querySelectorAll(".modal_window");
-
-    modals.forEach((modal) => {
-        if (modal.classList.contains("hold")) {
-            modal.style.zIndex = zIndexStart++;
+    elems.forEach((elem) => {
+        if (elem.classList.contains("hold")) {
+            elem.style.zIndex = zIndexStart++;
         }
     });
 
@@ -186,45 +194,46 @@ function movePointing(e) {
     e.preventDefault();
     e.stopPropagation();
 
+    //사용자 좌표 가져오기
     const coordinate = getCoordinates(e);
     let clientX = coordinate.clientX;
     let clientY = coordinate.clientY;
 
+    //현재 포커싱 된 요소 찾기
+    const elems = modalContainer.querySelectorAll(".modal_window");
 
-    const modals = modalContainer.querySelectorAll(".modal_window");
+    elems.forEach((elem) => {
+        if (elem.classList.contains("hold")) {
 
-    modals.forEach((modal) => {
-        if (modal.classList.contains("hold")) {
+            //포인팅 위치와 요소 사이의 갭
+            const gapX = elem.getAttribute("gap-x");
+            const gapY = elem.getAttribute("gap-y");
 
-            //포인팅 위치와 오브젝트 사이의 갭
-            const gapX = modal.getAttribute("gap-x");
-            const gapY = modal.getAttribute("gap-y");
-
-            //마우스 커서 위치에 따른 이동
-            let modalX = clientX - gapX;
-            let modalY = clientY - gapY;
-            modal.setAttribute("modal-x", modalX);
-            modal.setAttribute("modal-y", modalY);
+            //최초에 지정했던 gap과  현재 포인팅 위치를 기준으로 요소가 이동해야할 좌표 값 구하기
+            let elemX = clientX - gapX;
+            let elemY = clientY - gapY;
+            elem.setAttribute("elem-x", elemX);
+            elem.setAttribute("elem-y", elemY);
 
             //이동 한계 처리 (최대치 이상은 움직이지 않도록)
-            const maxLeft = window.innerWidth - modal.getBoundingClientRect().width;
-            const maxHeight = window.innerHeight - modal.getBoundingClientRect().height;
+            const maxLeft = window.innerWidth - elem.getBoundingClientRect().width;
+            const maxHeight = window.innerHeight - elem.getBoundingClientRect().height;
 
-            if (modalX <= 0) {
-                modalX = 0;
-            } else if (modalX > maxLeft) {
-                modalX = maxLeft;
+            if (elemX <= 0) {
+                elemX = 0;
+            } else if (elemX > maxLeft) {
+                elemX = maxLeft;
             }
 
-            if (modalY <= 0) {
-                modalY = 0;
-            } else if (modalY > maxHeight) {
-                modalY = maxHeight;
+            if (elemY <= 0) {
+                elemY = 0;
+            } else if (elemY > maxHeight) {
+                elemY = maxHeight;
             }
 
-            //오브젝트 이동
-            modal.style.left = `${modalX}px`;
-            modal.style.top = `${modalY}px`;
+            //요소 이동
+            elem.style.left = `${elemX}px`;
+            elem.style.top = `${elemY}px`;
 
         }
     });
@@ -234,18 +243,18 @@ function movePointing(e) {
 function endPointing() {
     //e.preventDefault();
 
-    const modals = modalContainer.querySelectorAll(".modal_window");
+    const elems = modalContainer.querySelectorAll(".modal_window");
 
 
-    modals.forEach((modal) => {
-        if (modal.classList.contains("hold")) {
+    elems.forEach((elem) => {
+        if (elem.classList.contains("hold")) {
 
             // 움직임에 적용된 속성 및 class를 삭제
-            modal.classList.remove("hold");
-            modal.removeAttribute("gap-x");
-            modal.removeAttribute("gap-y");
-            modal.removeAttribute("modal-x");
-            modal.removeAttribute("modal-y");
+            elem.classList.remove("hold");
+            elem.removeAttribute("gap-x");
+            elem.removeAttribute("gap-y");
+            elem.removeAttribute("elem-x");
+            elem.removeAttribute("elem-y");
 
         }
     });
