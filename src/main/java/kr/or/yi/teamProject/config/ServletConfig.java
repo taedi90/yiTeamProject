@@ -37,6 +37,7 @@ public class ServletConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
         registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
         registry.addResourceHandler("/upload/**").addResourceLocations("/resources/upload/");
+        registry.addResourceHandler("/se2/**").addResourceLocations("/resources/se2/");
     }
 
     //파일 업로드

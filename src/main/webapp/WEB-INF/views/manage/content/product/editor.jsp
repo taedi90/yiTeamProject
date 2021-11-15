@@ -132,7 +132,8 @@
             <div class="value_col"><button>선택하기</button></div>
         </div>
         <div class="row">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <!-- SmartEditor2 -->
+            <textarea name="smartEditor" id="smartEditor" style="width: 100%; height: 412px;"></textarea>
         </div>
 
 
@@ -142,4 +143,5 @@
 
 </div>
 
-
+<script type="text/javascript" src="${path}/se2/js/HuskyEZCreator.js" defer></script>
+<script type="text/javascript" src="${path}/js/common/smart-editor.js" defer></script>

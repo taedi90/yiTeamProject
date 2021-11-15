@@ -101,6 +101,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationSuccessHandler(successHandler());
                 //.userDetailsService(customUserDetailsService);
 
+        //CORS 설정
+        http
+                .headers()
+                .frameOptions()
+                .sameOrigin();
+
     }
 
 
