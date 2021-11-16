@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
@@ -26,13 +28,19 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,11 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/manage").hasAnyRole("MANAGER", "ADMIN")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated(); // 그 외에는 인증 된 사용자만 접근 가능
 
-
-
+        //소셜 로그인
         http
                 .oauth2Login().loginPage("/login")
                 .successHandler(successHandler())
@@ -77,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(oAuth2CustomUserDetailsService);
 
-
+        //일반 로그인
         http
                 .formLogin()
                 .loginPage("/login")
@@ -85,6 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(failureHandler())
                 .permitAll();
 
+        //로그아웃
         http
                 .logout()
                 .logoutUrl("/logout")
@@ -106,6 +115,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers()
                 .frameOptions()
                 .sameOrigin();
+
+        //예외 핸들링
+        http
+                .exceptionHandling()
+                .authenticationEntryPoint( new AuthenticationEntryPoint() {//인증 되지 않은(미 로그인) 유저의 요청
+
+                    @Override
+                    public void commence(HttpServletRequest request, HttpServletResponse response,
+                                         AuthenticationException authException) throws IOException, ServletException {
+                        log.info(authException.getMessage());
+                        request.getRequestDispatcher("/login").forward(request, response);
+                    }
+                })
+                .accessDeniedHandler( new AccessDeniedHandler() {// 액세스 권한이 없는 사용자의 요청
+
+                    @Override
+                    public void handle(HttpServletRequest request, HttpServletResponse response,
+                                       AccessDeniedException accessDeniedException) throws IOException, ServletException {
+                        log.info(accessDeniedException.getMessage());
+                        request.getRequestDispatcher("/access-denied").forward(request, response);
+                    }
+                });
 
     }
 

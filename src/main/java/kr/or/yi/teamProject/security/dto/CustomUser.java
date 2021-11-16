@@ -27,9 +27,9 @@ public class CustomUser extends User implements OAuth2User {
 
     // 공통
     private Member member;
+    private List<GrantedAuthority> authorities;
 
     // OAuth2 용
-    private List<GrantedAuthority> authorities;
     private Map<String, Object> attribute;
 
     // 일반 사용자용 생성자
@@ -37,6 +37,7 @@ public class CustomUser extends User implements OAuth2User {
         super(dto.getUsername(),
                 dto.getPassword(),
                 dto.getAuthority().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuthority().toString())).collect(Collectors.toList()));
+        this.authorities = dto.getAuthority().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuthority().toString())).collect(Collectors.toList());
         this.member = dto;
         this.member.setPassword(null);
     }
