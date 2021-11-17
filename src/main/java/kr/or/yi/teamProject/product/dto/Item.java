@@ -1,5 +1,6 @@
 package kr.or.yi.teamProject.product.dto;
 
+import kr.or.yi.teamProject.user.dto.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,10 @@ public class Item {
     private ProductInfoAnnounce productInfoAnnounce; //상품 정보 제공고시
     private boolean couponAllow; //쿠폰 할인 가능여부
     private boolean hide; //상품 숨기기
+    private Date regDate; //작성일
+    private Date modDate; //수정일
+    private Member member; //작성자
+    private boolean publish; //발행여부
 
     //추가
     private List<Option> options; //상품옵션

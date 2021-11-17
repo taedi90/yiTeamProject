@@ -1,7 +1,7 @@
 #table_wrap {
     display: inline-block;
-    max-width: 130rem;
-    min-width: 100rem;
+    max-width: 120rem;
+    min-width: 95rem;
     width: fit-content;
     font-size: var(--font-base);
     text-align: left;
@@ -24,7 +24,7 @@
     font-size: var(--font-lg);
 }
 
-.value_col input:focus{
+input:focus{
     background: var(--bg-color-base-hover);
     outline: none;
 }
@@ -55,4 +55,19 @@
     width: 80%;
     display: flex;
     flex-wrap: nowrap;
+}
+
+.option_input input {
+    padding: 1rem;
+    border: 0;
+    border-bottom: solid 0.1rem black;
+    font-size: var(--font-lg);
+    max-width: 26rem;
+    width: 100%;
+}
+
+.option_input button {
+    font-size: var(--font-lg);
+    padding: 1rem;
+    width: 4.2rem;
 }

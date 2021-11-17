@@ -92,6 +92,7 @@ public class ImageUtil {
 
     //서브경로
 
+
     public CommonResult uploadForMultipart(MultipartFile multipartFile) {
 
         //확장자 확인

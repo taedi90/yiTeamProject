@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class ImageResizeUtil {
 
-    private int[] preset = new int[] {300, 500, 800};
+    private int[] preset = new int[] {350, 130, 80};
 
     // 변환 포맷
     private String imgFormat = "png";

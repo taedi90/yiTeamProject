@@ -25,7 +25,13 @@
 
   <div id="main">
 <%--    <%@ include file="content/example.jsp" %>--%>
-    <%@ include file="content/product/editor.jsp" %>
+<%--    <%@ include file="content/product/editor.jsp" %>--%>
+
+    <c:if test="${url ne null}">
+      <c:set var="result" value="${result}" scope="request" />
+      <c:import url="${url}" />
+    </c:if>
+
   </div>
 
 </div>
@@ -35,7 +41,6 @@
 <script src="${path}/js/common/ajax.js" defer></script>
 <script src="${path}/js/manage/manage.js" defer></script>
 <script src="${path}/js/common/modal.js" defer></script>
-
 
 </body>
 </html>

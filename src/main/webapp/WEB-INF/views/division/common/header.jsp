@@ -13,6 +13,9 @@
             <sec:authorize access="isAuthenticated()">
                 <a href="logout">로그아웃</a>
             </sec:authorize>
+            <sec:authorize access="hasAnyRole('ADMIN','MANAGER')">
+                &nbsp;|&nbsp;<a href="manage">관리자페이지</a>
+            </sec:authorize>
             &nbsp;| 마이페이지 | 장바구니
         </div>
 

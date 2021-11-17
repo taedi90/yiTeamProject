@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="menu_item">
+    <div class="menu_item" onclick="window.location.href = '?section=product&func=list'">
         <div class="icon_holder" data-tooltip="상품 등록">
             <img src="${path}/img/manage/icon/item.png" alt="">
         </div>

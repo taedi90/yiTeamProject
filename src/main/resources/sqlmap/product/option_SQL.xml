@@ -4,7 +4,26 @@
 <!-- mapper 클래스 경로 -->
 <mapper namespace="kr.or.yi.teamProject.product.mapper.OptionMapper">
     <insert id="insertOption" parameterType="kr.or.yi.teamProject.product.dto.Option" useGeneratedKeys="true" keyProperty="optionNo">
-        INSERT INTO `option` (`item_no`, `category_no`, `name`, `option_price`, `stock`)
-        VALUES (#{item.itemNo}, #{item.category.categoryNo}, #{name}, #{optionPrice}, #{stock})
+        INSERT INTO `option` (`item_no`, `name`, `option_price`, `stock`)
+        VALUES (#{item.itemNo}, #{name}, #{optionPrice}, #{stock})
     </insert>
+
+    <select id="selectOption" parameterType="kr.or.yi.teamProject.product.dto.Option" resultType="kr.or.yi.teamProject.product.dto.Option">
+        SELECT `option_no`, `item_no`, `name`, `option_price`, `stock`
+        FROM `option`
+        WHERE `option_no` = #{optionNo}
+    </select>
+
+    <update id="updateOption" parameterType="kr.or.yi.teamProject.product.dto.Option">
+        UPDATE `option`
+        SET `title` = #{title}
+        WHERE `option_no` = #{optionNo}
+    </update>
+
+    <delete id="deleteOption" parameterType="kr.or.yi.teamProject.product.dto.Option">
+        DELETE
+        FROM `option`
+        WHERE `option_no` = #{optionNo}
+    </delete>
+
 </mapper>

@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <link rel="stylesheet" href="${path}/css/manage/product.css">
 <script src="${path}/js/manage/editor.js"></script>
 
@@ -15,6 +18,10 @@
         <div class="row">
             <h2>기본정보</h2>
         </div>
+
+        <input type="hidden" class="item_input" name="itemNo" value="${requestScope.result.itemNo}">
+
+
         <div class="row">
             <div class="key_col"><label for="">상품명</label></div>
             <div class="value_col"><input type="text" class="item_input" name="name"></div>
@@ -26,11 +33,12 @@
         <div class="row">
             <div class="key_col"><label for="">카테고리</label></div>
             <div class="value_col">
-                <select name="categoryNo" id="category_no">
+                <select name="categoryNo" id="category_no" value="${requestScope.result.category.categoryNo}">
                     <option value="1">아우터</option>
                     <option value="2">상의</option>
                     <option value="3">하의</option>
                     <option value="4">원피스</option>
+                    <option value="5">배송비</option>
                 </select>
             </div>
         </div>
@@ -54,18 +62,11 @@
         </div>
 
         <div class="option_input">
+            <input type="hidden" name="optionNo" value="${requestScope.result.options[0].optionNo}">
             <input type="text" name="name" placeholder="옵션명">
             <input type="number" name="optionPrice" placeholder="추가금액">
             <input type="number" name="stock" placeholder="재고수량">
-            <button>+</button>
-        </div>
-
-        <div class="option_input">
-            <input type="text" name="name" placeholder="옵션명">
-            <input type="number" name="optionPrice" placeholder="추가금액">
-            <input type="number" name="stock" placeholder="재고수량">
-            <button>+</button>
-            <button>-</button>
+            <button onclick="addOption()">+</button>
         </div>
 
     </div>
@@ -145,3 +146,12 @@
 
 <script type="text/javascript" src="${path}/se2/js/HuskyEZCreator.js" defer></script>
 <script type="text/javascript" src="${path}/js/common/smart-editor.js" defer></script>
+
+
+<%--<sec:authorize access="isAuthenticated()">--%>
+<%--    <p>principal : <sec:authentication property="principal.member"/></p>--%>
+<%--    <p>아이디 : <sec:authentication property="principal.username"/></p>--%>
+<%--    <p>이름 : <sec:authentication property="principal.member.name"/></p>--%>
+<%--    <p>이메일 : <sec:authentication property="principal.member.email"/></p>--%>
+<%--    <p>권한 : <sec:authentication property="principal.member.authority"/></p>--%>
+<%--</sec:authorize>--%>

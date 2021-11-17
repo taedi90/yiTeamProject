@@ -7,8 +7,8 @@
 
 
     <insert id="insertItem" parameterType="kr.or.yi.teamProject.product.dto.Item" useGeneratedKeys="true" keyProperty="itemNo">
-        INSERT INTO `item` (`category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`)
-        VALUES (#{category.categoryNo}, #{name}, #{price}, #{discount}, #{startDiscount}, #{endDiscount}, #{title}, #{text}, #{image}, #{productInfoAnnounce.piaNo}, #{couponAllow}, #{hide})
+        INSERT INTO `item` (`category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`, `username`, `publish`)
+        VALUES (#{category.categoryNo}, #{name}, #{price}, #{discount}, #{startDiscount}, #{endDiscount}, #{title}, #{text}, #{image}, #{productInfoAnnounce.piaNo}, #{couponAllow}, #{hide}, #{member.username}, #{publish})
     </insert>
 
     <update id="updateItem" parameterType="kr.or.yi.teamProject.product.dto.Item">
@@ -49,6 +49,9 @@
             </if>
             <if test="hide != null">
                 `hide` = #{hide}
+            </if>
+            <if test="publish != null">
+                `publish` = #{publish}
             </if>
         </set>
         WHERE `item_no` = #{itemNo}
@@ -103,6 +106,9 @@
             <result property="text" column="p_text" />
             <result property="regDate" column="p_reg_date" />
         </association>
+        <association property="member" javaType="kr.or.yi.teamProject.user.dto.Member">
+            <id property="username" column="username" />
+        </association>
         <collection property="options" ofType="kr.or.yi.teamProject.product.dto.Option">
             <id property="optionNo" column="option_no"/>
             <result property="name" column="o_name"/>
@@ -126,5 +132,50 @@
         WHERE `hide` IS NOT TRUE
         ORDER BY `item_no` ASC
     </select>
+
+    <select id="selectItemListForManage" parameterType="kr.or.yi.teamProject.common.dto.Pager"
+            resultMap="itemMap">
+        <![CDATA[
+        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, i.`title`, `i`.`text`, `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`,
+               `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock
+        FROM (SELECT *
+                FROM `item`
+                ORDER by `item_no` ${order}
+                LIMIT #{startRecord}, #{amount}
+            ) i
+
+            LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
+                 LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
+                 LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
+        ]]>
+    </select>
+
+    <select id="getInfoForPaging" parameterType="kr.or.yi.teamProject.common.dto.Pager"
+            resultType="kr.or.yi.teamProject.common.dto.Pager">
+        <![CDATA[
+        SELECT `total_records`,
+               `final_page_no`,
+               `start_page`,
+               if(@final_page > @end_page, @end_page, @final_page) `end_page`,
+               @start_page - 1 `prev`,
+               if(@final_page > @end_page, @end_page + 1, 0) `next`,
+               (#{pageNo} - 1) * #{amount} `start_record`
+        FROM (SELECT @total_recode := COUNT(*) `total_records`,
+            @final_page := CEIL(COUNT(*) / #{amount}) `final_page_no`,
+            @start_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + 1 `start_page`,
+            @end_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + #{linkCount}
+            FROM `item`
+        ]]>
+            <where>
+                <if test="category != null">
+                    `category` = #{category}
+                </if>
+                <if test="keyword != null">
+                    AND `name` LIKE '%' + #{keyword} + '%'
+                </if>
+            </where>
+            ) a
+    </select>
+
 
 </mapper>
