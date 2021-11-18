@@ -1,5 +1,6 @@
 package kr.or.yi.teamProject.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.Ordered;
@@ -9,10 +10,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -68,6 +66,15 @@ public class ServletConfig implements WebMvcConfigurer {
         resolver.setOrder(Ordered.HIGHEST_PRECEDENCE);
         resolver.setExceptionAttribute("exception");
         return resolver;
+    }
+
+    //커스텀 인터셉터
+    @Autowired
+    CustomInterceptor customInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(customInterceptor).excludePathPatterns("/resources/**");
     }
 
 }

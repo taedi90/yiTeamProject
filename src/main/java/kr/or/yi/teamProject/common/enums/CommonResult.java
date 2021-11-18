@@ -15,9 +15,9 @@ public enum CommonResult {
     private String comment;
     private Object object;
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+//    public void setComment(String comment) {
+//        this.comment = comment;
+//    }
 
     public void setObject(Object object) {
         this.object = object;
