@@ -37,3 +37,7 @@
 #table_wrap * {
     margin-top: 1rem;
 }
+
+#link {
+    font-size: var(--font-base);
+}

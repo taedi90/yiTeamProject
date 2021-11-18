@@ -18,12 +18,6 @@
         상품 관리
     </div>
     <div>
-        <input type="radio" name="type">
-        아이디
-        <input type="radio" name="type">
-        이름
-        <input type="radio" name="type">
-        이메일
         <input type="text">
         <button>검색</button>
     </div>
@@ -50,7 +44,11 @@
                 <tr>
                     <td><input type="checkbox" class="checkbox" name="${item.itemNo}"></td>
                     <td>${item.itemNo}</td>
-                    <td>${item.image}</td>
+                    <td>
+                        <c:if test="${item.image ne null}">
+                            <img src="upload/${item.image}/thumb_80.png" alt="">
+                        </c:if>
+                    </td>
                     <td>${item.category.title}</td>
                     <td>${item.name}</td>
                     <td>${item.price}</td>
@@ -67,17 +65,31 @@
         </table>
     </div>
     <div id="link">
-        <c:if test="${requestScope.result.prev > 0}">
-            <a href="manage?section=product&func=list&pageNo=${requestScope.result.prev}">이전</a>
+
+        <%-- 기본 링크 설정 --%>
+        <c:set var="link" value="manage?section=product&func=list&amount=${requestScope.result.amount}&order=${requestScope.result.order}" />
+        <c:if test="${requestScope.result.category ne null}" >
+            <c:set var="link" value="${link}&category=${requestScope.result.category}"/>
+        </c:if>
+        <c:if test="${requestScope.result.keyword ne null}" >
+            <c:set var="link" value="${link}&keyword=${requestScope.result.keyword}"/>
         </c:if>
 
+            <%-- 이전 --%>
+        <c:if test="${requestScope.result.prev > 0}">
+            <a href="${link}&pageNo=${requestScope.result.prev}">이전</a>&nbsp;
+        </c:if>
+
+            <%-- 페이지번호 --%>
         <c:forEach begin="${requestScope.result.startPage}" end="${requestScope.result.endPage}" step="1" varStatus="i">
-            <a href="manage?section=product&func=list&pageNo=${requestScope.result.startPage + i.count - 1}">${requestScope.result.startPage + i.count - 1}</a>
+            &nbsp;<a href="${link}&pageNo=${requestScope.result.startPage + i.count - 1}">
+                ${requestScope.result.startPage + i.count - 1}
+            </a>&nbsp;
         </c:forEach>
 
-
+            <%-- 다음 --%>
         <c:if test="${requestScope.result.next > 0}">
-            <a href="manage?section=product&func=list&pageNo=${requestScope.result.next}">다음</a>
+            &nbsp;<a href="${link}&pageNo=${requestScope.result.next}">다음</a>
         </c:if>
     </div>
 </div>

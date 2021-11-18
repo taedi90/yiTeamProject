@@ -10,15 +10,14 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <link rel="stylesheet" href="${path}/css/manage/product.css">
-<script src="${path}/js/manage/editor.js"></script>
 
 <div id="table_wrap">
-    <%-- 상품번호 --%>
     <div id="product">
         <div class="row">
             <h2>기본정보</h2>
         </div>
 
+        <%-- 상품번호 --%>
         <input type="hidden" class="item_input" name="itemNo" value="${requestScope.result.itemNo}">
 
 
@@ -118,15 +117,12 @@
 
         <div class="row">
             <div class="key_col"><label for="">썸네일</label></div>
-            <div class="value_col"><input type="file">
-                <form action="manage/product/upload-img" method="post" enctype="multipart/form-data">
-                    <input type="file" name="uploadFile" multiple>
-                    <button>업로드</button>
-                </form>
-
-
+            <div class="value_col">
+                <input type="hidden" class="item_input" name="image">
+                <input type="file" name="uploadThumb">
             </div>
         </div>
+
 
         <div class="row">
             <div class="key_col"><label for="">정보제공고시</label></div>
@@ -139,19 +135,14 @@
 
 
     </div>
-        <button onclick="getData()">등록하기</button>
+        <%-- publish --%>
+        <button onclick="">등록하기</button>
+        <%-- non-publish --%>
+        <button onclick="tempSave()">임시저장</button>
         <button>취소하기</button>
 
 </div>
 
+<script src="${path}/js/manage/editor.js"></script>
 <script type="text/javascript" src="${path}/se2/js/HuskyEZCreator.js" defer></script>
 <script type="text/javascript" src="${path}/js/common/smart-editor.js" defer></script>
-
-
-<%--<sec:authorize access="isAuthenticated()">--%>
-<%--    <p>principal : <sec:authentication property="principal.member"/></p>--%>
-<%--    <p>아이디 : <sec:authentication property="principal.username"/></p>--%>
-<%--    <p>이름 : <sec:authentication property="principal.member.name"/></p>--%>
-<%--    <p>이메일 : <sec:authentication property="principal.member.email"/></p>--%>
-<%--    <p>권한 : <sec:authentication property="principal.member.authority"/></p>--%>
-<%--</sec:authorize>--%>

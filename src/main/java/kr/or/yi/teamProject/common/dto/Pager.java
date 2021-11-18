@@ -3,10 +3,11 @@ package kr.or.yi.teamProject.common.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 /**
  * 페이징 처리를 위한 dto 클래스
+ *
+ * @author taedi
  */
 @Data
 @Builder
@@ -41,5 +42,20 @@ public class Pager {
         this.order = "desc";
         this.linkCount = 10;
     }
+
+//    public void setDefault() {
+//        if (this.pageNo < 0) {
+//            this.pageNo = 1;
+//        }
+//        if (this.amount < 0) {
+//            this.amount = 10;
+//        }
+//        if (this.order == null) {
+//            this.order = "desc";
+//        }
+//        if (this.linkCount < 0) {
+//            this.linkCount = 10;
+//        }
+//    }
 
 }

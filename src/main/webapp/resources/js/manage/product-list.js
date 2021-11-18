@@ -33,15 +33,15 @@ function cbkDeleteItem(result) {
     window.location.reload();
 }
 
-let token = 1;
+let selectToken = 1;
 function selectAll() {
     for (let checkbox of checkboxs){
-        if(token == 1){
+        if(selectToken == 1){
             checkbox.checked = true;
         } else {
             checkbox.checked = false;
         }
 
     }
-    token = token * -1;
+    selectToken = selectToken * -1;
 }

@@ -20,4 +20,5 @@ public interface ItemMapper {
 
     List<Item> selectItemListForMain();
     List<Item> selectItemListForManage(Pager pager);
+    List<String> getImagePath();
 }

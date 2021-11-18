@@ -13,7 +13,9 @@ function getData(){
     //상품 정보 받아오기
     let productInputs = document.getElementsByClassName("item_input");
     for (let i of productInputs) {
-        product[i.name] = i.value;
+        if(i.value != "") {
+            product[i.name] = i.value;
+        }
     }
 
     //카테고리 추가하기
@@ -21,22 +23,26 @@ function getData(){
     product.category = category;
 
     //옵션 추가하기
-    let optionInput1 = document.querySelectorAll('.option_input > [name="name"]');
-    let optionInput2 = document.querySelectorAll('.option_input > [name="optionPrice"]');
-    let optionInput3 = document.querySelectorAll('.option_input > [name="stock"]');
-    for (let i = 0; i < optionInput1.length; i++) {
-        options.push({
-            name: optionInput1[i].value,
-            optionPrice:optionInput2[i].value,
-            stock:optionInput3[i].value
-        });
+    const optionInputs = document.querySelectorAll(".option_input");
+
+    for (let optionInput of optionInputs) {
+
+        let option = new Object();
+
+        const childInputs = optionInput.querySelectorAll("input");
+
+        for (let childInput of childInputs) {
+            if(childInput.value != ""){
+                option[childInput.name] = childInput.value;
+            }
+        }
+        options.push(option);
     }
+
     product.options = options;
 
 
-    ajax('manage/product/put', product);
-
-    console.log(JSON.stringify(product));
+    return product;
 
 }
 
@@ -49,9 +55,9 @@ function setData(){
 //할인 시작일 < 종료일 - js로 날짜 수정해주기
 
 
-
-
-
+/**
+ * 옵션 추가하기
+ */
 function addOption(){
     //ajax 통신으로 option 번호 받아오기
         //성공시 요소 추가
@@ -62,7 +68,7 @@ function addOption(){
 
     option.item = item;
 
-    ajax('item/option',option,cbkAddOption,(res) => console.error(res),'post');
+    ajax('item/option', option, cbkAddOption,(res) => console.error(res),'post');
 
 
 }
@@ -71,16 +77,19 @@ function cbkAddOption(result){
     console.log(result);
     const optionNo = JSON.parse(result).object.optionNo;
 
-    const optionElem = `<div class="option_input">
+    const optionContent = `
             <input type="hidden" name="optionNo" value="${optionNo}">
             <input type="text" name="name" placeholder="옵션명">
             <input type="number" name="optionPrice" placeholder="추가금액">
             <input type="number" name="stock" placeholder="재고수량">
             <button onclick="addOption()">+</button>
-            <button onclick="removeOption(this.parentNode)">-</button>
-        </div>`;
+            <button onclick="removeOption(this.parentNode)">-</button>`;
 
-    document.querySelector("#option").innerHTML += optionElem;
+    let optionElem = document.createElement("div");
+    optionElem.classList.add("option_input");
+    optionElem.innerHTML = optionContent;
+
+    document.querySelector("#option").appendChild(optionElem);
 }
 
 let removeElem = undefined;
@@ -105,3 +114,85 @@ function cbkRemoveOption(result) {
 let timer = setInterval(()=>{
 
 }, 5 * 60 * 1000);
+
+
+let formData = new FormData();
+
+let thumbInput = document.querySelector('[name="uploadThumb"]');
+thumbInput.addEventListener("change", () =>
+{
+    console.log(thumbInput.files[0]);
+    formData = new FormData();
+    uploadFileChk(thumbInput.files[0]);
+});
+
+// 파일 확인
+function uploadFileChk(data){
+
+    // 확장자 확인
+    if (data.type != 'image/jpeg' && data.type != 'image/gif' && data.type != 'image/png'){
+        newModal("지정 된 확장자(.jpg, .png, .gif)만 업로드 가능합니다.");
+        thumbInput.value = null;
+        return;
+    }
+
+    // 사이즈 확인
+    if (data.size > 20 * 1024 * 1024){
+        newModal("10mb 이하의 파일을 선택해주세요!");
+        thumbInput.value = null;
+        return;
+    }
+
+    formData.append("thumb", data);
+    formData.append("item", new Blob([JSON.stringify(getData())], {type: "application/json; charset=utf-8"}));
+
+    uploadBtnEvent();
+}
+
+function uploadBtnEvent(){
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('post', 'item/thumb', true);
+    //xhr.setRequestHeader('Content-Type', contentType); // request type 설정
+    xhr.send(formData);
+
+    xhr.onload = function () {
+        if (xhr.status === 200 || xhr.status === 201) { // 통신 성공 시
+            document.querySelector("[name='image']").value = JSON.parse(xhr.response).object;
+            document.querySelector("#detail").style.background = "";
+            document.querySelector("#detail").style.background = "white url('upload/" + JSON.parse(xhr.response).object  + "/thumb_130.png') no-repeat right top/18rem";
+        } else { // 통신 실패 시
+            //
+        }
+    }
+
+}
+
+
+/**
+ * 5분마다 임시 저장
+ */
+let autoSave = setInterval(tempSave,5 * 60 * 1000);
+
+//임시 저장
+function tempSave() {
+
+    //작성한 내용 불러오기
+    let data = getData();
+
+    //발행여부 false
+    data.publish = false;
+
+    //업데이트 요청
+    ajax('item', getData(), cbkTempSave, (e) => console.log(e), 'put');
+
+}
+
+function cbkTempSave(res) {
+    const result = JSON.parse(res);
+    if(result.success == true) {
+        toastAlert("임시 저장 완료!");
+    } else {
+        toastAlert("임시 저장 실패!");
+    }
+}

@@ -41,6 +41,7 @@
 <script src="${path}/js/common/ajax.js" defer></script>
 <script src="${path}/js/manage/manage.js" defer></script>
 <script src="${path}/js/common/modal.js" defer></script>
+<script src="${path}/js/common/toast-alert.js" defer></script>
 
 </body>
 </html>

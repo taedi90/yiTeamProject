@@ -45,10 +45,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public CommonResult createItem(Item item) {
-        int result = itemMapper.insertItem(item);
+    public CommonResult createItem(Item item){
 
         //상품 생성
+        int result = itemMapper.insertItem(item);
+
+
         if (result == 1){
 
             //옵션 생성
@@ -75,7 +77,25 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public CommonResult updateItem(Item item) {
-        return null;
+
+        //아이템 업데이트
+        int resItem = itemMapper.updateItem(item);
+        if(resItem == 0) {
+            return CommonResult.FAILURE;
+        }
+
+        //옵션 업데이트
+        List<Option> options = item.getOptions();
+        if(options != null) {
+            for(Option option : item.getOptions()) {
+                int resOption = optionMapper.updateOption(option);
+                if(resOption == 0 ){
+                    return CommonResult.FAILURE;
+                }
+            }
+        }
+
+        return CommonResult.SUCCESS;
     }
 
     @Override
@@ -100,5 +120,11 @@ public class ItemServiceImpl implements ItemService {
             return pager;
         }
         return null;
+    }
+
+    @Override
+    public List<String> getImagePath() {
+
+        return itemMapper.getImagePath();
     }
 }

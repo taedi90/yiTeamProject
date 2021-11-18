@@ -13,22 +13,24 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  *
+ *
+ * todo : 파일 동일이름 존재 확인 유틸
  */
 @Slf4j
 public class ImageUtil {
 
-    public static final String UPLOAD_PATH = path(); //이미지 업로드 경로
+    public static final String UPLOAD_BASE_PATH = path(); //이미지 업로드 베이스 경로
 
-    final
-    String[] exts = {"jpg", "jpeg", "gif", "png"}; //지원 확장자
+    private String[] exts = {"jpg", "jpeg", "gif", "png"}; //지원 확장자
+
+    private int[] preset = new int[] {350, 130, 80}; //프리셋
 
 
-
-
-    //업로드 경로 설정
+    //베이스 경로 설정
     private static String path(){
 
         String os = System.getProperty("os.name");  //서버 운영체제 (Mac OS X, Windows 10, ...)
@@ -90,22 +92,110 @@ public class ImageUtil {
         return uploadPath;
     }
 
-    //서브경로
+    //경로 체크(없을 경우 생성)
+    public boolean checkPath(String uploadPath) {
+        File folder = new File(uploadPath);
+        if(!folder.exists()) {
+            try{
+                folder.mkdir();
+                log.info("mkDir - " + uploadPath);
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
 
+    //썸네일 업로드
+    public boolean thumbResize(MultipartFile multipartFile, String subPath) {
 
-    public CommonResult uploadForMultipart(MultipartFile multipartFile) {
+        //썸네일은 무조건 png, 정방형
 
         //확장자 확인
         String filename = multipartFile.getOriginalFilename();
         String ext = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
 
+        log.info(ext);
+
+        //지원하지 않는 확장자 리턴
+        if(!Arrays.stream(exts).anyMatch(ext::equals)){
+            return false;
+        }
+
+        //업로드 경로 생성
+        String uploadPath = UPLOAD_BASE_PATH + File.separator + subPath;
+        if(!checkPath(uploadPath)){
+            return false;
+        }
+
         //파일 저장
-        File saveFile = new File(UPLOAD_PATH, filename);
+        File originFile = new File(uploadPath, "origin." + ext);
+        try {
+            multipartFile.transferTo(originFile);
+        } catch (Exception e) {
+            e.getStackTrace();
+            return false;
+        }
+
+        try {
+            ImmutableImage originalImage = ImmutableImage.loader().fromFile(originFile);
+
+            int min = Math.min(originalImage.height, originalImage.width);
+            ImmutableImage resizeImage = originalImage.resizeTo(min, min);
+
+
+            PngWriter writer = new PngWriter().withCompression(100);
+
+            originalImage.output(writer, new File(uploadPath + File.separator + "thumb.png"));
+
+            //리사이즈
+            for (int pre : preset) {
+                resizeImage = resizeImage.scaleTo(pre, pre);
+                resizeImage.output(writer, new File(uploadPath + File.separator + "thumb_" + pre + ".png"));
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    //일반 업로드
+    public void uploadForMultipart(){
+
+    }
+
+    //리사이즈 업로드
+    public String resizeForMultipart(MultipartFile multipartFile, String savePath) {
+
+        //썸네일은 무조건 png 저장
+
+        //확장자 확인
+        String filename = multipartFile.getOriginalFilename();
+        String ext = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+
+        log.info(ext);
+
+        //지원하지 않는 확장자 리턴
+        if(!Arrays.stream(exts).anyMatch(ext::equals)){
+            return null;
+        }
+
+        //파일 저장
+        File saveFile = new File(UPLOAD_BASE_PATH, filename);
         try {
             multipartFile.transferTo(saveFile);
         } catch (Exception e) {
 
         }
+
+
+
 
 
         //gif는 별도 취급
@@ -114,6 +204,8 @@ public class ImageUtil {
 
         return null;
     }
+
+
 
     public CommonResult upload(File originalImage) throws IOException {
         //png, jpeg, gif, tiff, webp
@@ -139,7 +231,7 @@ public class ImageUtil {
         //작성하기
         StreamingGifWriter writer = new StreamingGifWriter(gif.getDelay(0), true); //딜레이(프레임간 차등 딜레이 불가), 반복여부
 
-        StreamingGifWriter.GifStream resizedGif = writer.prepareStream(UPLOAD_PATH + File.separator + "result.gif", BufferedImage.TYPE_INT_ARGB);
+        StreamingGifWriter.GifStream resizedGif = writer.prepareStream(UPLOAD_BASE_PATH + File.separator + "result.gif", BufferedImage.TYPE_INT_ARGB);
 
         for (int i = 0; i < gif.getFrameCount(); i++){
 

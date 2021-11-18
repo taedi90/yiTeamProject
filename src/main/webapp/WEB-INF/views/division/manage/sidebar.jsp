@@ -45,7 +45,7 @@
             <img src="${path}/img/manage/icon/item.png" alt="">
         </div>
         <div class="description_holder">
-            상품 등록
+            상품 관리
         </div>
     </div>
 

@@ -1,7 +1,10 @@
 package kr.or.yi.teamProject.product.controller;
 
+import kr.or.yi.teamProject.common.enums.CommonResult;
 import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.mapper.ItemMapper;
+import kr.or.yi.teamProject.product.service.ItemService;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,9 @@ public class ItemController {
 
     @Autowired
     ItemMapper itemMapper;
+
+    @Setter(onMethod_ = @Autowired)
+    ItemService itemService;
 
     //아이템 조회
     @GetMapping
@@ -32,8 +38,11 @@ public class ItemController {
 
     //아이템 수정
     @PutMapping
-    public void putItem(){
+    public CommonResult putItem(@RequestBody Item item){
+//        log.info(item.toString());
+        CommonResult commonResult = itemService.updateItem(item);
 
+        return commonResult;
     }
 
     //아이템 삭제

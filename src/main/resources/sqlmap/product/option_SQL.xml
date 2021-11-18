@@ -16,7 +16,17 @@
 
     <update id="updateOption" parameterType="kr.or.yi.teamProject.product.dto.Option">
         UPDATE `option`
-        SET `title` = #{title}
+        <set>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="optionPrice != null">
+                `option_price` = #{optionPrice},
+            </if>
+            <if test="stock != null">
+                `stock` = #{stock},
+            </if>
+        </set>
         WHERE `option_no` = #{optionNo}
     </update>
 

@@ -48,7 +48,7 @@
                 `coupon_allow` = #{couponAllow},
             </if>
             <if test="hide != null">
-                `hide` = #{hide}
+                `hide` = #{hide},
             </if>
             <if test="publish != null">
                 `publish` = #{publish}
@@ -135,11 +135,18 @@
 
     <select id="selectItemListForManage" parameterType="kr.or.yi.teamProject.common.dto.Pager"
             resultMap="itemMap">
-        <![CDATA[
         SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, i.`title`, `i`.`text`, `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`,
                `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock
         FROM (SELECT *
                 FROM `item`
+                <where>
+                    <if test="category != null">
+                        `category_no` = #{category}
+                    </if>
+                    <if test="keyword != null">
+                       AND `name` LIKE CONCAT('%', #{keyword}, '%')
+                    </if>
+                </where>
                 ORDER by `item_no` ${order}
                 LIMIT #{startRecord}, #{amount}
             ) i
@@ -147,7 +154,6 @@
             LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
                  LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
                  LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
-        ]]>
     </select>
 
     <select id="getInfoForPaging" parameterType="kr.or.yi.teamProject.common.dto.Pager"
@@ -159,7 +165,13 @@
                if(@final_page > @end_page, @end_page, @final_page) `end_page`,
                @start_page - 1 `prev`,
                if(@final_page > @end_page, @end_page + 1, 0) `next`,
-               (#{pageNo} - 1) * #{amount} `start_record`
+               (#{pageNo} - 1) * #{amount} `start_record`,
+               #{amount} `amount`,
+               #{pageNo} `page_no`,
+               #{order} `order`,
+               #{linkCount} `link_count`,
+               #{category} `category`,
+               #{keyword} `keyword`
         FROM (SELECT @total_recode := COUNT(*) `total_records`,
             @final_page := CEIL(COUNT(*) / #{amount}) `final_page_no`,
             @start_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + 1 `start_page`,
@@ -168,13 +180,18 @@
         ]]>
             <where>
                 <if test="category != null">
-                    `category` = #{category}
+                    `category_no` = #{category}
                 </if>
                 <if test="keyword != null">
-                    AND `name` LIKE '%' + #{keyword} + '%'
+                    AND `name` LIKE CONCAT('%', #{keyword}, '%')
                 </if>
             </where>
             ) a
+    </select>
+
+    <select id="getImagePath" resultType="string">
+        SELECT `image`
+        FROM `item`
     </select>
 
 
