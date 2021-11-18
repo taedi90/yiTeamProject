@@ -73,25 +73,25 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
             errorDescription = "페이지가 존재하지 않거나 일시적인 오류일 수 있습니다.";
             errorTitle = "페이지를 찾을 수 없습니다.";
             userExceptionDetail = String.format("The page %s cannot be found", request.getRequestURL());
-            mav.setViewName("/error/error");
+            mav.setViewName("error/error");
             mav.addObject("status", HttpStatus.NOT_FOUND.value());
         } else if (exceptions500.contains(exceptionType)) {
             errorDescription = "내부적 문제로 요청하신 내용을 처리할 수 없습니다.";
             errorTitle = "요청을 처리할 수 없습니다.";
             userExceptionDetail = "The current page refuses to load due to an internal error";
-            mav.setViewName("/error/error");
+            mav.setViewName("error/error");
             mav.addObject("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         } else if (accessException.contains(exceptionType)) {
             errorDescription = "요청하신 사항을 접근할 수 있는 권한이 없습니다.";
             errorTitle = "요청을 처리할 수 없습니다.";
             userExceptionDetail = String.format("You don't have a permission to access the page %s", request.getRequestURL());
-            mav.setViewName("/error/error");
+            mav.setViewName("error/error");
             mav.addObject("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         } else {
             errorDescription = "알 수 없는 이유로 요청하신 내용을 처리할 수 없습니다.";
             errorTitle = "사이트 오류";
             userExceptionDetail = "A generic error prevents from serving the page";
-            mav.setViewName("/error/error");
+            mav.setViewName("error/error");
             mav.addObject("status", response.getStatus());
         }
 

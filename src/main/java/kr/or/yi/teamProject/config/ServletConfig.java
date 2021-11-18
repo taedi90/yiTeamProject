@@ -51,16 +51,16 @@ public class ServletConfig implements WebMvcConfigurer {
         CustomSimpleMappingExceptionResolver resolver = new CustomSimpleMappingExceptionResolver();
         Properties mappings = new Properties();
         // Mapping Spring internal error NoHandlerFoundException to a view name
-        mappings.setProperty(NoHandlerFoundException.class.getName(), "/error/error"); //404
-        mappings.setProperty(NullPointerException.class.getName(), "/error/error"); //500
-        mappings.setProperty(ClassNotFoundException.class.getName(), "/error/error"); //500
-        mappings.setProperty(AccessDeniedException.class.getName(), "/error/error"); //Security 권한 인가 예외
-        mappings.setProperty(Exception.class.getName(), "/error/error"); //그 외
+        mappings.setProperty(NoHandlerFoundException.class.getName(), "error/error"); //404
+        mappings.setProperty(NullPointerException.class.getName(), "error/error"); //500
+        mappings.setProperty(ClassNotFoundException.class.getName(), "error/error"); //500
+        mappings.setProperty(AccessDeniedException.class.getName(), "error/error"); //Security 권한 인가 예외
+        mappings.setProperty(Exception.class.getName(), "error/error"); //그 외
         resolver.setExceptionMappings(mappings);
         // Set specific HTTP codes
         resolver.addStatusCode("404", HttpStatus.NOT_FOUND.value());
         resolver.addStatusCode("500", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        resolver.setDefaultErrorView("/error/error");
+        resolver.setDefaultErrorView("error/error");
         resolver.setDefaultStatusCode(200);
         // This resolver will be processed before the default ones
         resolver.setOrder(Ordered.HIGHEST_PRECEDENCE);
