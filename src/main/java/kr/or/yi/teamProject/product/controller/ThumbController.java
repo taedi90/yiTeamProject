@@ -7,14 +7,13 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -42,5 +41,21 @@ public class ThumbController {
         CommonResult commonResult = thumbService.uploadThumb(map);
 
         return commonResult;
+    }
+
+    //본문 이미지 업로드
+    @PostMapping("/item/image")
+    public List<Map<String,Object>>  postImages(@RequestPart(value = "item")Item item,
+               @RequestPart(value = "images")MultipartFile[] images){
+
+//        log.info(item.toString());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("item", item);
+        map.put("images", images);
+
+        List<Map<String,Object>> result = thumbService.uploadImages(map);
+
+        return result;
     }
 }

@@ -130,6 +130,7 @@
         </div>
         <div class="row">
             <!-- SmartEditor2 -->
+            <input id="seUpload" type="file" style="display: none" multiple accept="image/jpeg, image/png, image/gif">
             <textarea name="smartEditor" id="smartEditor" style="width: 100%; height: 412px;"></textarea>
         </div>
 

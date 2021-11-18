@@ -12,8 +12,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  *
@@ -166,8 +167,71 @@ public class ImageUtil {
     }
 
     //일반 업로드
-    public void uploadForMultipart(){
+    public List<Map<String,Object>> uploadForMultipart(MultipartFile[] MultipartFiles, String subPath){
 
+        //success, originalFilename, comment, path
+
+        List<Map<String,Object>> list = new ArrayList<>();
+
+        //업로드 경로 생성
+        String uploadPath = UPLOAD_BASE_PATH + File.separator + subPath;
+        if(!checkPath(uploadPath)){
+            return null;
+        }
+
+        for (MultipartFile multipartFile : MultipartFiles) {
+
+            HashMap<String,Object> map = new HashMap<>();
+
+            //확장자 확인
+            String filename = multipartFile.getOriginalFilename();
+            //String name = filename.substring(0, filename.lastIndexOf("."));
+            String ext = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+
+            map.put("originalFileName", filename);
+
+            //지원하지 않는 확장자 패스
+            if(!Arrays.stream(exts).anyMatch(ext::equals)){
+                map.put("success", false);
+                map.put("comment", "지원하지 않는 확장자 오류");
+                list.add(map);
+                continue;
+            }
+
+            RandomStringCreateUtil rscu = new RandomStringCreateUtil();
+            rscu.setSize(30);
+            //String newName = name + "_" + rscu.getSecureRand();
+            String newName = rscu.getSecureRand();;
+
+            //파일 저장
+            File originFile = new File(uploadPath, newName + "." + ext);
+            try {
+                multipartFile.transferTo(originFile);
+            } catch (Exception e) {
+                e.getStackTrace();
+                map.put("success", false);
+                map.put("comment", "파일 저장 실패");
+                list.add(map);
+                continue;
+            }
+
+
+//            try {
+//                map.put("success", true);
+//                map.put("comment", "업로드 성공");
+//                map.put("path", "upload/" + subPath + "/" + URLEncoder.encode(newName,"UTF-8") + "." + ext);
+//                list.add(map);
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
+
+            map.put("success", true);
+            map.put("comment", "업로드 성공");
+            map.put("path", "upload/" + subPath + "/" + newName + "." + ext);
+            list.add(map);
+        }
+
+        return list;
     }
 
     //리사이즈 업로드

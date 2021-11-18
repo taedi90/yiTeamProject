@@ -1,9 +1,9 @@
 'use strict';
 
-let data ={
-    name: document.getElementById(""),
-
-}
+// let data ={
+//     name: document.getElementById(""),
+//
+// }
 
 function getData(){
     let product = new Object(); //상품 정보를 담을 객체
@@ -94,6 +94,10 @@ function cbkAddOption(result){
 
 let removeElem = undefined;
 
+
+/**
+ * 옵션 삭제하기
+ */
 function removeOption(elem){
 
     removeElem = elem;
@@ -110,15 +114,13 @@ function cbkRemoveOption(result) {
     removeElem.remove();
 }
 
-//자동 저장
-let timer = setInterval(()=>{
 
-}, 5 * 60 * 1000);
+/**
+ * 썸네일 업로드
+ */
+let formData = undefined;
 
-
-let formData = new FormData();
-
-let thumbInput = document.querySelector('[name="uploadThumb"]');
+const thumbInput = document.querySelector('[name="uploadThumb"]');
 thumbInput.addEventListener("change", () =>
 {
     console.log(thumbInput.files[0]);
@@ -168,6 +170,53 @@ function uploadBtnEvent(){
 
 }
 
+/**
+ * 에디터 사진 업로드
+ */
+
+const seUpload = document.querySelector("#seUpload"); //스마트 에디터 이미지 업로드 요소
+
+seUpload.addEventListener("change",() => {
+    formData = new FormData();
+
+    for(let file of seUpload.files) {
+        formData.append("images", file);
+    }
+
+    formData.append("item", new Blob([JSON.stringify(getData())], {type: "application/json; charset=utf-8"}));
+    ajax('item/image',formData, cbkImageUpload, (res) => console.log(res), 'post', 'multipart');
+});
+
+function cbkImageUpload(results){
+
+    //스마트 에디터 본문 가져오기
+    const seRootIframe = document.querySelector("iframe");
+    const seChildIframe = seRootIframe.contentWindow.document.querySelector("#se2_iframe");
+    const seBody = seChildIframe.contentWindow.document.body;
+    console.log(seBody.innerHTML);
+
+    for (let result of JSON.parse(results)) {
+
+        if (result.success == true) {
+            seBody.innerHTML += '<p><img src="/shop/'  + result.path + '" /></p>';
+        }
+
+    }
+
+}
+
+//에디터 사진 버튼 클릭
+function addImage(){
+
+
+
+    document.querySelector("#seUpload").click();
+
+
+
+}
+
+
 
 /**
  * 5분마다 임시 저장
@@ -196,3 +245,5 @@ function cbkTempSave(res) {
         toastAlert("임시 저장 실패!");
     }
 }
+
+

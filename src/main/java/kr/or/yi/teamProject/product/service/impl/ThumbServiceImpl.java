@@ -68,12 +68,60 @@ public class ThumbServiceImpl implements ThumbService {
 
             if(isThumbCreated) {
 
-                CommonResult result = CommonResult.SUCCESS;
-                result.setObject(subPath);
-                return result;
+                CommonResult.SUCCESS.setObject(subPath);
+                return CommonResult.SUCCESS;
             }
         }
 
         return CommonResult.FAILURE;
+    }
+
+    @Override
+    public List<Map<String,Object>> uploadImages(Map<String, Object> map) {
+
+        //전달 받은 내용
+        Item item = (Item) map.get("item");
+        MultipartFile[] images = (MultipartFile[]) map.get("images");
+
+        //이미지 경로 있는지 확인, 없으면 db에 경로 입력
+        String subPath = item.getImage();
+        log.info(subPath);
+        if(subPath == null || subPath.equals("")) {
+
+            RandomStringCreateUtil randomStringCreateUtil = new RandomStringCreateUtil();
+
+            //이미지 경로 insert 시도
+            for(int i = 0; i < 30; i++){
+
+                subPath = randomStringCreateUtil.getSecureRand();
+                List<String> pathList = itemService.getImagePath();
+
+                if(!pathList.contains(subPath)){
+
+                    Item dto = new Item();
+                    dto.setItemNo(item.getItemNo());
+                    dto.setImage(subPath);
+
+                    CommonResult result = itemService.updateItem(dto);
+                    if(result.isSuccess()){
+                        break;
+                    }
+
+                }
+            }
+        }
+
+        //이미지 업로드
+        if(subPath != null){
+            ImageUtil imageUtil = new ImageUtil();
+
+            List<Map<String,Object>> result = imageUtil.uploadForMultipart(images, subPath);
+
+            return result;
+
+        }
+
+
+        return null;
     }
 }

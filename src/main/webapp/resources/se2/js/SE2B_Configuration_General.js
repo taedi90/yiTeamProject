@@ -50,3 +50,13 @@ nhn.husky.SE2M_Configuration.QuickEditor = {
 		bUseConfig : false
 	}
 };
+
+nhn.husky.SE2M_Configuration.QuickEditor = {
+	common : {
+		bUseConfig : false
+	},
+	Image : {
+		nImageMaxWidthSize : 1200,
+		nImageMaxHeightSize : 3000
+	}
+};
