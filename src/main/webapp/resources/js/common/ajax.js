@@ -10,14 +10,16 @@ function ajax(url = '', // url(필수) : 호출 할 url
               callback = (res) => console.log(res), // callback(default consolelog) : ajax 통신 완료 후 실행 할 함수
               errorCallback = (res) => console.error(res), // callback(default consolelog) : ajax 통신 실패 시 실행 할 함수
               method = 'post', // method(default post) : post / get / put ...
-              type = 'json' // type(default json) : json / urlencoded
+              type = 'json' // type(default json) : json / multipart / urlencoded ...
 ) {
 
     let contentType = undefined;
     if(type == "json"){
         contentType = "application/json; charset=utf-8";
         data = JSON.stringify(data);
-    }else{
+    }else if(type == "multipart"){
+        //data = data;
+    } else{
         contentType = "application/x-www-form-urlencoded";
         data = new URLSearchParams(Object.entries(data)).toString();
     }
@@ -25,7 +27,9 @@ function ajax(url = '', // url(필수) : 호출 할 url
 
     let xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
-    xhr.setRequestHeader('Content-Type', contentType); // request type 설정
+    if(type != "multipart"){
+        xhr.setRequestHeader('Content-Type', contentType); // request type 설정
+    }
     xhr.send(data);
 
     xhr.onload = function () {
@@ -40,18 +44,20 @@ function ajax(url = '', // url(필수) : 호출 할 url
 
 // 동기 방식, jQuery 필요
 function syncAjax(url = '', // url(필수) : 호출 할 url
-              data = {}, // data(default null) : 전송 할 데이터
-              callback = (res) => console.log(res), // callback(default consolelog) : ajax 통신 완료 후 실행 할 함수
-              errorCallback = (res) => console.error(res), // callback(default consolelog) : ajax 통신 실패 시 실행 할 함수
-              method = 'post', // method(default post) : post / get / put ...
-              type = 'json' // tyoe(default json) : json / urlencoded
+                  data = {}, // data(default null) : 전송 할 데이터
+                  callback = (res) => console.log(res), // callback(default consolelog) : ajax 통신 완료 후 실행 할 함수
+                  errorCallback = (res) => console.error(res), // callback(default consolelog) : ajax 통신 실패 시 실행 할 함수
+                  method = 'post', // method(default post) : post / get / put ...
+                  type = 'json' // type(default json) : json / urlencoded
 ) {
 
     let contentType = undefined;
     if(type == "json"){
         contentType = "application/json; charset=utf-8";
         data = JSON.stringify(data);
-    }else{
+    } else if(type == "multipart"){
+        contentType = false;
+    } else{
         contentType = "application/x-www-form-urlencoded";
     }
 
