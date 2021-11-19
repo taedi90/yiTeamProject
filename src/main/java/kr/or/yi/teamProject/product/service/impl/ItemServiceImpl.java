@@ -71,6 +71,28 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public CommonResult updateItem(Item item) {
 
+        //등록 건의 경우 필수값 체크
+        if(item.isPublish() == true){
+
+            //필수값 누락은 저장 x
+            if(item.getName() == null || item.getPrice() <= 0){
+                return CommonResult.FAILURE;
+            }
+
+            //옵션은 배열 돌면서
+            for(Option option : item.getOptions()) {
+                if(option.getName() == null) {
+                    return CommonResult.FAILURE;
+                }
+            }
+
+            //상품 상세 누락은 hide => true
+            if(item.getTitle() == null || item.getText() == null) {
+                item.setHide(true);
+            }
+
+        }
+
         //아이템 업데이트
         int resItem = itemMapper.updateItem(item);
         if(resItem == 0) {

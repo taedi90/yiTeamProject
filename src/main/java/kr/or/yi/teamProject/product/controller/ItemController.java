@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/item")
 public class ItemController {
 
-    @Autowired
+    @Setter(onMethod_ = @Autowired)
     ItemMapper itemMapper;
 
     @Setter(onMethod_ = @Autowired)

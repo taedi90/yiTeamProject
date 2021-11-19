@@ -76,11 +76,11 @@ input:focus{
     display: flex;
 }
 
-#detail_info .info_section {
+#detail_info .info_holder {
     width: 100%;
 }
 
-#detail_info .image_section {
+#detail_info .image_holder {
     width: 13rem;
     display: flex;
     justify-content: center;

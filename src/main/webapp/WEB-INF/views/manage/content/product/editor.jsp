@@ -15,7 +15,7 @@
 <div id="table_wrap">
     <div id="product">
         <div class="row">
-            <h2>기본정보</h2>
+            <h2>기본정보 <span style="color: red">*</span></h2>
         </div>
 
         <%-- 상품번호 --%>
@@ -58,7 +58,7 @@
     <%-- 옵션 기본 1개 이상, 추가 가능 --%>
     <div id="option">
         <div class="row">
-            <h2>옵션</h2>
+            <h2>옵션 <span style="color: red">*</span></h2>
         </div>
     <c:forEach var="option" items="${requestScope.result.options}" varStatus="i">
         <div class="option_input">
@@ -115,7 +115,7 @@
     <%-- 상품 상세 --%>
     <div id="detail">
         <div id="detail_info">
-            <div class="info_section">
+            <div class="info_holder">
                 <div class="row">
                     <h2>상품 상세</h2>
                 </div>
@@ -141,12 +141,12 @@
 
             </div>
 
-            <div class="image_section">
-                <img id="thumb_image" src="
-                    <c:if test="${requestScope.result.image ne null}">
-                        upload/${requestScope.result.image}/thumb_130.png
-                    </c:if>
-                " alt="">
+            <div class="image_holder">
+
+                <c:if test="${requestScope.result.image ne null}">
+                    <img src="upload/${requestScope.result.image}/thumb_130.png" alt="썸네일 이미지" />
+                </c:if>
+
             </div>
         </div>
 
@@ -160,11 +160,11 @@
 
     </div>
         <%-- publish --%>
-        <button onclick="">등록하기</button>
+        <button onclick="save()">등록하기</button>
         <%-- non-publish --%>
     <c:if test="${requestScope.result.publish ne true}">
         <button onclick="tempSave()">임시저장</button>
-        <button>취소하기</button>
+        <button onclick="cancel()">삭제하기</button>
     </c:if>
 
 

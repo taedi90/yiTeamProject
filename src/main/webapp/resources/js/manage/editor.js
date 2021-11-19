@@ -168,9 +168,13 @@ function uploadBtnEvent(){
     xhr.onload = function () {
         if (xhr.status === 200 || xhr.status === 201) { // 통신 성공 시
             document.querySelector("[name='image']").value = JSON.parse(xhr.response).object;
-            //document.querySelector("#detail").style.background = "";
-            //document.querySelector("#detail").style.background = "white url('upload/" + JSON.parse(xhr.response).object  + "/thumb_130.png') no-repeat right top/18rem";
-            document.querySelector("#thumb_image").src = "upload/" + JSON.parse(xhr.response).object  + "/thumb_130.png";
+
+            const imageHolder = document.querySelector(".image_holder");
+
+            imageHolder.innerHTML = `<img src="upload/${JSON.parse(xhr.response).object}/thumb_130.png?a=${new Date().getTime()}" alt="썸네일 이미지" />`;
+
+            thumbInput.value = null;
+
         } else { // 통신 실패 시
             //
         }
@@ -216,11 +220,7 @@ function cbkImageUpload(results){
 //에디터 사진 버튼 클릭
 function addImage(){
 
-
-
     document.querySelector("#seUpload").click();
-
-
 
 }
 
@@ -241,7 +241,7 @@ function tempSave() {
     data.publish = false;
 
     //업데이트 요청
-    ajax('item', getData(), cbkTempSave, (e) => console.log(e), 'put');
+    ajax('item', data, cbkTempSave, (e) => console.log(e), 'put');
 
 }
 
@@ -254,4 +254,42 @@ function cbkTempSave(res) {
     }
 }
 
+/**
+ * 취소하기(삭제)
+ */
 
+function cancel(){
+    const data = [{itemNo: document.querySelector("[name='itemNo']").value}];
+
+    ajax('item', data, cbkCancel,(res) => console.error(res),'delete');
+}
+
+function cbkCancel(result){
+    window.location.href = "manage?section=product&func=list";
+}
+
+
+/**
+ * 저장하기
+ */
+function save() {
+
+    //작성한 내용 불러오기
+    let data = getData();
+
+    //발행여부 false
+    data.publish = true;
+
+    //업데이트 요청
+    ajax('item', data, cbkSave, (e) => console.log(e), 'put');
+
+}
+
+function cbkSave(res) {
+    const result = JSON.parse(res);
+    if(result.success == true) {
+        window.location.href = "manage?section=product&func=list";
+    } else {
+        toastAlert("등록 실패!");
+    }
+}
