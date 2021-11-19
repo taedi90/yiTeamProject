@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.order.mapper.OrderItemMapper">
+
+
+<!-- id : Dao 메서드와 동일하게 -->
+<!-- parameterType (입력 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+<!-- resultType (결과 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+     <resultMap type="kr.or.yi.teamProject.order.dto.OrderItem" id="orderItemMap">
+       <id property="orderItemNo" column="order_item_no"/>
+       <result property="optionName" column="option_name"/>
+       <result property="priceItem" column="price_item"/>
+       <result property="priceOption" column="price_option"/>
+       <result property="priceCoupon" column="price_coupon"/>
+       <result property="prepareDate" column="prepare_date"/>
+       <result property="trackingNumber" column="tracking_number"/>
+       <result property="deliveryStartDate" column="delivery_start_date"/>
+       <result property="deliveryEndDate" column="delivery_end_date"/>
+       <result property="confirmDate" column="confirm_date"/>
+       <result property="cancelDate" column="cancel_date"/>
+       <result property="returnDate" column="return_date"/>
+       <result property="returnCarrierNo" column="return_carrier_no"/>
+       <result property="returnNumber" column="return_number"/>
+       <result property="returnConfirmDate" column="return_confirm_date"/>
+       <result property="refundDate" column="refund_date"/>
+       
+       <!-- order -->
+       <association property="order" javaType="kr.or.yi.teamProject.order.dto.Order">
+			<id property="orderNo" column="order_no"/>
+			<result property="member.username" column="username"/> 
+			<result property="nonMember.nonUsername" column="non_username"/>   		
+       </association>
+       		
+    	<!-- Option -->
+		<association property="option" javaType="kr.or.yi.teamProject.product.dto.Option">
+            <id property="optionNo" column="option_no"/>		<!-- 옵션번호 -->
+            <result property="name" column="op_name"/>			<!-- 옵션이름 -->
+            <result property="optionPrice" column="option_price"/><!-- 옵션가격 -->
+            <result property="stock" column="stock"/>			<!-- 수량 -->
+            <result property="item.itemNo" column="item_no"/>	<!-- 주문상품 명 -->	            	           
+		</association>	
+       		
+    	<!-- couponHistory -->
+		<association property="couponHistory" javaType="kr.or.yi.teamProject.user.dto.CouponHistory">
+            <id property="issueNumber" column="issue_number"/>		<!-- 쿠폰 발급 번호 -->
+            <result property="regDate" column="reg_date"/>			<!-- 발급일자 -->
+            <result property="expireDate" column="expire_date"/>	<!-- 만료일자 -->            	           
+		</association>	
+
+
+    </resultMap> 
+
+
+
+	<select id="orderItemList" parameterType="kr.or.yi.teamProject.order.dto.OrderItem" resultMap="orderItemMap">
+		SELECT oi.`order_item_no` ,
+			   o.`order_no` , 
+			   oi.`item_no` , 
+			   oi.`option_no`, 
+			   oi.`option_name`,
+			   oi.`price_item` ,
+			   o.`username` ,
+			   o.`non_username` 
+		FROM `order` o join `order_item` oi on oi.`order_no` =  o.`order_no`
+		left outer join `member` m on o.username = m.username 
+		left outer join non_member nm  on o.non_username = nm.non_username 
+		left outer join `option` op on oi.option_no = op.option_no 
+		left outer join coupon_history ch on oi.issue_number = ch.issue_number 
+		where o.`order_no` = #{order.orderNo}		
+	</select>
+
+
+	<!-- orderItem insert -->
+	<insert id="insertOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">	
+		<![CDATA[  
+		INSERT INTO `order_item`
+		(`order_no`,  `item_no`, `option_no`, `option_name`, `price_item`, `price_option`)
+		VALUES(#{order.orderNo}, #{option.item.itemNo}, #{option.optionNo}, #{option.name}, #{priceItem}, #{priceOption})	
+	    ]]> 
+	</insert>
+
+	<!-- orderItem update -->	
+	<update id="updateOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">
+		<![CDATA[
+			UPDATE `order_item`
+			SET `issue_number`=#{couponHistory.issueNumber},
+				 `coupon_no`=#{couponHistory.coupon.couponNo}, 
+				 `price_item`=#{priceItem},  
+				 `price_coupon`=#{priceCoupon}, 
+				 `prepare_date`=#{prepareDate},
+				 `delivery_carrier_no`=#{carrier.carrierNo}, 
+				 `tracking_number`=#{trackingNumber}, 
+				 `delivery_start_date`=#{deliveryStartDate}, 
+				 `delivery_end_date`=#{deliveryEndDate}, 
+				 `confirm_date`=#{confirmDate}, 
+				 `cancel_date`=#{cancelDate}, 
+				 `return_date`=#{returnDate}, 
+				 `return_carrier_no`=#{returnCarrierNo}, 
+				 `return_number`=#{returnNumber}, 
+				 `return_confirm_date`=#{returnConfirmDate}, 
+				 `return_option_code`=#{returnOption.returnOptionCode}, 
+				 `refund_date`=#{refundDate}
+			WHERE order_item_no=#{orderItemNo} AND order_no=#{order.orderNo}			  
+		 ]]> 	
+	</update>
+
+	<!-- orderItem delete -->	
+	<delete id="deleteOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">
+		<![CDATA[  
+			DELETE FROM `order_item`
+			WHERE order_no=#{order.orderNo}		
+		 ]]> 	
+	</delete>
+
+	
+
+
+ 
+ 
+</mapper>
