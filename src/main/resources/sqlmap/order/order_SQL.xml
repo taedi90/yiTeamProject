@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.order.mapper.OrderMapper">
+
+
+<!-- id : Dao 메서드와 동일하게 -->
+<!-- parameterType (입력 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+<!-- resultType (결과 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+
+     <resultMap type="kr.or.yi.teamProject.order.dto.Order" id="orderMap">
+       <id property="orderNo" column="order_no"/>
+       <result property="zipcode" column="zipcode"/>
+       <result property="address1" column="address1"/>
+       <result property="address2" column="address2"/>
+       <result property="name" column="name"/>
+       <result property="phone" column="phone"/>
+       <result property="regDate" column="reg_date"/>
+       <result property="point" column="point"/>
+       <result property="status" column="status"/>
+       <association property="member" javaType="kr.or.yi.teamProject.user.dto.Member">
+			<id property="username" column="username"/>
+			<result property="name" column="name"/> 
+			<result property="email" column="email"/>      		
+			<result property="phone" column="phone"/>      		
+       </association>
+       <association property="nonMember" javaType="kr.or.yi.teamProject.user.dto.NonMember">
+			<id property="nonUsername" column="non_username"/>
+			<result property="email" column="email"/>      		
+			<result property="phone" column="phone"/>      		
+       </association>
+    </resultMap> 
+
+ <!-- selectOrderList -->
+ 	<select id="selectOrderList" resultMap="orderMap">       
+      	SELECT `o`.`order_no`, `m`.`username`, `zipcode`, `address1`, `address2`, m.`name`, m.`phone`,`point`, `email` 
+		from `order` as o LEFT OUTER join `member` as m on o.username = m.username 
+ 	 	
+ 	</select>
+
+
+
+ <!-- selectOrder -->
+    <select id="selectOrder" parameterType="kr.or.yi.teamProject.order.dto.Order" resultMap="orderMap">       
+		<![CDATA[  				       
+	        SELECT `order_no`, o.`username`, `zipcode`, `address1`, `address2`, m.`name`, m.`phone`,`point`, `email` 
+			from `order` as o LEFT OUTER join `member` as m 
+			on o.username = m.username 
+			where o.order_no = #{orderNo}
+	                
+        ]]>         
+        
+    </select> 
+
+<!-- 회원주문 insertOrderMember -->
+
+		<insert id="insertOrderMember" parameterType="kr.or.yi.teamProject.order.dto.Order">
+        	INSERT INTO `order`
+			(`order_no`, `username`) 
+			VALUES
+			(#{orderNo}, #{member.username})
+		</insert>
+
+    
+    
+<!--    <insert id="insertOrderMember" parameterType="kr.or.yi.teamProject.order.dto.Order">
+		<![CDATA[  
+        	INSERT INTO `order`
+			(`order_no`, `username`, `zipcode`, `address1`, `address2`, `name`, `phone`, `point`, `status`) 
+			VALUES
+			(#{orderNo}, #{member.username}, #{zipcode}, #{address1}, #{address2}, #{name}, #{phone}, #{point}, #{status})
+        ]]>    
+    </insert>	
+-->
+
+
+<!-- 비회원 주문 insertOrderNonMember -->
+<!--     <insert id="insertOrderNonMember" parameterType="kr.or.yi.teamProject.order.dto.Order">
+		<![CDATA[  
+        	INSERT INTO `order`
+			(`order_no`, `username`, `zipcode`, `address1`, `address2`, `name`, `phone`, `point`, `status`) 
+			VALUES
+			(#{orderNo}, #{nonMember.username}, #{zipcode}, #{address1}, #{address2}, #{name}, #{phone}, #{point}, #{status})
+        ]]>    
+    </insert>	 -->
+ 
+<!-- updateOrder --> 
+    <update id="updateOrder" parameterType="kr.or.yi.teamProject.order.dto.Order">
+
+		UPDATE `order` 
+		SET `zipcode`=#{zipcode}, `address1`=#{address1}, `address2`=#{address2}, `name`=#{name}, `phone`=#{phone} 
+		WHERE order_no=#{orderNo}
+    </update> 
+ 
+<!-- deleteOrder -->
+
+	<delete id="deleteOrder"  parameterType="kr.or.yi.teamProject.order.dto.Order">
+		DELETE FROM `order` WHERE `order_no`= #{orderNo}
+	</delete>
+ 
+ 
+ 
+</mapper>
