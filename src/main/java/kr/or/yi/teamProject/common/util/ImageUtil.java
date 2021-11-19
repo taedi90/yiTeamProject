@@ -67,7 +67,7 @@ public class ImageUtil {
 
         //이미지 업로드 경로 지정(프로젝트 배포 경로에 따라 판단)
         String uploadPath;
-        if(deployPath.equals("webapps")){
+        if(deployPath.contains("webapps")){
             //배포 경로가 외부 서버일 경우
             uploadPath = deployPath + File.separator +"yiTeamProjectStorage" + File.separator + "upload";
         }else {
