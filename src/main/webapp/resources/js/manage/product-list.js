@@ -45,3 +45,46 @@ function selectAll() {
     }
     selectToken = selectToken * -1;
 }
+
+//등록 여부
+function publishOption(elem){
+
+    const nowUrl = window.location.href;
+    const relUrl = nowUrl.replace(/^http.*\//ig, "");
+    let delParam = relUrl.replace(/&publish=[^&]*/ig, "");
+    delParam = delParam.replace(/&pageNo=[^&]*/ig, "");
+    const href = delParam + "&publish=" + elem.value;
+
+    window.location.href = href;
+
+    // console.log(currentHref);
+    // console.log(relativeHref);
+    // console.log(deleteParam);
+    // console.log(href);
+
+}
+
+//공개 여부
+function hideOption(elem){
+
+    const nowUrl = window.location.href;
+    const relUrl = nowUrl.replace(/^http.*\//ig, "");
+    let delParam = relUrl.replace(/&hide=[^&]*/ig, "");
+    delParam = delParam.replace(/&pageNo=[^&]*/ig, "");
+    const href = delParam + "&hide=" + elem.value;
+
+    window.location.href = href;
+
+    // console.log(currentHref);
+    // console.log(relativeHref);
+    // console.log(deleteParam);
+    // console.log(href);
+
+}
+
+//검색어
+function search(){
+    const keyword = document.querySelector("[name='keyword']").value;
+
+    window.location.href = "manage?section=product&func=list&keyword=" + keyword;
+}

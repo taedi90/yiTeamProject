@@ -3,6 +3,7 @@ package kr.or.yi.teamProject.manage.controller;
 import kr.or.yi.teamProject.common.dto.Pager;
 import kr.or.yi.teamProject.common.enums.CommonResult;
 import kr.or.yi.teamProject.product.dto.Item;
+import kr.or.yi.teamProject.product.dto.ItemPager;
 import kr.or.yi.teamProject.product.service.ItemService;
 import kr.or.yi.teamProject.security.dto.CustomUser;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +56,7 @@ public class ManageController {
 
     //상품 관리 페이지
     @GetMapping(params = {"section=product","func=list"})
-    public String getProductList(Pager pager, Model model) {
+    public String getProductList(ItemPager pager, Model model) {
 
         log.info(pager.toString());
 

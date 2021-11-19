@@ -33,12 +33,12 @@
         <div class="row">
             <div class="key_col"><label for="">카테고리</label></div>
             <div class="value_col">
-                <select name="categoryNo" id="category_no" value="${requestScope.result.category.categoryNo}">
-                    <option value="1">아우터</option>
-                    <option value="2">상의</option>
-                    <option value="3">하의</option>
-                    <option value="4">원피스</option>
-                    <option value="5">배송비</option>
+                <select name="categoryNo" id="category_no">
+                    <option value="1" <c:if test="${requestScope.result.category.categoryNo eq 1}">selected</c:if>>아우터</option>
+                    <option value="2" <c:if test="${requestScope.result.category.categoryNo eq 2}">selected</c:if>>상의</option>
+                    <option value="3" <c:if test="${requestScope.result.category.categoryNo eq 3}">selected</c:if>>하의</option>
+                    <option value="4" <c:if test="${requestScope.result.category.categoryNo eq 4}">selected</c:if>>원피스</option>
+                    <option value="5" <c:if test="${requestScope.result.category.categoryNo eq 5}">selected</c:if>>배송비</option>
                 </select>
             </div>
         </div>
@@ -46,9 +46,9 @@
         <div class="row">
             <div class="key_col"><label for="">상품 숨기기</label></div>
             <div class="value_col">
-                <select name="hide" class="item_input" value="${requestScope.result.hide}">
-                    <option value="true">적용</option>
-                    <option value="false" selected>미적용</option>
+                <select name="hide" class="item_input">
+                    <option value="true" <c:if test="${requestScope.result.hide}">selected</c:if>>적용</option>
+                    <option value="false" <c:if test="${!requestScope.result.hide}">selected</c:if>>미적용</option>
                 </select>
             </div>
         </div>
@@ -103,9 +103,9 @@
         <div class="row">
             <div class="key_col"><label for="">쿠폰 할인 여부</label></div>
             <div class="value_col">
-                <select name="couponAllow" class="item_input" value="${requestScope.result.couponAllow}">
-                    <option value="true">적용</option>
-                    <option value="false">미적용</option>
+                <select name="couponAllow" class="item_input">
+                    <option value="true" <c:if test="${requestScope.result.couponAllow}">selected</c:if>>적용</option>
+                    <option value="false" <c:if test="${!requestScope.result.couponAllow}">selected</c:if>>미적용</option>
                 </select>
             </div>
         </div>

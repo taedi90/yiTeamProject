@@ -2,6 +2,7 @@ package kr.or.yi.teamProject.product.mapper;
 
 import kr.or.yi.teamProject.common.dto.Pager;
 import kr.or.yi.teamProject.product.dto.Item;
+import kr.or.yi.teamProject.product.dto.ItemPager;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -16,9 +17,9 @@ public interface ItemMapper {
     Item selectItem(int itemNo);
     ArrayList<Item> selectItemList();
 
-    Pager getInfoForPaging(Pager pager);
+    ItemPager getInfoForPaging(ItemPager pager);
 
     List<Item> selectItemListForMain();
-    List<Item> selectItemListForManage(Pager pager);
+    List<Item> selectItemListForManage(ItemPager pager);
     List<String> getImagePath();
 }

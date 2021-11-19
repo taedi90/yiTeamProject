@@ -3,6 +3,7 @@ package kr.or.yi.teamProject.product.service.impl;
 import kr.or.yi.teamProject.common.dto.Pager;
 import kr.or.yi.teamProject.common.enums.CommonResult;
 import kr.or.yi.teamProject.product.dto.Item;
+import kr.or.yi.teamProject.product.dto.ItemPager;
 import kr.or.yi.teamProject.product.dto.Option;
 import kr.or.yi.teamProject.product.mapper.ItemMapper;
 import kr.or.yi.teamProject.product.mapper.OptionMapper;
@@ -119,7 +120,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Pager getInfoForPaging(Pager pager) {
+    public ItemPager getInfoForPaging(ItemPager pager) {
 
         pager = itemMapper.getInfoForPaging(pager);
 
@@ -127,7 +128,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Pager readItemForManage(Pager pager) {
+    public ItemPager readItemForManage(ItemPager pager) {
         List<Item> items = itemMapper.selectItemListForManage(pager);
 
         if (items != null) {
