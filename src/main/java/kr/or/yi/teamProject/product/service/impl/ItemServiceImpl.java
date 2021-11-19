@@ -24,19 +24,12 @@ public class ItemServiceImpl implements ItemService {
     OptionMapper optionMapper;
 
     @Override
-    public CommonResult readItem() {
-        //숨김처리 안된 아이템
-        Item searchOption = Item.builder()
-                .hide(false)
-                .build();
+    public CommonResult readItem(int itemNo) {
+        Item item = itemMapper.selectItem(itemNo);
 
-        //재고 없는 아이템 숨기기
-
-        List<Item> items = itemMapper.selectItemListForMain();
-
-        if (items != null) {
+        if (item != null) {
             CommonResult commonResult = CommonResult.SUCCESS;
-            commonResult.setObject(items);
+            commonResult.setObject(item);
             return commonResult;
         }
 

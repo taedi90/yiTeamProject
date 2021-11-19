@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <link rel="stylesheet" href="${path}/css/manage/product.css">
 
@@ -23,11 +24,11 @@
 
         <div class="row">
             <div class="key_col"><label for="">상품명</label></div>
-            <div class="value_col"><input type="text" class="item_input" name="name"></div>
+            <div class="value_col"><input type="text" class="item_input" name="name" value="${requestScope.result.name}"></div>
         </div>
         <div class="row">
             <div class="key_col"><label for="">판매금액</label></div>
-            <div class="value_col"><input type="number" class="item_input" name="price"></div>
+            <div class="value_col"><input type="number" class="item_input" name="price" value="${requestScope.result.price}"></div>
         </div>
         <div class="row">
             <div class="key_col"><label for="">카테고리</label></div>
@@ -45,7 +46,7 @@
         <div class="row">
             <div class="key_col"><label for="">상품 숨기기</label></div>
             <div class="value_col">
-                <select name="hide" class="item_input">
+                <select name="hide" class="item_input" value="${requestScope.result.hide}">
                     <option value="true">적용</option>
                     <option value="false" selected>미적용</option>
                 </select>
@@ -59,14 +60,19 @@
         <div class="row">
             <h2>옵션</h2>
         </div>
-
+    <c:forEach var="option" items="${requestScope.result.options}" varStatus="i">
         <div class="option_input">
-            <input type="hidden" name="optionNo" value="${requestScope.result.options[0].optionNo}">
-            <input type="text" name="name" placeholder="옵션명">
-            <input type="number" name="optionPrice" placeholder="추가금액">
-            <input type="number" name="stock" placeholder="재고수량">
+            <input type="hidden" name="optionNo" value="${option.optionNo}">
+            <input type="text" name="name" placeholder="옵션명" value="${option.name}">
+            <input type="number" name="optionPrice" placeholder="추가금액" value="${option.optionPrice}">
+            <input type="number" name="stock" placeholder="재고수량" value="${option.stock}">
             <button onclick="addOption()">+</button>
+            <c:if test="${i.count > 1}">
+                <button onclick="removeOption(this.parentNode)">-</button>
+            </c:if>
         </div>
+    </c:forEach>
+
 
     </div>
 
@@ -78,25 +84,27 @@
         <h3>기간 할인</h3>
         <div class="row">
             <div class="key_col"><label for="">할인 금액</label></div>
-            <div class="value_col"><input type="number" class="item_input" name="discount"></div>
+            <div class="value_col"><input type="number" class="item_input" name="discount" value="${requestScope.result.discount}"></div>
         </div>
 
         <div class="row">
             <div class="key_col"><label for="">할인 시작</label></div>
-            <div class="value_col"><input type="date" class="item_input" name="startDiscount"></div>
+            <fmt:formatDate var="startDiscount" value="${requestScope.result.startDiscount}" pattern="yyyy-MM-dd"/>
+            <div class="value_col"><input type="date" class="item_input" name="startDiscount" value="${startDiscount}"></div>
         </div>
 
         <div class="row">
             <div class="key_col"><label for="">할인 종료</label></div>
-            <div class="value_col"><input type="date" class="item_input" name="endDiscount"></div>
+            <fmt:formatDate var="endDiscount" value="${requestScope.result.endDiscount}" pattern="yyyy-MM-dd"/>
+            <div class="value_col"><input type="date" class="item_input" name="endDiscount" value="${endDiscount}"></div>
         </div>
 
         <h3>쿠폰 할인</h3>
         <div class="row">
             <div class="key_col"><label for="">쿠폰 할인 여부</label></div>
             <div class="value_col">
-                <select name="couponAllow" class="item_input">
-                    <option value="true" selected>적용</option>
+                <select name="couponAllow" class="item_input" value="${requestScope.result.couponAllow}">
+                    <option value="true">적용</option>
                     <option value="false">미적용</option>
                 </select>
             </div>
@@ -106,41 +114,59 @@
 
     <%-- 상품 상세 --%>
     <div id="detail">
-        <div class="row">
-            <h2>상품 상세</h2>
-        </div>
+        <div id="detail_info">
+            <div class="info_section">
+                <div class="row">
+                    <h2>상품 상세</h2>
+                </div>
 
-        <div class="row">
-            <div class="key_col"><label for="">제목</label></div>
-            <div class="value_col"><input type="text" class="item_input" name="title"></div>
-        </div>
+                <div class="row">
+                    <div class="key_col"><label for="">제목</label></div>
+                    <div class="value_col"><input type="text" class="item_input" name="title" value="${requestScope.result.title}"></div>
+                </div>
 
-        <div class="row">
-            <div class="key_col"><label for="">썸네일</label></div>
-            <div class="value_col">
-                <input type="hidden" class="item_input" name="image">
-                <input type="file" name="uploadThumb">
+                <div class="row">
+                    <div class="key_col"><label for="">썸네일</label></div>
+                    <div class="value_col">
+                        <input type="hidden" class="item_input" name="image" value="${requestScope.result.image}">
+                        <input type="file" name="uploadThumb">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="key_col"><label for="">정보제공고시</label></div>
+                    <div class="value_col"><button>선택하기</button></div>
+                </div>
+
+            </div>
+
+            <div class="image_section">
+                <img id="thumb_image" src="
+                    <c:if test="${requestScope.result.image ne null}">
+                        upload/${requestScope.result.image}/thumb_130.png
+                    </c:if>
+                " alt="">
             </div>
         </div>
 
 
         <div class="row">
-            <div class="key_col"><label for="">정보제공고시</label></div>
-            <div class="value_col"><button>선택하기</button></div>
-        </div>
-        <div class="row">
             <!-- SmartEditor2 -->
             <input id="seUpload" type="file" style="display: none" multiple accept="image/jpeg, image/png, image/gif">
-            <textarea name="smartEditor" id="smartEditor" style="width: 100%; height: 412px;"></textarea>
+            <%--            <input type="hidden" class="item_input" name="text">--%>
+            <textarea name="smartEditor" id="smartEditor" style="width: 100%; height: 412px;">${requestScope.result.text}</textarea>
         </div>
-
 
     </div>
         <%-- publish --%>
         <button onclick="">등록하기</button>
         <%-- non-publish --%>
+    <c:if test="${requestScope.result.publish ne true}">
         <button onclick="tempSave()">임시저장</button>
         <button>취소하기</button>
+    </c:if>
+
 
 </div>
 

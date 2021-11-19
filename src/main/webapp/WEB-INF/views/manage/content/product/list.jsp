@@ -17,14 +17,21 @@
     <div id="title">
         상품 관리
     </div>
-    <div>
+    <div id="actions">
         <input type="text">
         <button>검색</button>
-    </div>
-    <div id="actions">
+        <select name="" id="">
+            <option value="">발행 여부</option>
+            <option value="true">발행</option>
+            <option value="false">미발행</option>
+        </select>
+        <select name="" id="">
+            <option value="">숨김 여부</option>
+            <option value="true">숨김</option>
+            <option value="false">안숨김</option>
+        </select>
         <button onclick="window.location.href='?section=product&func=create'">신규 생성</button>
         <button onclick="deleteItem()">선택 삭제</button>
-
     </div>
     <div id="content">
         <table>
@@ -35,13 +42,13 @@
                 <th>카테고리</th>
                 <th>상품명</th>
                 <th>가격</th>
-                <th>생성일</th>
-                <th>숨김여부</th>
-                <th>수정하기</th>
+                <th>작성자</th>
+                <th>발행여부</th>
+                <th>숨김처리</th>
             </tr>
 
             <c:forEach var="item" items="${requestScope.result.records}">
-                <tr>
+                <tr onclick="window.location.href = 'manage?section=product&func=detail&itemNo=' + ${item.itemNo}">
                     <td><input type="checkbox" class="checkbox" name="${item.itemNo}"></td>
                     <td>${item.itemNo}</td>
                     <td>
@@ -52,9 +59,9 @@
                     <td>${item.category.title}</td>
                     <td>${item.name}</td>
                     <td>${item.price}</td>
-                    <td>${item.regDate}</td>
+                    <td data-name="${item.member.name}" data-reg-date="${item.member.regDate}">${item.member.username}</td>
+                    <td>${item.publish}</td>
                     <td>${item.hide}</td>
-                    <td><button>수정</button></td>
                 </tr>
             </c:forEach>
 

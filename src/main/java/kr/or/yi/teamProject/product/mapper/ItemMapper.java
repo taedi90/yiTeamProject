@@ -13,7 +13,7 @@ public interface ItemMapper {
     int updateItem(Item item);
     int deleteItem(Item item);  //on delete cascade
 
-    ArrayList<Item> selectItem(Item item);
+    Item selectItem(int itemNo);
     ArrayList<Item> selectItemList();
 
     Pager getInfoForPaging(Pager pager);

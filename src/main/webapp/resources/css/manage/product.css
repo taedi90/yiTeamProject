@@ -71,3 +71,18 @@ input:focus{
     padding: 1rem;
     width: 4.2rem;
 }
+
+#detail_info {
+    display: flex;
+}
+
+#detail_info .info_section {
+    width: 100%;
+}
+
+#detail_info .image_section {
+    width: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

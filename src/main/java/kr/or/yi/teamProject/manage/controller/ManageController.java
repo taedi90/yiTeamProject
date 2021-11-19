@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDateTime;
 
 /**
  * 관리자 페이지 관련 컨트롤러
@@ -36,6 +39,9 @@ public class ManageController {
     //상품
     @GetMapping("/product")
     public String getProduct(Model model) {
+
+        log.info("서버시간");
+        log.info(LocalDateTime.now().toString());
 
         model.addAttribute("url", "content/product/editor.jsp");
 
@@ -95,13 +101,28 @@ public class ManageController {
 
     //상품 상세 페이지
     @GetMapping(params = {"section=product","func=detail"})
-    public String getProductDetail(Model model, Authentication authentication) {
+    public String getProductDetail(@RequestParam("itemNo") int itemNo, Model model) {
+
+
+        CommonResult result = itemService.readItem(itemNo);
+
+        model.addAttribute("result", result.getObject());
+        model.addAttribute("url", "content/product/detail.jsp");
+
         return "manage/manage";
     }
 
     //상품 수정 페이지
     @GetMapping(params = {"section=product","func=edit"})
-    public String getProductEdit(Model model, Authentication authentication) {
+    public String getProductEdit(@RequestParam("itemNo") int itemNo, Model model, Authentication authentication) {
+
+        //권한확인
+
+        CommonResult result = itemService.readItem(itemNo);
+
+        model.addAttribute("result", result.getObject());
+        model.addAttribute("url", "content/product/editor.jsp");
+
         return "manage/manage";
     }
 }

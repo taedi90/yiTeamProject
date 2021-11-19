@@ -39,7 +39,7 @@ public class ItemController {
     //아이템 수정
     @PutMapping
     public CommonResult putItem(@RequestBody Item item){
-//        log.info(item.toString());
+        log.info(item.toString());
         CommonResult commonResult = itemService.updateItem(item);
 
         return commonResult;

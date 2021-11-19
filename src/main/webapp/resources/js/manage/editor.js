@@ -18,6 +18,13 @@ function getData(){
         }
     }
 
+    //에디터 내용은 따로 받기
+    const seRootIframe = document.querySelector("iframe");
+    const seChildIframe = seRootIframe.contentWindow.document.querySelector("#se2_iframe");
+    const seBody = seChildIframe.contentWindow.document.body;
+    product["text"] = seBody.innerHTML;
+
+
     //카테고리 추가하기
     category.categoryNo = document.getElementById("category_no").value;
     product.category = category;
@@ -161,8 +168,9 @@ function uploadBtnEvent(){
     xhr.onload = function () {
         if (xhr.status === 200 || xhr.status === 201) { // 통신 성공 시
             document.querySelector("[name='image']").value = JSON.parse(xhr.response).object;
-            document.querySelector("#detail").style.background = "";
-            document.querySelector("#detail").style.background = "white url('upload/" + JSON.parse(xhr.response).object  + "/thumb_130.png') no-repeat right top/18rem";
+            //document.querySelector("#detail").style.background = "";
+            //document.querySelector("#detail").style.background = "white url('upload/" + JSON.parse(xhr.response).object  + "/thumb_130.png') no-repeat right top/18rem";
+            document.querySelector("#thumb_image").src = "upload/" + JSON.parse(xhr.response).object  + "/thumb_130.png";
         } else { // 통신 실패 시
             //
         }

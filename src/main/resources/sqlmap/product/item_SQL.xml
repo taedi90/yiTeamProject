@@ -63,15 +63,24 @@
         WHERE `item_no` = #{itemNo}
     </delete>
 
-    <select id="selectItem" parameterType="kr.or.yi.teamProject.product.dto.Item"
-    resultType="kr.or.yi.teamProject.product.dto.Item">
-        SELECT `item_no`, `category_no`, `name`, `price`, `discount`, `start_discount`, `end_discount`, `title`, `text`, `image`, `pia_no`, `coupon_allow`, `hide`
+    <select id="selectItem" resultMap="itemMap">
+        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, `i`.`title`, `i`.`text`,
+        `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`, `i`.`reg_date`, `i`.`mod_date`, `i`.`username`, `i`.`publish`,
+        `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`option_no`, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock,
+        `m`.`name` m_name, `m`.`reg_date` m_reg_date
+        FROM (SELECT *
         FROM `item`
         <where>
             <if test="itemNo != null and itemNo != 0">
                 `item_no` = #{itemNo}
             </if>
         </where>
+        ) i
+
+        LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
+        LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
+        LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
+        LEFT OUTER JOIN `member` m ON i.`username` = m.`username`
     </select>
 
     <select id="selectItemList" parameterType="kr.or.yi.teamProject.product.dto.Item"
@@ -96,6 +105,9 @@
         <result property="image" column="image"/>
         <result property="couponAllow" column="coupon_allow"/>
         <result property="hide" column="hide"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="modDate" column="mod_date"/>
+        <result property="publish" column="publish"/>
         <association property="category" javaType="kr.or.yi.teamProject.product.dto.Category">
             <id property="categoryNo" column="category_no" />
             <result property="title" column="c_title" />
@@ -108,6 +120,8 @@
         </association>
         <association property="member" javaType="kr.or.yi.teamProject.user.dto.Member">
             <id property="username" column="username" />
+            <id property="name" column="m_name" />
+            <id property="regDate" column="m_reg_date" />
         </association>
         <collection property="options" ofType="kr.or.yi.teamProject.product.dto.Option">
             <id property="optionNo" column="option_no"/>
@@ -124,7 +138,7 @@
     <select id="selectItemListForMain" parameterType="kr.or.yi.teamProject.product.dto.Item"
             resultMap="itemMap">
         SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, i.`title`, `i`.`text`, `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`,
-                `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock
+                `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`option_no`, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock
         FROM `item` i
             LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
             LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
@@ -135,8 +149,10 @@
 
     <select id="selectItemListForManage" parameterType="kr.or.yi.teamProject.common.dto.Pager"
             resultMap="itemMap">
-        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, i.`title`, `i`.`text`, `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`,
-               `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock
+        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, `i`.`title`, `i`.`text`,
+               `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`, `i`.`reg_date`, `i`.`mod_date`, `i`.`username`, `i`.`publish`,
+               `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`option_no`, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock,
+               `m`.`name` m_name, `m`.`reg_date` m_reg_date
         FROM (SELECT *
                 FROM `item`
                 <where>
@@ -152,8 +168,9 @@
             ) i
 
             LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
-                 LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
-                 LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
+            LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
+            LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
+            LEFT OUTER JOIN `member` m ON i.`username` = m.`username`
     </select>
 
     <select id="getInfoForPaging" parameterType="kr.or.yi.teamProject.common.dto.Pager"

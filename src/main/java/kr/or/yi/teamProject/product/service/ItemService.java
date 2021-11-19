@@ -7,7 +7,7 @@ import kr.or.yi.teamProject.product.dto.Item;
 import java.util.List;
 
 public interface ItemService {
-    CommonResult readItem();
+    CommonResult readItem(int itemNo);
 
     CommonResult createItem(Item item);
     CommonResult updateItem(Item item);
