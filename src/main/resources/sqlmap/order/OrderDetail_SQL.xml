@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.order.mapper.OrderDetailMapper">
+
+
+<!-- id : Dao 메서드와 동일하게 -->
+<!-- parameterType (입력 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+<!-- resultType (결과 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+
+     <resultMap type="kr.or.yi.teamProject.order.dto.OrderDetail" id="orderDetailMap">
+     <!-- Order -->
+       <id property="orderNo" column="order_no"/>	<!-- 주문번호  -->
+       <result property="zipcode" column="zipcode"/><!-- 우편번호 -->
+       <result property="address1" column="address1"/><!-- 주소앞 -->
+       <result property="address2" column="address2"/><!-- 주소상세 -->
+       <result property="name" column="name"/>		<!-- 받는분 -->
+       <result property="phone" column="phone"/>	<!-- 휴대폰 -->
+       <result property="regDate" column="reg_date"/><!-- 생성일자 -->
+       <result property="point" column="point"/>	<!-- 포인트 사용액 -->
+       <result property="status" column="status"/>	<!-- 주문상태 -->
+       
+       <!-- Member 아이디,이름,이메일,연락처-->
+       <association property="member" javaType="kr.or.yi.teamProject.user.dto.Member">
+			<id property="username" column="username"/>
+			<result property="name" column="name"/> 
+			<result property="email" column="email"/>      		
+			<result property="phone" column="phone"/>      		
+       </association>
+       
+       <!-- NonMember 아이디,이메일,연락처-->
+       <association property="nonMember" javaType="kr.or.yi.teamProject.user.dto.NonMember">
+			<id property="nonUsername" column="non_username"/>
+			<result property="email" column="email"/>      		
+			<result property="phone" column="phone"/>      		
+       </association>
+       
+       <!-- OrderItem 주문상품 번호, 상품금액, 할인금액, 쿠폰금액, 옵션번호, 옵션명, 옵션번호, 상품번호, 상품이름, 재고수량-->
+       <collection property="itemList" ofType="kr.or.yi.teamProject.order.dto.OrderItem">
+			<id property="orderItemNo" column="order_item_no"/>		<!-- 주문상품 번호  -->
+       		<result property="priceItem" column="price_item"/>		<!-- 상품 금액 -->
+       		<result property="priceOption" column="price_option"/>	<!-- 옵션 금액 -->
+       		<result property="priceCoupon" column="price_coupon"/>	<!-- 할인 금액 -->
+       		<result property="couponHistory.coupon.couponNo" column="coupon_no"/>	<!-- 쿠폰번호 -->
+       		<result property="couponHistory.coupon.name" column="name"/>	<!-- 할인 명 -->
+       		
+       		<!-- Option -->
+			<association property="option" javaType="kr.or.yi.teamProject.product.dto.Option">
+	            <id property="optionNo" column="option_no"/>		<!-- 옵션번호 -->
+	            <result property="name" column="op_name"/>			<!-- 옵션이름 -->
+	            <result property="optionPrice" column="option_price"/><!-- 옵션가격 -->
+	            <result property="stock" column="stock"/>			<!-- 수량 -->
+	            <result property="item.itemNo" column="item_no"/>	<!-- 주문상품 명 -->	            	           
+			</association>	
+
+       </collection>
+       
+       <!-- Payment  -->
+       <collection property="paymentList" ofType="kr.or.yi.teamProject.payment.dto.Payment">
+       		<id property="paymentNo" column="payment_no"/>
+       		<result property="amount" column="amount"/>
+       </collection>
+    </resultMap> 
+
+ <!-- selectOrderList member -->
+ 	<select id="selectDetailOrder" parameterType="kr.or.yi.teamProject.order.dto.OrderDetail" resultMap="orderDetailMap">			       
+      	SELECT `o`.`order_no`, 
+      			`o`.`zipcode`, 
+      			`o`.`address1`, 
+      			`o`.`address2`, 
+      			`o`.`name`, 
+      			`o`.`phone`, 
+      			`m`.`username`, 
+      			`m`.`email`, 
+      			`oi`.`order_item_no`, 
+      			`oi`.`price_item`,
+      			`oi`.`price_option` ,
+      			`oi`.`price_coupon`, 
+      			`op`.`option_no`,
+      			`pay`.`payment_no`,
+      			`pay`.`amount`   	
+		from `order` as o LEFT OUTER join `member` as m on o.username = m.username 
+		LEFT OUTER join `order_item` as oi on o.`order_no` = oi.`order_no`
+		LEFT OUTER join `payment` as pay on pay.`order_no` = o.`order_no`
+		LEFT OUTER join `option` as op on oi.`option_no` = op.`option_no`
+	 	where o.`order_no` = #{orderNo} 
+ 	</select>
+ 	
+
+
+ 	
+
+ 	
+</mapper>
