@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.payment.mapper.PaymentMapper">
+
+	<resultMap type="kr.or.yi.teamProject.payment.dto.Payment" id="paymentMap">
+		<id property="paymentNo" column="payment_no"/>
+        <result property="sort" column="sort"/>
+        <result property="method" column="method"/>
+        <result property="order.orderNo" column="order_no"/>
+        <result property="uid" column="uid"/>
+        <result property="amount" column="amount"/>
+        <result property="regDate" column="reg_date"/>
+    </resultMap>
+    
+    
+    
+    <select id="selectPaymentUid" parameterType="kr.or.yi.teamProject.payment.dto.Payment"
+    resultType="kr.or.yi.teamProject.payment.dto.Payment">
+        Select `payment_no`, `sort`, `method`, `order_no`, `uid`, `amount`, `reg_date` 
+        	from `payment`
+        	where `uid` = #{uid}
+    </select>
+    
+    <insert id="insertPayment" parameterType="kr.or.yi.teamProject.payment.dto.Payment">
+    	<![CDATA[
+        INSERT INTO `payment` (`sort`, `method`, `order_no`, `uid`, `amount`)
+        VALUES (#{sort}, #{method}, #{order.orderNo}, #{uid}, #{amount})
+        ]]>
+    </insert>
+    
+    
+    <insert id="insertRefund" parameterType="kr.or.yi.teamProject.payment.dto.Payment">
+    	<![CDATA[
+        INSERT INTO `payment` (`sort`, `method`, `order_no`, `uid`, `amount`)
+        VALUES (#{sort}, #{method}, #{order.orderNo}, #{uid}, #{amount}*-1)
+        ]]>
+    </insert>
+    
+    <update id="updatePayment" parameterType="kr.or.yi.teamProject.payment.dto.Payment">
+        UPDATE `payment`
+        SET `amount` = #{amount}
+        WHERE `uid` = #{uid}
+    </update>
+    
+    <delete id="deletePaymentUid" parameterType="kr.or.yi.teamProject.payment.dto.Payment">
+        DELETE
+        FROM `payment`
+        WHERE `uid` = #{uid}
+    </delete>
+    
+    <delete id="deletePaymentOrderNo" parameterType="kr.or.yi.teamProject.payment.dto.Payment">
+        DELETE
+        FROM `payment`
+        WHERE `order_no` = #{orderNo}
+    </delete>
+
+	<select id="selectPaymentList" resultType="kr.or.yi.teamProject.payment.dto.Payment">
+        Select `payment_no`, `sort`, `method`, `order_no`, `uid`, `amount`, `reg_date` 
+        	from `payment`
+    </select>
+
+
+</mapper>
