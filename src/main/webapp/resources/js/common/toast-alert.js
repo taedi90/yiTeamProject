@@ -23,7 +23,7 @@ document.querySelector("body").appendChild(toastElem);
 
 let toastTimeout;
 
-function toastAlert(string) {
+function newToast(string) {
 
     clearTimeout(toastTimeout);
 

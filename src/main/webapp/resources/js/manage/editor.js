@@ -1,10 +1,5 @@
 'use strict';
 
-// let data ={
-//     name: document.getElementById(""),
-//
-// }
-
 function getData(){
     let product = new Object(); //상품 정보를 담을 객체
     let category = new Object(); //카테고리 정보를 담을 객체
@@ -248,9 +243,9 @@ function tempSave() {
 function cbkTempSave(res) {
     const result = JSON.parse(res);
     if(result.success == true) {
-        toastAlert("임시 저장 완료!");
+        newToast("임시 저장 완료!");
     } else {
-        toastAlert("임시 저장 실패!");
+        newToast("임시 저장 실패!");
     }
 }
 
@@ -290,6 +285,6 @@ function cbkSave(res) {
     if(result.success == true) {
         window.location.href = "manage?section=product&func=list";
     } else {
-        toastAlert("등록 실패!");
+        newToast("등록 실패!");
     }
 }
