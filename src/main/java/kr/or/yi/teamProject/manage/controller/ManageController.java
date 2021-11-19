@@ -32,6 +32,8 @@ public class ManageController {
         return "manage/manage";
     }
 
+
+    //상품
     @GetMapping("/product")
     public String getProduct(Model model) {
 
@@ -88,6 +90,18 @@ public class ManageController {
             model.addAttribute("url", "content/product/editor.jsp");
         }
 
+        return "manage/manage";
+    }
+
+    //상품 상세 페이지
+    @GetMapping(params = {"section=product","func=detail"})
+    public String getProductDetail(Model model, Authentication authentication) {
+        return "manage/manage";
+    }
+
+    //상품 수정 페이지
+    @GetMapping(params = {"section=product","func=edit"})
+    public String getProductEdit(Model model, Authentication authentication) {
         return "manage/manage";
     }
 }
