@@ -28,7 +28,7 @@
         </div>
         <div class="row">
             <div class="key_col"><label for="">판매금액</label></div>
-            <div class="value_col"><input type="number" class="item_input" name="price" value="${requestScope.result.price}"></div>
+            <div class="value_col"><input type="number" class="item_input" name="price" value="${requestScope.result.price}" min="0"></div>
         </div>
         <div class="row">
             <div class="key_col"><label for="">카테고리</label></div>
@@ -64,8 +64,8 @@
         <div class="option_input">
             <input type="hidden" name="optionNo" value="${option.optionNo}">
             <input type="text" name="name" placeholder="옵션명" value="${option.name}">
-            <input type="number" name="optionPrice" placeholder="추가금액" value="${option.optionPrice}">
-            <input type="number" name="stock" placeholder="재고수량" value="${option.stock}">
+            <input type="number" name="optionPrice" placeholder="추가금액" value="${option.optionPrice}" min="0">
+            <input type="number" name="stock" placeholder="재고수량" value="${option.stock}" min="0">
             <button onclick="addOption()">+</button>
             <c:if test="${i.count > 1}">
                 <button onclick="removeOption(this.parentNode)">-</button>
@@ -84,7 +84,7 @@
         <h3>기간 할인</h3>
         <div class="row">
             <div class="key_col"><label for="">할인 금액</label></div>
-            <div class="value_col"><input type="number" class="item_input" name="discount" value="${requestScope.result.discount}"></div>
+            <div class="value_col"><input type="number" class="item_input" name="discount" value="${requestScope.result.discount}" min="0"></div>
         </div>
 
         <div class="row">

@@ -124,15 +124,29 @@
 
     </div>
 
-${items}
-<c:forEach var="item" items="${items}" varStatus="status">
-    <p>${item.image}</p>
-    <h2>${item.title}</h2>
-    <h4>${item.category.title}</h4>
-    <p>${item.price}원</p>
-    <c:forEach var="option" items="${item.options}" varStatus="status">
-        <p>${option.name}</p>
-    </c:forEach>
+${result}
+<c:forEach var="item" items="${result.records}" varStatus="status">
+
+    <div>
+        <div>
+            <img src="upload/${item.image}/thumb_350.png" alt="">
+        </div>
+        <div>
+            <h2>${item.title}</h2>
+            <h4>${item.category.title}</h4>
+            <p>${item.price}원</p>
+
+            <c:set value="0" var="totalStock" scope="page"/>
+            <c:forEach var="option" items="${item.options}" varStatus="status">
+                <c:set value="${option.stock + totalStock}" var="totalStock" scope="page"/>
+                <input type="hidden" data-option-no="${option.optionNo}" data-option-name="${option.name}" data-option-price="${option.optionPrice}" data-option-stock="${option.stock}">
+            </c:forEach>
+            총 재고 : ${totalStock}
+        </div>
+    </div>
+
+
+
 
 </c:forEach>
 

@@ -64,10 +64,10 @@
     </delete>
 
     <select id="selectItem" resultMap="itemMap">
-        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, `i`.`title`, `i`.`text`,
-        `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`, `i`.`reg_date`, `i`.`mod_date`, `i`.`username`, `i`.`publish`,
-        `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`option_no`, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock,
-        `m`.`name` m_name, `m`.`reg_date` m_reg_date
+        SELECT i.`item_no`, i.`category_no`, i.`name`, i.`price`, i.`discount`, i.`start_discount`, i.`end_discount`, i.`title`, i.`text`,
+        i.`image`, i.`pia_no`, i.`coupon_allow`, i.`hide`, i.`reg_date`, i.`mod_date`, i.`username`, i.`publish`,
+        c.`title` c_title, p.`title` p_title, p.`text` p_text, p.`reg_date` p_reg_date, o.`option_no`, o.`name` o_name, o.`option_price`, o.`stock` o_stock,
+        m.`name` m_name, m.`reg_date` m_reg_date
         FROM (SELECT *
         FROM `item`
         <where>
@@ -78,7 +78,7 @@
         ) i
 
         LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
-        LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
+        LEFT OUTER JOIN `category` c ON i.`category_no` = c.`category_no`
         LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
         LEFT OUTER JOIN `member` m ON i.`username` = m.`username`
     </select>
@@ -135,24 +135,70 @@
 <!--        </discriminator>-->
     </resultMap>
 
-    <select id="selectItemListForMain" parameterType="kr.or.yi.teamProject.product.dto.Item"
+<!--    -->
+<!--    <select id="selectItemListForMain" parameterType="kr.or.yi.teamProject.product.dto.ItemPager"-->
+<!--            resultMap="itemMap">-->
+<!--        <![CDATA[-->
+<!--        SELECT i.`item_no`, i.`category_no`, i.`name`, i.`price`, i.`discount`, i.`start_discount`, i.`end_discount`, i.`title`, i.`text`,-->
+<!--        i.`image`, i.`pia_no`, i.`coupon_allow`, i.`hide`, i.`reg_date`, i.`mod_date`, i.`username`, i.`publish`,-->
+<!--        c.`title` c_title, p.`title` p_title, p.`text` p_text, p.`reg_date` p_reg_date, o.`option_no`, o.`name` o_name, o.`option_price`, o.`stock` o_stock-->
+<!--        FROM (SELECT *-->
+<!--        FROM `item`-->
+<!--        LEFT OUTER JOIN (SELECT `item_no`, sum(`stock`) `total_stock` FROM `option` GROUP BY `item_no`) total ON item.`item_no` = total.`item_no`-->
+<!--        WHERE `publish` = true AND `hide` = false-->
+<!--        ]]>-->
+<!--            <if test="category != null and category != ''">-->
+<!--                AND `category_no` = #{category}-->
+<!--            </if>-->
+<!--            <if test="keyword != null and keyword != ''">-->
+<!--                AND `name` LIKE CONCAT('%', #{keyword}, '%')-->
+<!--            </if>-->
+<!--        <![CDATA[-->
+<!--        ORDER BY-->
+<!--                 CASE WHEN `total_stock` <= 0 THEN 2-->
+<!--                 ELSE 1-->
+<!--                 END ASC, item.`item_no` ${order}-->
+<!--        LIMIT #{startRecord}, #{amount}-->
+<!--        ) i-->
+
+<!--        LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`-->
+<!--        LEFT OUTER JOIN `category` c ON i.`category_no` = c.`category_no`-->
+<!--        LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="selectItemListForMain" parameterType="kr.or.yi.teamProject.product.dto.ItemPager"
             resultMap="itemMap">
-        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, i.`title`, `i`.`text`, `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`,
-                `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`option_no`, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock
+        SELECT i.`item_no`, i.`category_no`, i.`name`, i.`price`, i.`discount`, i.`start_discount`, i.`end_discount`, i.`title`, i.`text`,
+        i.`image`, i.`pia_no`, i.`coupon_allow`, i.`hide`, i.`reg_date`, i.`mod_date`, i.`username`, i.`publish`,
+        c.`title` c_title, p.`title` p_title, p.`text` p_text, p.`reg_date` p_reg_date, o.`option_no`, o.`name` o_name, o.`option_price`, o.`stock` o_stock
         FROM `item` i
-            LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
-            LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
-            LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
-        WHERE `hide` IS NOT TRUE
-        ORDER BY `item_no` ASC
+        LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
+        LEFT OUTER JOIN `category` c ON i.`category_no` = c.`category_no`
+        LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
+        LEFT OUTER JOIN (SELECT `item_no`, sum(`stock`) `total_stock` FROM `option` GROUP BY `item_no`) total ON i.`item_no` = total.`item_no`
+        WHERE `publish` = true AND `hide` = false
+        <if test="category != null and category != ''">
+            AND i.`category_no` = #{category}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND i.`name` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <![CDATA[
+        ORDER BY
+            CASE WHEN `total_stock` <= 0 THEN 2
+            ELSE 1
+            END ASC, i.`item_no` ${order}
+        LIMIT #{startRecord}, #{amount}
+        ]]>
     </select>
 
     <select id="selectItemListForManage" parameterType="kr.or.yi.teamProject.product.dto.ItemPager"
             resultMap="itemMap">
-        SELECT `i`.`item_no`, `i`.`category_no`, `i`.`name`, `i`.`price`, `i`.`discount`, `i`.`start_discount`, `i`.`end_discount`, `i`.`title`, `i`.`text`,
-               `i`.`image`, `i`.`pia_no`, `i`.`coupon_allow`, `i`.`hide`, `i`.`reg_date`, `i`.`mod_date`, `i`.`username`, `i`.`publish`,
-               `c`.`title` c_title, `p`.`title` p_title, `p`.`text` p_text, `p`.`reg_date` p_reg_date, `o`.`option_no`, `o`.`name` o_name, `o`.`option_price`, `o`.`stock` o_stock,
-               `m`.`name` m_name, `m`.`reg_date` m_reg_date
+        SELECT i.`item_no`, i.`category_no`, i.`name`, i.`price`, i.`discount`, i.`start_discount`, i.`end_discount`, i.`title`, i.`text`,
+               i.`image`, i.`pia_no`, i.`coupon_allow`, i.`hide`, i.`reg_date`, i.`mod_date`, i.`username`, i.`publish`,
+               c.`title` c_title, p.`title` p_title, p.`text` p_text, p.`reg_date` p_reg_date, o.`option_no`, o.`name` o_name, o.`option_price`, o.`stock` o_stock,
+               m.`name` m_name, m.`reg_date` m_reg_date
         FROM (SELECT *
                 FROM `item`
                 <where>
@@ -174,7 +220,7 @@
             ) i
 
             LEFT OUTER JOIN `option` o ON i.`item_no` = o.`item_no`
-            LEFT OUTER JOIN `category` `c` ON i.`category_no` = `c`.`category_no`
+            LEFT OUTER JOIN `category` c ON i.`category_no` = c.`category_no`
             LEFT OUTER JOIN `product_info_announce` p ON i.`pia_no` = p.`pia_no`
             LEFT OUTER JOIN `member` m ON i.`username` = m.`username`
     </select>

@@ -6,6 +6,7 @@ import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.dto.ItemPager;
 import kr.or.yi.teamProject.product.service.ItemService;
 import kr.or.yi.teamProject.security.dto.CustomUser;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,22 +37,7 @@ public class ManageController {
         return "manage/manage";
     }
 
-
-    //상품
-    @GetMapping("/product")
-    public String getProduct(Model model) {
-
-        log.info("서버시간");
-        log.info(LocalDateTime.now().toString());
-
-        model.addAttribute("url", "content/product/editor.jsp");
-
-        return "manage/manage";
-    }
-
-
-
-    @Autowired
+    @Setter(onMethod_ = @Autowired)
     ItemService itemService;
 
     //상품 관리 페이지
@@ -64,8 +50,6 @@ public class ManageController {
 
         log.info(pager.toString());
 
-        //CommonResult result = itemService.readItem();
-
         pager = itemService.readItemForManage(pager);
 
         model.addAttribute("url", "content/product/list.jsp");
@@ -76,7 +60,7 @@ public class ManageController {
 
     //상품 등록 페이지
     @GetMapping(params = {"section=product","func=create"})
-    public String getProductCreate(Model model, Authentication authentication) {
+    public String getProductCreate(Model model, Authentication authentication) throws Exception {
 
         //관리자 정보 가져오기
         CustomUser user = (CustomUser) authentication.getPrincipal();

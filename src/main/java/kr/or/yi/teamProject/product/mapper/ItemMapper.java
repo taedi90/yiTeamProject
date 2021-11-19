@@ -19,7 +19,7 @@ public interface ItemMapper {
 
     ItemPager getInfoForPaging(ItemPager pager);
 
-    List<Item> selectItemListForMain();
+    List<Item> selectItemListForMain(ItemPager pager);
     List<Item> selectItemListForManage(ItemPager pager);
     List<String> getImagePath();
 }

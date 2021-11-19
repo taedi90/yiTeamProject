@@ -10,11 +10,12 @@ import java.util.List;
 public interface ItemService {
     CommonResult readItem(int itemNo);
 
-    CommonResult createItem(Item item);
+    CommonResult createItem(Item item) throws Exception;
     CommonResult updateItem(Item item);
     CommonResult deleteItem(int itemNo);
 
     ItemPager getInfoForPaging(ItemPager pager);
     ItemPager readItemForManage(ItemPager pager);
+    ItemPager readItemForMain(ItemPager pager);
     List<String> getImagePath();
 }
