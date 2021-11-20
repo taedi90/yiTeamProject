@@ -1,11 +1,12 @@
 package kr.or.yi.teamProject.manage.controller;
 
-import kr.or.yi.teamProject.common.dto.Pager;
 import kr.or.yi.teamProject.common.enums.CommonResult;
 import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.dto.ItemPager;
 import kr.or.yi.teamProject.product.service.ItemService;
 import kr.or.yi.teamProject.security.dto.CustomUser;
+import kr.or.yi.teamProject.user.dto.MemberPager;
+import kr.or.yi.teamProject.user.service.MemberService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
 
 /**
  * 관리자 페이지 관련 컨트롤러
@@ -52,7 +52,7 @@ public class ManageController {
 
         pager = itemService.readItemForManage(pager);
 
-        model.addAttribute("url", "content/product/list.jsp");
+        model.addAttribute("url", "content/product/product-list.jsp");
         model.addAttribute("result", pager);
 
         return "manage/manage";
@@ -78,7 +78,7 @@ public class ManageController {
 
         if(result.isSuccess() == true) {
             model.addAttribute("result", result.getObject());
-            model.addAttribute("url", "content/product/editor.jsp");
+            model.addAttribute("url", "content/product/product-editor.jsp");
         }
 
         return "manage/manage";
@@ -92,7 +92,7 @@ public class ManageController {
         CommonResult result = itemService.readItem(itemNo);
 
         model.addAttribute("result", result.getObject());
-        model.addAttribute("url", "content/product/detail.jsp");
+        model.addAttribute("url", "content/product/product-detail.jsp");
 
         return "manage/manage";
     }
@@ -106,7 +106,22 @@ public class ManageController {
         CommonResult result = itemService.readItem(itemNo);
 
         model.addAttribute("result", result.getObject());
-        model.addAttribute("url", "content/product/editor.jsp");
+        model.addAttribute("url", "content/product/product-editor.jsp");
+
+        return "manage/manage";
+    }
+
+    @Setter(onMethod_ = @Autowired)
+    MemberService memberService;
+
+    //회원 관리 페이지
+    @GetMapping(params = {"section=member","func=list"})
+    public String getMemberList(MemberPager pager, Model model) {
+
+        pager = memberService.selectMemberList(pager);
+
+        model.addAttribute("result", pager);
+        model.addAttribute("url", "content/member/member-list.jsp");
 
         return "manage/manage";
     }

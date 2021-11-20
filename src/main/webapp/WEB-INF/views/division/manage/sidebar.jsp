@@ -31,7 +31,7 @@
 <div  class="sidebar_section">
     <hr>
 
-    <div class="menu_item">
+    <div class="menu_item" onclick="window.location.href = '?section=member&func=list'">
         <div class="icon_holder" data-tooltip="회원 관리">
             <img src="${path}/img/manage/icon/member.png" alt="">
         </div>

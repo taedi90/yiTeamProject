@@ -5,6 +5,7 @@ import kr.or.yi.teamProject.common.util.MailUtil;
 import kr.or.yi.teamProject.common.util.RandomStringCreateUtil;
 import kr.or.yi.teamProject.user.dto.Auth;
 import kr.or.yi.teamProject.user.dto.Member;
+import kr.or.yi.teamProject.user.dto.MemberPager;
 import kr.or.yi.teamProject.user.enums.RegisterResult;
 import kr.or.yi.teamProject.user.enums.Role;
 import kr.or.yi.teamProject.user.enums.SendConfirmMailResult;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -180,6 +182,27 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return CommonResult.FAILURE;
+    }
+
+
+    private MemberPager getInfoForPaging(MemberPager pager) {
+
+        pager = memberMapper.getInfoForPaging(pager);
+
+        return pager;
+    }
+
+    //회원 리스트 조회
+    @Override
+    public MemberPager selectMemberList(MemberPager pager) {
+
+        pager = getInfoForPaging(pager);
+
+        List<Member> list = memberMapper.selectMemberListForManage(pager);
+
+        pager.setRecords(list);
+
+        return pager;
     }
 
 

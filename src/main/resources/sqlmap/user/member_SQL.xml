@@ -61,9 +61,75 @@
         WHERE `username` = #{username}
     </update>
 
-    <!-- id : Dao 메서드와 동일하게 -->
-    <!-- parameterType (입력 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
-    <!-- resultType (결과 값) : 가급적 Dto, 불가피한 경우 해시맵 -->
+    <select id="getInfoForPaging" parameterType="kr.or.yi.teamProject.user.dto.MemberPager"
+            resultType="kr.or.yi.teamProject.user.dto.MemberPager">
+        <![CDATA[
+        SELECT `total_records`,
+               `final_page_no`,
+               `start_page`,
+               if(@final_page > @end_page, @end_page, @final_page) `end_page`,
+               @start_page - 1 `prev`,
+               if(@final_page > @end_page, @end_page + 1, 0) `next`,
+               (#{pageNo} - 1) * #{amount} `start_record`,
+               #{amount} `amount`,
+               #{pageNo} `page_no`,
+               #{order} `order`,
+               #{linkCount} `link_count`,
+               #{name} `name`,
+               #{username} `username`,
+               #{email} `email`,
+               #{social} `social`,
+               #{confirm} `confirm`
+        FROM (SELECT @total_recode := COUNT(*) `total_records`,
+            @final_page := CEIL(COUNT(*) / #{amount}) `final_page_no`,
+            @start_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + 1 `start_page`,
+            @end_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + #{linkCount}
+            FROM `member`
+        ]]>
+        <where>
+            <if test="name != null and name != ''">
+                `name` LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="username != null and username != ''">
+                AND `username` LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="email != null and keyword != ''">
+                AND `email` LIKE CONCAT('%', #{email}, '%')
+            </if>
+            <if test="social != null and social != ''">
+                AND `social` = ${social}
+            </if>
+            <if test="confirm != null and confirm != ''">
+                AND `email_confirm` = ${confirm}
+            </if>
+        </where>
+        ) a
+    </select>
+
+    <select id="selectMemberListForManage" parameterType="kr.or.yi.teamProject.user.dto.MemberPager"
+            resultMap="memberMap">
+        SELECT mem.`username`, `password`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social, temp_pass, enabled, authority
+        FROM `member` mem LEFT OUTER JOIN `auth` authority
+        ON mem.`username` = authority.`username`
+        <where>
+            <if test="name != null and name != ''">
+                `name` LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="username != null and username != ''">
+                AND `username` LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="email != null and keyword != ''">
+                AND `email` LIKE CONCAT('%', #{email}, '%')
+            </if>
+            <if test="social != null and social != ''">
+                AND `social` = ${social}
+            </if>
+            <if test="confirm != null and confirm != ''">
+                AND `email_confirm` = ${confirm}
+            </if>
+        </where>
+        LIMIT #{startRecord}, #{amount}
+    </select>
 
 
 </mapper>

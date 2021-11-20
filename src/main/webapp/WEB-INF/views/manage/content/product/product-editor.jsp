@@ -10,7 +10,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<link rel="stylesheet" href="${path}/css/manage/product.css">
+<link rel="stylesheet" href="${path}/css/manage/product/product-editor.css">
 
 <div id="table_wrap">
     <div id="product">
@@ -170,6 +170,6 @@
 
 </div>
 
-<script src="${path}/js/manage/editor.js"></script>
+<script src="${path}/js/manage/product/product-editor.js"></script>
 <script type="text/javascript" src="${path}/se2/js/HuskyEZCreator.js" defer></script>
 <script type="text/javascript" src="${path}/js/common/smart-editor.js" defer></script>
