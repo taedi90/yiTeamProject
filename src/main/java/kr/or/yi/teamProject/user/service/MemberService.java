@@ -17,4 +17,6 @@ public interface MemberService {
 
     MemberPager selectMemberList(MemberPager pager);
 
+    Member selectMember(Member member);
+
 }

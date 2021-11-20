@@ -17,4 +17,5 @@ public interface MemberMapper {
     MemberPager getInfoForPaging(MemberPager pager);
 
     List<Member> selectMemberListForManage(MemberPager pager);
+
 }

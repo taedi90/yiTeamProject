@@ -205,6 +205,11 @@ public class MemberServiceImpl implements MemberService {
         return pager;
     }
 
+    @Override
+    public Member selectMember(Member member) {
+        return memberMapper.selectMember(member);
+    }
+
 
     public boolean sendEmail(Member member, String authKey) {
         try {

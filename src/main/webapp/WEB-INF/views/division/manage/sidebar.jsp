@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="${path}/css/manage/sidebar.css">
 
 <div class="sidebar_section">
@@ -41,7 +42,7 @@
     </div>
 
     <div class="menu_item" onclick="window.location.href = '?section=product&func=list'">
-        <div class="icon_holder" data-tooltip="상품 등록">
+        <div class="icon_holder" data-tooltip="상품 관리">
             <img src="${path}/img/manage/icon/item.png" alt="">
         </div>
         <div class="description_holder">
@@ -102,11 +103,11 @@
 <div id="user_info" class="sidebar_section">
     <hr>
     <div class="menu_item">
-        <div class="icon_holder" data-tooltip="사용자 정보">
+        <div class="icon_holder" data-tooltip="<sec:authentication property="principal.member.name"/> 님">
             <img src="${path}/img/manage/icon/user.png" alt="">
         </div>
         <div class="description_holder">
-            사용자 정보
+            <sec:authentication property="principal.member.name"/> 님
         </div>
     </div>
 </div>

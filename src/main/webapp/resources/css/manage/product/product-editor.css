@@ -9,10 +9,11 @@
 }
 
 #table_wrap > div {
-    border: 0.1rem solid black;
+    border: 0.1rem solid grey;
     border-radius: 0.5rem;
     margin-bottom: 2rem;
     padding: 3rem;
+    box-shadow: 0.5rem 0.5rem 0.5rem grey;
 }
 
 .value_col input{

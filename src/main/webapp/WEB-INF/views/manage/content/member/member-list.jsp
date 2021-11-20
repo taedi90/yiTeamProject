@@ -28,7 +28,6 @@
     </div>
     <div id="actions">
         <button>인증 메일 재발송</button>
-        <button>탈퇴 처리</button>
         <button>엑셀 내려받기</button>
         <button>쿠폰 발행</button>
     </div>
@@ -49,13 +48,13 @@
             <c:forEach var="member" items="${requestScope.result.records}" varStatus="i">
                 <tr>
                     <td><input type="checkbox" class="checkbox" name="${member.username}"></td>
-                    <td onclick="window.location.href = 'manage?section=product&func=detail&itemNo=' + ${member.username}">${i.count}</td>
-                    <td onclick="window.location.href = 'manage?section=product&func=detail&itemNo=' + ${member.username}">
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + '${member.username}'">${i.count}</td>
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + '${member.username}'">
                             ${member.username}
                     </td>
-                    <td onclick="window.location.href = 'manage?section=product&func=detail&itemNo=' + ${member.username}">${member.name}</td>
-                    <td onclick="window.location.href = 'manage?section=product&func=detail&itemNo=' + ${member.username}">${member.email}</td>
-                    <td onclick="window.location.href = 'manage?section=product&func=detail&itemNo=' + ${member.username}">${member.phone}</td>
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + ${member.username}">${member.name}</td>
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + ${member.username}">${member.email}</td>
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + ${member.username}">${member.phone}</td>
                     <td>
                         <c:if test="${member.social}">
                             ✅

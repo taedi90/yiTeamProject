@@ -5,6 +5,7 @@ import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.dto.ItemPager;
 import kr.or.yi.teamProject.product.service.ItemService;
 import kr.or.yi.teamProject.security.dto.CustomUser;
+import kr.or.yi.teamProject.user.dto.Member;
 import kr.or.yi.teamProject.user.dto.MemberPager;
 import kr.or.yi.teamProject.user.service.MemberService;
 import lombok.Setter;
@@ -122,6 +123,20 @@ public class ManageController {
 
         model.addAttribute("result", pager);
         model.addAttribute("url", "content/member/member-list.jsp");
+
+        return "manage/manage";
+    }
+
+    //회원 상세 페이지
+    @GetMapping(params = {"section=member","func=detail"})
+    public String getMemberDetail(@RequestParam("username") String username, Model model) {
+
+        Member member = Member.builder().username(username).build();
+
+        member = memberService.selectMember(member);
+
+        model.addAttribute("result", member);
+        model.addAttribute("url", "content/member/member-detail.jsp");
 
         return "manage/manage";
     }
