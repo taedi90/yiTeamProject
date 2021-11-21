@@ -38,7 +38,7 @@ body {
     align-items: center;
     font-size: var(--font-base);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+    background-color: rgb(247, 244, 244);
 }
 a {
     color: black;
@@ -53,11 +53,13 @@ a:visited {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    max-width: 40rem;
+    max-width: 30rem;
     min-width: 30rem;
-    border: black solid 0.1rem;
+    /*border: black solid 0.1rem;*/
     border-radius: 1rem;
     padding: 3rem;
+    background-color: white;
+    box-shadow: 0.3rem 0.3rem 0.3rem rgb(193 193 193);
 }
 
 #login_title {
@@ -80,14 +82,19 @@ a:visited {
     width: 100%;
     padding: 1rem;
     border: 0;
-    border-bottom: 0.1rem solid black;
+    border-bottom: 0.1rem solid #e5e5e5;
     font-size: var(--font-base);
     margin-bottom: 1rem;
 }
 
+#login_form .login_input:focus {
+    outline: none;
+    background-color: #e5e5e5;
+}
+
 #login_form button {
     padding: 1rem;
-    border: 0.1rem solid black;
+    /*border: 0.1rem solid black;*/
     width: 100%;
     font-size: var(--font-base);
     margin: 1rem 0 1rem 0;
@@ -102,6 +109,10 @@ a:visited {
 #from_social {
     width: 100%;
     padding: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #from_social a {
@@ -109,14 +120,14 @@ a:visited {
 }
 
 .social_login_button {
-    text-align: center;
-    padding: 1rem;
-    border: 0.1rem solid black;
-    border-radius: 1rem;
     margin-bottom: 0.5rem;
-    font-size: var(--font-base);
 }
 
-.social_login_button:hover {
-    background-color: darkgray;
+.from_kakao {
+    background-color: #FEE500;
+    box-shadow: 0rem 1px 1px rgb(193 193 193);
+    border: 1px solid #e8d847;
+    width: 185px;
+    border-radius: 2px;
+    color: #000000;
 }
