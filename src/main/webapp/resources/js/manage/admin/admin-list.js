@@ -4,11 +4,18 @@ const searchInput = document.querySelector("#search_input");
 const autocomplete = document.querySelector("#autocomplete");
 const searchList = document.querySelector("#search_list");
 
+
+document.addEventListener("click", ()=> {
+    searchList.innerHTML = '';
+})
+document.addEventListener("touchstart", ()=> {
+    searchList.innerHTML = '';
+})
+
 searchInput.addEventListener("input", keywordSearch);
 
 function keywordSearch() {
     const keyword = searchInput.value.trim();
-    console.log(keyword.length);
     if (keyword.length > 0) {
         ajax('search-non-admin', {username:keyword}, cbkKeywordSearch);
     } else {
