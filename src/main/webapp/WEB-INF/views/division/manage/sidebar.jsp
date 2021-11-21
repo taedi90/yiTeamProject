@@ -18,11 +18,11 @@
             숨기기
         </div>
     </div>
-    <div class="menu_item">
+    <div class="menu_item" onclick="window.location.href = '?section=admin&func=list'">
         <div class="icon_holder" data-tooltip="관리자 설정">
             <img src="${path}/img/manage/icon/admin.png" alt="">
         </div>
-        <div class="description_holder">
+        <div class="description_holder" >
             관리자 설정
         </div>
     </div>

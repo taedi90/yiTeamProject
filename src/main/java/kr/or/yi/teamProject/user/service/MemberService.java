@@ -6,6 +6,8 @@ import kr.or.yi.teamProject.user.dto.MemberPager;
 import kr.or.yi.teamProject.user.enums.RegisterResult;
 import kr.or.yi.teamProject.user.enums.SendConfirmMailResult;
 
+import java.util.List;
+
 
 public interface MemberService {
 
@@ -15,8 +17,11 @@ public interface MemberService {
 
     CommonResult updateMember(Member member);
 
-    MemberPager selectMemberList(MemberPager pager);
+    MemberPager selectMemberListForManage(MemberPager pager);
 
     Member selectMember(Member member);
+
+    MemberPager selectMemberListForAdmin(MemberPager pager);
+    List<Member> selectNonManagerList(String username);
 
 }

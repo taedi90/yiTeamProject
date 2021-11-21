@@ -108,7 +108,7 @@
 
     <select id="selectMemberListForManage" parameterType="kr.or.yi.teamProject.user.dto.MemberPager"
             resultMap="memberMap">
-        SELECT mem.`username`, `password`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social, temp_pass, enabled, authority
+        SELECT mem.`username`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social, temp_pass, enabled, authority
         FROM `member` mem LEFT OUTER JOIN `auth` authority
         ON mem.`username` = authority.`username`
         <where>
@@ -129,6 +129,35 @@
             </if>
         </where>
         LIMIT #{startRecord}, #{amount}
+    </select>
+
+    <select id="selectMemberListForAdmin" parameterType="kr.or.yi.teamProject.user.dto.MemberPager"
+            resultMap="memberMap">
+        SELECT mem.`username`, `name`, `email`, phone, reg_date, withdrawal_date, authority
+        FROM `member` mem LEFT OUTER JOIN `auth` authority
+        ON mem.`username` = authority.`username`
+        WHERE authority = 'ROLE_MANAGER'
+            <if test="name != null and name != ''">
+                AND `name` LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+            <if test="username != null and username != ''">
+                AND `username` LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="email != null and keyword != ''">
+                AND `email` LIKE CONCAT('%', #{email}, '%')
+            </if>
+        LIMIT #{startRecord}, #{amount}
+    </select>
+
+    <!--  비 관리자 조회용 쿼리  -->
+    <select id="selectNonManagerList" resultMap="memberMap">
+        SELECT mem.`username`, `name`
+        FROM `member` mem LEFT OUTER JOIN `auth` authority
+        ON mem.`username` = authority.`username`
+        WHERE mem.`username` LIKE CONCAT('%', #{username}, '%')
+        GROUP BY mem.username HAVING SUM(IF(`authority` = 'ROLE_MANAGER',1,0)) = 0
+        ORDER BY mem.username ASC
+        LIMIT 0, 5
     </select>
 
 </mapper>

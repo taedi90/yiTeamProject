@@ -24,8 +24,6 @@
   </div>
 
   <div id="main">
-<%--    <%@ include file="content/member-product-list.jsp" %>--%>
-<%--    <%@ include file="content/product/product-editor.jsp" %>--%>
 
     <c:if test="${url ne null}">
       <c:set var="result" value="${result}" scope="request" />

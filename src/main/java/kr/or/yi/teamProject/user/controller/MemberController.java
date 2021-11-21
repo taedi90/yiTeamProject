@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 회원 (로그인, 로그아웃, 회원가입) 관련 컨트롤러
@@ -141,4 +142,14 @@ public class MemberController {
         return result;
     }
 
+    //비 관리자 조회
+    @PostMapping("/search-non-admin")
+    @ResponseBody
+    public List<Member> searchNonAdmin(
+            @RequestBody Member member) {
+
+        List<Member> list = memberService.selectNonManagerList(member.getUsername());
+
+        return list;
+    }
 }

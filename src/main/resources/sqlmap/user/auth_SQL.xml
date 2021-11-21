@@ -11,4 +11,12 @@
         ]]>
     </insert>
 
+    <delete id="deleteAuth" parameterType="kr.or.yi.teamProject.user.dto.Auth">
+        <![CDATA[
+        DELETE FROM `auth`
+        WHERE `username` = #{username}
+        AND `authority` = #{authority}
+        ]]>
+    </delete>
+
 </mapper>

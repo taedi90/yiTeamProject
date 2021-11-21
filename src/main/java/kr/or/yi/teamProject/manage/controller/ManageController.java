@@ -11,6 +11,7 @@ import kr.or.yi.teamProject.user.service.MemberService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //@PreAuthorize("hasRole('ROLE_MANAGER')")
 @RequestMapping("/manage")
 public class ManageController {
+
     //관리페이지 메인
     @GetMapping
     public String getManage() {
@@ -119,7 +121,7 @@ public class ManageController {
     @GetMapping(params = {"section=member","func=list"})
     public String getMemberList(MemberPager pager, Model model) {
 
-        pager = memberService.selectMemberList(pager);
+        pager = memberService.selectMemberListForManage(pager);
 
         model.addAttribute("result", pager);
         model.addAttribute("url", "content/member/member-list.jsp");
@@ -140,4 +142,18 @@ public class ManageController {
 
         return "manage/manage";
     }
+
+    //관리자 설정 페이지
+    @Secured("ROLE_ADMIN")
+    @GetMapping(params = {"section=admin","func=list"})
+    public String getAdminList(MemberPager pager, Model model) {
+
+        pager = memberService.selectMemberListForAdmin(pager);
+
+        model.addAttribute("result", pager);
+        model.addAttribute("url", "content/admin/admin-list.jsp");
+
+        return "manage/manage";
+    }
+
 }

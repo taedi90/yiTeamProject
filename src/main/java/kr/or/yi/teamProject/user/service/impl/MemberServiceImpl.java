@@ -185,6 +185,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
+
+
+    @Override
+    public Member selectMember(Member member) {
+        return memberMapper.selectMember(member);
+    }
+
     private MemberPager getInfoForPaging(MemberPager pager) {
 
         pager = memberMapper.getInfoForPaging(pager);
@@ -192,9 +199,9 @@ public class MemberServiceImpl implements MemberService {
         return pager;
     }
 
-    //회원 리스트 조회
+    //관리자 페이지 회원 리스트 조회
     @Override
-    public MemberPager selectMemberList(MemberPager pager) {
+    public MemberPager selectMemberListForManage(MemberPager pager) {
 
         pager = getInfoForPaging(pager);
 
@@ -205,9 +212,23 @@ public class MemberServiceImpl implements MemberService {
         return pager;
     }
 
+    //관리자 조회
     @Override
-    public Member selectMember(Member member) {
-        return memberMapper.selectMember(member);
+    public MemberPager selectMemberListForAdmin(MemberPager pager) {
+
+        pager = getInfoForPaging(pager);
+
+        List<Member> list = memberMapper.selectMemberListForAdmin(pager);
+
+        pager.setRecords(list);
+
+        return pager;
+    }
+
+    //비 관리자 조회
+    @Override
+    public List<Member> selectNonManagerList(String username) {
+        return memberMapper.selectNonManagerList(username);
     }
 
 
