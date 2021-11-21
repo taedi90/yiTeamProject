@@ -14,7 +14,7 @@
 
 <div id="table_wrap">
     <div id="title">
-        관리자 설정
+        관리자 리스트
     </div>
     <div id="actions">
         <div id="search_wrap">
@@ -31,7 +31,7 @@
     <div id="content">
         <table>
             <tr>
-                <th>선택</th>
+<%--                <th>선택</th>--%>
                 <th>No</th>
                 <th>아이디</th>
                 <th>이름</th>
@@ -43,7 +43,7 @@
 
             <c:forEach var="member" items="${requestScope.result.records}" varStatus="i">
                 <tr>
-                    <td><input type="checkbox" class="checkbox" name="${member.username}"></td>
+<%--                    <td><input type="checkbox" class="checkbox" name="${member.username}"></td>--%>
                     <td>${i.count}</td>
                     <td>${member.username}</td>
                     <td>${member.name}</td>

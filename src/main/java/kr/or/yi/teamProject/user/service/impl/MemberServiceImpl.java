@@ -39,10 +39,10 @@ public class MemberServiceImpl implements MemberService {
     @Setter(onMethod_ =  {@Autowired})
     PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Setter(onMethod_ =  {@Autowired})
     private JavaMailSender mailSender;
 
-    @Autowired
+    @Setter(onMethod_ =  {@Autowired})
     @Qualifier("jasyptStringEncryptor")
     StringEncryptor encryptor;
 
@@ -243,7 +243,7 @@ public class MemberServiceImpl implements MemberService {
                     .append(member.getUsername())
                     .append("&confirm=")
                     .append(authKey)
-                    .append("' target='_blenk'>이메일 인증 확인</a>")
+                    .append("' target='_blank'>이메일 인증 확인</a>")
                     .toString());
             sendMail.setFrom("no-reply@taedi.net", "발송용");
             sendMail.setTo(member.getEmail());

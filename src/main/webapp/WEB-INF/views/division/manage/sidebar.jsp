@@ -11,26 +11,29 @@
 
 <div class="sidebar_section">
     <div class="menu_item" onclick="toggleHide()">
-        <div class="icon_holder"  data-tooltip="펼치기">
+        <div class="icon_holder" data-tooltip="펼치기">
             <img src="${path}/img/manage/icon/hide.png" id="hide_image" alt="">
         </div>
         <div class="description_holder">
             숨기기
         </div>
     </div>
-    <div class="menu_item" onclick="window.location.href = '?section=admin&func=list'">
-        <div class="icon_holder" data-tooltip="관리자 설정">
-            <img src="${path}/img/manage/icon/admin.png" alt="">
+    <sec:authorize access="hasRole('ADMIN')">
+        <div class="menu_item" onclick="window.location.href = '?section=admin&func=list'">
+            <div class="icon_holder" data-tooltip="관리자 설정">
+                <img src="${path}/img/manage/icon/admin.png" alt="">
+            </div>
+            <div class="description_holder">
+                관리자 설정
+            </div>
         </div>
-        <div class="description_holder" >
-            관리자 설정
-        </div>
-    </div>
+    </sec:authorize>
+
     <hr>
 </div>
 
-<div  class="sidebar_section">
-<%--    <hr>--%>
+<div class="sidebar_section">
+    <%--    <hr>--%>
 
     <div class="menu_item" onclick="window.location.href = '?section=member&func=list'">
         <div class="icon_holder" data-tooltip="회원 관리">
@@ -58,7 +61,6 @@
             배송 관리
         </div>
     </div>
-
 
 
     <div class="menu_item">
@@ -97,10 +99,10 @@
         </div>
     </div>
 
-<%--    <hr>--%>
+    <%--    <hr>--%>
 </div>
 
-<div id="user_info" class="sidebar_section">
+<div id="user_info" class="sidebar_section" onclick="window.location.href = 'main'">
     <hr>
     <div class="menu_item">
         <div class="icon_holder" data-tooltip="<sec:authentication property="principal.member.name"/> 님">

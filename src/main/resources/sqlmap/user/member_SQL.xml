@@ -24,9 +24,10 @@
 
 
     <select id="selectMember" parameterType="kr.or.yi.teamProject.user.dto.Member" resultMap="memberMap">
-        SELECT mem.`username`, `password`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social, temp_pass, enabled, authority
+        SELECT mem.`username`, `password`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social,
+        temp_pass, enabled, authority
         FROM `member` mem LEFT OUTER JOIN `auth` authority
-                                             ON mem.`username` = authority.`username`
+        ON mem.`username` = authority.`username`
         WHERE 1 = 1
         <if test="username != null">
             AND mem.`username` = #{username}
@@ -38,8 +39,8 @@
 
     <insert id="insertSocialMember" parameterType="kr.or.yi.teamProject.user.dto.Member">
         <![CDATA[
-            INSERT INTO `member` (`username`, `password`, `name`, `email`, `email_confirm`, `social`)
-            VALUES (#{username}, #{password}, #{name}, #{email}, 1, 1)
+        INSERT INTO `member` (`username`, `password`, `name`, `email`, `email_confirm`, `social`)
+        VALUES (#{username}, #{password}, #{name}, #{email}, 1, 1)
         ]]>
     </insert>
 
@@ -108,9 +109,9 @@
 
     <select id="selectMemberListForManage" parameterType="kr.or.yi.teamProject.user.dto.MemberPager"
             resultMap="memberMap">
-        SELECT mem.`username`, `name`, `email`, `email_confirm`, phone, reg_date, withdrawal_date, social, temp_pass, enabled, authority
-        FROM `member` mem LEFT OUTER JOIN `auth` authority
-        ON mem.`username` = authority.`username`
+        SELECT mem.`username`, `name`, `email`, `email_confirm`, `phone`, `reg_date`, `withdrawal_date`, `social`, `temp_pass`,
+        `enabled`, `authority`
+        FROM (SELECT * from `member`
         <where>
             <if test="name != null and name != ''">
                 `name` LIKE CONCAT('%', #{keyword}, '%')
@@ -129,6 +130,9 @@
             </if>
         </where>
         LIMIT #{startRecord}, #{amount}
+        ) mem
+        LEFT OUTER JOIN `auth` authority
+        ON mem.`username` = authority.`username`
     </select>
 
     <select id="selectMemberListForAdmin" parameterType="kr.or.yi.teamProject.user.dto.MemberPager"
@@ -137,25 +141,27 @@
         FROM `member` mem LEFT OUTER JOIN `auth` authority
         ON mem.`username` = authority.`username`
         WHERE authority = 'ROLE_MANAGER'
-            <if test="name != null and name != ''">
-                AND `name` LIKE CONCAT('%', #{keyword}, '%')
-            </if>
-            <if test="username != null and username != ''">
-                AND `username` LIKE CONCAT('%', #{username}, '%')
-            </if>
-            <if test="email != null and keyword != ''">
-                AND `email` LIKE CONCAT('%', #{email}, '%')
-            </if>
+        <if test="name != null and name != ''">
+            AND `name` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="username != null and username != ''">
+            AND `username` LIKE CONCAT('%', #{username}, '%')
+        </if>
+        <if test="email != null and keyword != ''">
+            AND `email` LIKE CONCAT('%', #{email}, '%')
+        </if>
         LIMIT #{startRecord}, #{amount}
     </select>
 
     <!--  비 관리자 조회용 쿼리  -->
     <select id="selectNonManagerList" resultMap="memberMap">
         SELECT mem.`username`, `name`
-        FROM `member` mem LEFT OUTER JOIN `auth` authority
-        ON mem.`username` = authority.`username`
+        FROM `member` mem
+                 LEFT OUTER JOIN `auth` authority
+                                 ON mem.`username` = authority.`username`
         WHERE mem.`username` LIKE CONCAT('%', #{username}, '%')
-        GROUP BY mem.username HAVING SUM(IF(`authority` = 'ROLE_MANAGER',1,0)) = 0
+        GROUP BY mem.username
+        HAVING SUM(IF(`authority` = 'ROLE_MANAGER', 1, 0)) = 0
         ORDER BY mem.username ASC
         LIMIT 0, 5
     </select>
