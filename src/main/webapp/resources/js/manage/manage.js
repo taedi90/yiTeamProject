@@ -21,7 +21,7 @@ function toggleHide(){
 
 // 모바일이거나 스크린 사이즈가 768px 보다 작으면 사이드바 숨기기
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-    window.innerWidth <= 768) {
+    window.innerWidth <= 1500) {
     hideSidebar();
 }
 

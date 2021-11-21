@@ -30,7 +30,7 @@
 </div>
 
 <div  class="sidebar_section">
-    <hr>
+<%--    <hr>--%>
 
     <div class="menu_item" onclick="window.location.href = '?section=member&func=list'">
         <div class="icon_holder" data-tooltip="회원 관리">
@@ -97,7 +97,7 @@
         </div>
     </div>
 
-    <hr>
+<%--    <hr>--%>
 </div>
 
 <div id="user_info" class="sidebar_section">

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <link rel="stylesheet" href="${path}/css/manage/product/product-editor.css">
 
@@ -24,21 +24,28 @@
 
         <div class="row">
             <div class="key_col"><label for="">상품명</label></div>
-            <div class="value_col"><input type="text" class="item_input" name="name" value="${requestScope.result.name}"></div>
+            <div class="value_col"><input type="text" class="item_input" name="name"
+                                          value="${requestScope.result.name}"></div>
         </div>
         <div class="row">
             <div class="key_col"><label for="">판매금액</label></div>
-            <div class="value_col"><input type="number" class="item_input" name="price" value="${requestScope.result.price}" min="0"></div>
+            <div class="value_col"><input type="number" class="item_input" name="price"
+                                          value="${requestScope.result.price}" min="0"></div>
         </div>
         <div class="row">
             <div class="key_col"><label for="">카테고리</label></div>
             <div class="value_col">
                 <select name="categoryNo" id="category_no">
-                    <option value="1" <c:if test="${requestScope.result.category.categoryNo eq 1}">selected</c:if>>아우터</option>
-                    <option value="2" <c:if test="${requestScope.result.category.categoryNo eq 2}">selected</c:if>>상의</option>
-                    <option value="3" <c:if test="${requestScope.result.category.categoryNo eq 3}">selected</c:if>>하의</option>
-                    <option value="4" <c:if test="${requestScope.result.category.categoryNo eq 4}">selected</c:if>>원피스</option>
-                    <option value="5" <c:if test="${requestScope.result.category.categoryNo eq 5}">selected</c:if>>배송비</option>
+                    <option value="1" <c:if test="${requestScope.result.category.categoryNo eq 1}">selected</c:if>>아우터
+                    </option>
+                    <option value="2" <c:if test="${requestScope.result.category.categoryNo eq 2}">selected</c:if>>상의
+                    </option>
+                    <option value="3" <c:if test="${requestScope.result.category.categoryNo eq 3}">selected</c:if>>하의
+                    </option>
+                    <option value="4" <c:if test="${requestScope.result.category.categoryNo eq 4}">selected</c:if>>원피스
+                    </option>
+                    <option value="5" <c:if test="${requestScope.result.category.categoryNo eq 5}">selected</c:if>>배송비
+                    </option>
                 </select>
             </div>
         </div>
@@ -60,18 +67,18 @@
         <div class="row">
             <h2>옵션 <span style="color: red">*</span></h2>
         </div>
-    <c:forEach var="option" items="${requestScope.result.options}" varStatus="i">
-        <div class="option_input">
-            <input type="hidden" name="optionNo" value="${option.optionNo}">
-            <input type="text" name="name" placeholder="옵션명" value="${option.name}">
-            <input type="number" name="optionPrice" placeholder="추가금액" value="${option.optionPrice}" min="0">
-            <input type="number" name="stock" placeholder="재고수량" value="${option.stock}" min="0">
-            <button onclick="addOption()">+</button>
-            <c:if test="${i.count > 1}">
-                <button onclick="removeOption(this.parentNode)">-</button>
-            </c:if>
-        </div>
-    </c:forEach>
+        <c:forEach var="option" items="${requestScope.result.options}" varStatus="i">
+            <div class="option_input">
+                <input type="hidden" name="optionNo" value="${option.optionNo}">
+                <input type="text" name="name" placeholder="옵션명" value="${option.name}">
+                <input type="number" name="optionPrice" placeholder="추가금액" value="${option.optionPrice}" min="0">
+                <input type="number" name="stock" placeholder="재고수량" value="${option.stock}" min="0">
+                <button onclick="addOption()">+</button>
+                <c:if test="${i.count > 1}">
+                    <button onclick="removeOption(this.parentNode)">-</button>
+                </c:if>
+            </div>
+        </c:forEach>
 
 
     </div>
@@ -84,19 +91,22 @@
         <h3>기간 할인</h3>
         <div class="row">
             <div class="key_col"><label for="">할인 금액</label></div>
-            <div class="value_col"><input type="number" class="item_input" name="discount" value="${requestScope.result.discount}" min="0"></div>
+            <div class="value_col"><input type="number" class="item_input" name="discount"
+                                          value="${requestScope.result.discount}" min="0"></div>
         </div>
 
         <div class="row">
             <div class="key_col"><label for="">할인 시작</label></div>
             <fmt:formatDate var="startDiscount" value="${requestScope.result.startDiscount}" pattern="yyyy-MM-dd"/>
-            <div class="value_col"><input type="date" class="item_input" name="startDiscount" value="${startDiscount}"></div>
+            <div class="value_col"><input type="date" class="item_input" name="startDiscount" value="${startDiscount}">
+            </div>
         </div>
 
         <div class="row">
             <div class="key_col"><label for="">할인 종료</label></div>
             <fmt:formatDate var="endDiscount" value="${requestScope.result.endDiscount}" pattern="yyyy-MM-dd"/>
-            <div class="value_col"><input type="date" class="item_input" name="endDiscount" value="${endDiscount}"></div>
+            <div class="value_col"><input type="date" class="item_input" name="endDiscount" value="${endDiscount}">
+            </div>
         </div>
 
         <h3>쿠폰 할인</h3>
@@ -122,7 +132,8 @@
 
                 <div class="row">
                     <div class="key_col"><label for="">제목</label></div>
-                    <div class="value_col"><input type="text" class="item_input" name="title" value="${requestScope.result.title}"></div>
+                    <div class="value_col"><input type="text" class="item_input" name="title"
+                                                  value="${requestScope.result.title}"></div>
                 </div>
 
                 <div class="row">
@@ -136,7 +147,9 @@
 
                 <div class="row">
                     <div class="key_col"><label for="">정보제공고시</label></div>
-                    <div class="value_col"><button>선택하기</button></div>
+                    <div class="value_col">
+                        <button>선택하기</button>
+                    </div>
                 </div>
 
             </div>
@@ -144,7 +157,7 @@
             <div class="image_holder">
 
                 <c:if test="${requestScope.result.image ne null}">
-                    <img src="upload/${requestScope.result.image}/thumb_130.png" alt="썸네일 이미지" />
+                    <img src="upload/${requestScope.result.image}/thumb_130.png" alt="썸네일 이미지"/>
                 </c:if>
 
             </div>
@@ -155,13 +168,16 @@
             <!-- SmartEditor2 -->
             <input id="seUpload" type="file" style="display: none" multiple accept="image/jpeg, image/png, image/gif">
             <%--            <input type="hidden" class="item_input" name="text">--%>
-            <textarea name="smartEditor" id="smartEditor" style="width: 100%; height: 412px;">${requestScope.result.text}</textarea>
+            <textarea name="smartEditor" id="smartEditor"
+                      style="width: 100%; height: 412px;">${requestScope.result.text}</textarea>
         </div>
 
     </div>
-        <%-- publish --%>
-        <button onclick="save()">등록하기</button>
-        <%-- non-publish --%>
+
+
+    <%-- publish --%>
+    <button onclick="save()">등록하기</button>
+    <%-- non-publish --%>
     <c:if test="${requestScope.result.publish ne true}">
         <button onclick="tempSave()">임시저장</button>
         <button onclick="cancel()">삭제하기</button>

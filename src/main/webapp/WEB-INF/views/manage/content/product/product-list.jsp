@@ -107,7 +107,7 @@
                 <c:when test="${pgNo ne requestScope.result.pageNo}">
                     &nbsp;<a href="${link}&pageNo=${pgNo}">${pgNo}</a>&nbsp;
                 </c:when>
-                <c:when test="${pgNo eq requestScope.result.pageNo}"><b style="color: #6e391a;">${pgNo}</b></c:when>
+                <c:when test="${pgNo eq requestScope.result.pageNo}">&nbsp;<span id="now_page">${pgNo}</span>&nbsp;</c:when>
             </c:choose>
         </c:forEach>
 

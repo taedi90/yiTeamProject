@@ -41,7 +41,7 @@
 
 /* 구분선 */
 .sidebar_section hr {
-    border: 0.1rem solid var(--txt-color-base);
+    border: 0.1rem solid var(--border-darker);
     width: 80%;
 }
 
@@ -54,7 +54,7 @@
 .menu_item:hover .description_holder{
     font-size: var(--font-xl);
     font-weight: 600;
-    color: #5f4343;
+    color: var(--txt-color-base-hover);
 }
 
 /* 아이콘 뒤집기 */

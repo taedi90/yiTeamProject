@@ -52,9 +52,9 @@
                     <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + '${member.username}'">
                             ${member.username}
                     </td>
-                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + ${member.username}">${member.name}</td>
-                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + ${member.username}">${member.email}</td>
-                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + ${member.username}">${member.phone}</td>
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + '${member.username}'">${member.name}</td>
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + '${member.username}'">${member.email}</td>
+                    <td onclick="window.location.href = 'manage?section=member&func=detail&username=' + '${member.username}'">${member.phone}</td>
                     <td>
                         <c:if test="${member.social}">
                             ✅
@@ -89,7 +89,7 @@
             <c:when test="${pgNo ne requestScope.result.pageNo}">
                 &nbsp;<a href="${link}&pageNo=${pgNo}">${pgNo}</a>&nbsp;
             </c:when>
-            <c:when test="${pgNo eq requestScope.result.pageNo}"><b style="color: #6e391a;">${pgNo}</b></c:when>
+            <c:when test="${pgNo eq requestScope.result.pageNo}">&nbsp;<span id="now_page">${pgNo}</span>&nbsp;</c:when>
         </c:choose>
     </c:forEach>
 
