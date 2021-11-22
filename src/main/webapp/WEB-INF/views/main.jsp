@@ -17,7 +17,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
-    <link rel="stylesheet" href="${path}/css/common/common.css">
+    <link rel="stylesheet" href="${path}/css/common/main.css">
+    <link rel="stylesheet" href="${path}/css/common/main_content.css">
     <title>메인페이지</title>
 </head>
 <body>
@@ -30,99 +31,52 @@
 	<!-- content -->
     <div class="content">
 
-        <div class="event_banner">
-
-        </div>
-
-        <div class="best">
-
-            <div>
-
-                <h1>지금 가장 인기있는 상품</h1><br><br><br>
+            <div class="event_banner">
 
             </div>
 
-            <table border="1" class="best_product_table">
+            <div class="best">
 
-                <tr class="best_product_img">
-                    <td> img 1 </td>
-                    <td> img 2 </td>
-                    <td> img 3 </td>
-                    <td> img 4 </td>
-                </tr>
+                <div class="best_product_wrap">
+                    
+                    <div class="best_product">
+                        <div class="best_product_img">이미지영역</div>
+                        <div class="best_product_info_wrap">
+                            <a class="product" href="#">
+                                <div class="best_product_name">[EVENT] 11월 특가 롱원피스</div>
+                                <div class="best_product_price"> 
+                                    <div style="display: inline-block;"><span>50,000원</span>
+                                        <span><strike>55,000원</strike></span>
+                                    </div>
+                                    <span style="display: inline-block;"> 500원 적립</span>
+                                </div>
+                                <div class="best_product_size"> S / M / L / XL</div>
+                                <div class="best_product_information"> 선선한 가을날 잘 어울리는 원피스</div>
+                                <div class="best_product_color">
+                                    <span style="background-color: rgba(255, 255, 255, 0.918);"></span>
+                                    <span style="background-color: lightpink;"></span>
+                                </div>
+                            </a>                
+                        </div>
+                    </div>
 
-                <tr class="best_product_name">
-                    <td> con 1 </td>
-                    <td> con 2 </td>
-                    <td> con 3 </td>
-                    <td> con 4 </td>
-                </tr>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
+                    <div class="best_product"></div>
 
-                <tr class="best_product_img">
-                    <td> img 5 </td>
-                    <td> img 6 </td>
-                    <td> img 7 </td>
-                    <td> img 8 </td>
-                </tr>
+                </div>
 
-                <tr class="best_product_name">
-                    <td> con 5 </td>
-                    <td> con 6 </td>
-                    <td> con 7 </td>
-                    <td> con 8 </td>
-                </tr>
-
-            </table>
-
-            <table border="1" class="mobile_best_product_table">
-
-                <tr class="best_product_img">
-                    <td> img 1 </td>
-                    <td> img 2 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> 이름 <br>
-                        가격 </td>
-                    <td> con 2 </td>
-                </tr>
-
-                <tr class="best_product_img">
-                    <td> img 3 </td>
-                    <td> img 4 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 3 </td>
-                    <td> con 4 </td>
-                </tr>
-
-                <tr class="best_product_img">
-                    <td> img 5 </td>
-                    <td> img 6 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 5 </td>
-                    <td> con 6 </td>
-                </tr>
-
-                <tr class="best_product_img">
-                    <td> img 7 </td>
-                    <td> img 8 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 7 </td>
-                    <td> con 8 </td>
-                </tr>
-
-
-            </table>
+            </div>
 
         </div>
-
-    </div>
 
 ${result}
 <c:forEach var="item" items="${result.records}" varStatus="status">
