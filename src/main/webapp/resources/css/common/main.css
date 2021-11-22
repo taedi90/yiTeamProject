@@ -10,11 +10,11 @@ body{ padding-top: 7rem; }
 
 html{
     /* 배경색 */
-    --bg-color-1: #FDFAF6;
-    --bg-color-2: rgb(247,244,244);
-    --bg-color-3: #DAD0C2;
-    --bg-color-4: #CDBBA7;
-    --bg-color-5: #ffffff;
+    --bg-base: rgb(250,247,244);
+    --bg-point: rgb(248,248,250);
+    --bg-grey: rgb(223, 219, 219);
+    --bg-color-payment: rgb(211,84,96);
+    --bg-color-cart: black;
 
     /* 글자색 */
     --txt-color-1: black;

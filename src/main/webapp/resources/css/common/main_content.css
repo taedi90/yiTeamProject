@@ -1,6 +1,6 @@
 .content{
     width: 100%;
-    background-color: rgb(247, 244, 244);
+    background-color: var(--bg-base);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
