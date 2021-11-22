@@ -22,120 +22,118 @@
     <title>메인페이지</title>
 </head>
 <body>
-	
-	<div id="wrap">
-	<%@ include file="division/common/header.jsp" %>
-	<%@ include file="division/common/nav.jsp" %>
+
+<div id="wrap">
+    <%@ include file="division/common/header.jsp" %>
+    <%@ include file="division/common/nav.jsp" %>
 
 
-	<!-- content -->
+    <!-- content -->
+    <%--    <div class="content">--%>
+
+    <%--            <div class="event_banner">--%>
+
+    <%--            </div>--%>
+
+    <%--            <div class="best">--%>
+
+    <%--                <div class="best_product_wrap">--%>
+    <%--                    --%>
+    <%--                    <div class="best_product">--%>
+    <%--                        <div class="best_product_img">이미지영역</div>--%>
+    <%--                        <div class="best_product_info_wrap">--%>
+    <%--                            <a class="product" href="#">--%>
+    <%--                                <div class="best_product_name">[EVENT] 11월 특가 롱원피스</div>--%>
+    <%--                                <div class="best_product_price"> --%>
+    <%--                                    <div style="display: inline-block;"><span>50,000원</span>--%>
+    <%--                                        <span><strike>55,000원</strike></span>--%>
+    <%--                                    </div>--%>
+    <%--                                    <span style="display: inline-block;"> 500원 적립</span>--%>
+    <%--                                </div>--%>
+    <%--                                <div class="best_product_size"> S / M / L / XL</div>--%>
+    <%--                                <div class="best_product_information"> 선선한 가을날 잘 어울리는 원피스</div>--%>
+    <%--                                <div class="best_product_color">--%>
+    <%--                                    <span style="background-color: rgba(255, 255, 255, 0.918);"></span>--%>
+    <%--                                    <span style="background-color: lightpink;"></span>--%>
+    <%--                                </div>--%>
+    <%--                            </a>                --%>
+    <%--                        </div>--%>
+    <%--                    </div>--%>
+
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+    <%--                    <div class="best_product"></div>--%>
+
+    <%--                </div>--%>
+
+    <%--            </div>--%>
+
+    <%--        </div>--%>
+
+    <%--${result}--%>
+
+
+    <%--  <main>
+
+         <sec:authorize access="isAnonymous()">
+             <a href="login">로그인</a>
+         </sec:authorize>
+
+         <sec:authorize access="isAuthenticated()">
+             <a href="logout">로그아웃</a>
+             <p>principal : <sec:authentication property="principal.member"/></p>
+             <p>아이디 : <sec:authentication property="principal.username"/></p>
+             <p>이름 : <sec:authentication property="principal.member.name"/></p>
+             <p>이메일 : <sec:authentication property="principal.member.email"/></p>
+             <p>권한 : <sec:authentication property="principal.member.authority"/></p>
+         </sec:authorize>
+
+     </main> --%>
+
+
     <div class="content">
+        <div class="event_banner"></div>
+        <div class="product_container">
 
-            <div class="event_banner">
 
-            </div>
 
-            <div class="best">
+            <c:forEach var="item" items="${result.records}" varStatus="status">
+                <a href="detail?itemNo=${item.itemNo}">
+                    <div class="product">
+                        <div class="image_holder">
+                            <img src="upload/${item.image}/thumb_350.png" alt="">
+                        </div>
+                        <div class="desc">
+                            <p>${item.category.title}</p>
+                            <p>${item.title}</p>
+                            <p>${item.price}원</p>
+                            <p>
+                                <c:forEach var="option" items="${item.options}" varStatus="status">
+                                    ${option.name}&nbsp;
+                                </c:forEach>
+                            </p>
 
-                <div class="best_product_wrap">
-                    
-                    <div class="best_product">
-                        <div class="best_product_img">이미지영역</div>
-                        <div class="best_product_info_wrap">
-                            <a class="product" href="#">
-                                <div class="best_product_name">[EVENT] 11월 특가 롱원피스</div>
-                                <div class="best_product_price"> 
-                                    <div style="display: inline-block;"><span>50,000원</span>
-                                        <span><strike>55,000원</strike></span>
-                                    </div>
-                                    <span style="display: inline-block;"> 500원 적립</span>
-                                </div>
-                                <div class="best_product_size"> S / M / L / XL</div>
-                                <div class="best_product_information"> 선선한 가을날 잘 어울리는 원피스</div>
-                                <div class="best_product_color">
-                                    <span style="background-color: rgba(255, 255, 255, 0.918);"></span>
-                                    <span style="background-color: lightpink;"></span>
-                                </div>
-                            </a>                
                         </div>
                     </div>
-
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-                    <div class="best_product"></div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-${result}
-<c:forEach var="item" items="${result.records}" varStatus="status">
-
-    <div>
-        <div>
-            <img src="upload/${item.image}/thumb_350.png" alt="">
-        </div>
-        <div>
-            <h2>${item.title}</h2>
-            <h4>${item.category.title}</h4>
-            <p>${item.price}원</p>
-
-            <c:set value="0" var="totalStock" scope="page"/>
-            <c:forEach var="option" items="${item.options}" varStatus="status">
-                <c:set value="${option.stock + totalStock}" var="totalStock" scope="page"/>
-                <input type="hidden" data-option-no="${option.optionNo}" data-option-name="${option.name}" data-option-price="${option.optionPrice}" data-option-stock="${option.stock}">
+                </a>
             </c:forEach>
-            총 재고 : ${totalStock}
+
         </div>
     </div>
 
 
+    <%@ include file="division/common/footer.jsp" %>
+</div>
 
 
-</c:forEach>
-
-
-
-
-
-   <%--  <main>
-
-        <sec:authorize access="isAnonymous()">
-            <a href="login">로그인</a>
-        </sec:authorize>
-
-        <sec:authorize access="isAuthenticated()">
-            <a href="logout">로그아웃</a>
-            <p>principal : <sec:authentication property="principal.member"/></p>
-            <p>아이디 : <sec:authentication property="principal.username"/></p>
-            <p>이름 : <sec:authentication property="principal.member.name"/></p>
-            <p>이메일 : <sec:authentication property="principal.member.email"/></p>
-            <p>권한 : <sec:authentication property="principal.member.authority"/></p>
-        </sec:authorize>
-
-    </main> --%>
-    
-    
-    <div class="content" style="height:1000px">
-    
-    </div>
-    
-    
-    
-    	<%@ include file="division/common/footer.jsp" %>
-    </div>
-
-
-    <script src="${path}/js/payment/jquery-3.6.0.min.js"></script>
+<script src="${path}/js/payment/jquery-3.6.0.min.js"></script>
 </body>
 </html>

@@ -38,11 +38,11 @@
                 <select name="categoryNo" id="category_no">
                     <option value="1" <c:if test="${requestScope.result.category.categoryNo eq 1}">selected</c:if>>아우터
                     </option>
-                    <option value="2" <c:if test="${requestScope.result.category.categoryNo eq 2}">selected</c:if>>상의
+                    <option value="2" <c:if test="${requestScope.result.category.categoryNo eq 2}">selected</c:if>>원피스
                     </option>
-                    <option value="3" <c:if test="${requestScope.result.category.categoryNo eq 3}">selected</c:if>>하의
+                    <option value="3" <c:if test="${requestScope.result.category.categoryNo eq 3}">selected</c:if>>상의
                     </option>
-                    <option value="4" <c:if test="${requestScope.result.category.categoryNo eq 4}">selected</c:if>>원피스
+                    <option value="4" <c:if test="${requestScope.result.category.categoryNo eq 4}">selected</c:if>>하의
                     </option>
                     <option value="5" <c:if test="${requestScope.result.category.categoryNo eq 5}">selected</c:if>>배송비
                     </option>

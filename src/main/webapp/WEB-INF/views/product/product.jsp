@@ -30,18 +30,18 @@
                     <!-- 상품 상세페이지 시작 -->
                     <div class="detail_top container">
                         <div class="product_img" style="height: 70rem;">
-
+                            <img src="upload/${result.image}/thumb.png" alt="">
                         </div>
 
                         <div class="product_info">
                             <!-- form 태그와 input type=hidden태그로 값넘겨주는게 일반적인듯? -->
-                            <H3 class="product_title">[EVENT] 11월 특가 롱원피스</H3>
+                            <H3 class="product_title">${result.title}</H3>
                             <!-- 금액시작 -->
                             <div class="product_price">
                                 <!-- 판매가 -->
                                 <div class="price dcpricet">
                                     <span id="price_span">
-                                        50000
+                                        ${result.price}
                                     </span>
                                     <span class="won">원</span>
                                 </div>
@@ -165,6 +165,8 @@
 	<script type="text/javascript" src="${path}/js/product/tab.js"></script>
 	
 	<script type="text/javascript" src="${path}/js/payment/iamport.js"></script>
-	
+
+    ${result}
+
 </body>
 </html>

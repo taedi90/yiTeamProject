@@ -94,7 +94,9 @@ a:visited {
 
 #login_form button {
     padding: 1rem;
-    /*border: 0.1rem solid black;*/
+    border: none;
+    background-color: rgb(211,84,96);
+    color: white;
     width: 100%;
     font-size: var(--font-base);
     margin: 1rem 0 1rem 0;
