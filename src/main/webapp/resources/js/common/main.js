@@ -9,6 +9,9 @@ function viewMore() {
 
     pager.pageNo = page++;
 
+    if(typeof category !== 'undefined'){
+        pager.category = category;
+    }
 
     btnMore.style.display = "none";
 

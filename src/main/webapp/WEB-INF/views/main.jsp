@@ -30,16 +30,26 @@
 
 
     <div class="content">
-        <div class="event_banner"></div>
+
+        <c:if test="${result.category eq null}">
+            <div class="event_banner"></div>
+        </c:if>
+        <c:if test="${result.category ne null}">
+            <script>
+                const category = ${result.category};
+                const items = ${result.totalRecords}
+            </script>
+        </c:if>
+
+
+
         <div class="product_container">
-
-
 
             <c:forEach var="item" items="${result.records}" varStatus="status">
                 <a href="detail?itemNo=${item.itemNo}">
                     <div class="product">
                         <div class="image_holder">
-                            <img src="upload/${item.image}/thumb_350.png" onerror="this.src='${path}/img/common/lazy.svg'" alt="">
+                            <img src="upload/${item.image}/thumb_350.png" onerror="this.onerror=null;this.src='${path}/img/common/lazy.svg'" alt="">
 <%--                            <img class="lazy" src="${path}/img/common/lazy.svg" data-src="upload/${item.image}/thumb_350.png" onerror="this.src='${path}/img/common/lazy.svg'" alt="">--%>
                         </div>
                         <div class="desc">
@@ -49,7 +59,10 @@
                             <p class="product_price"><fmt:formatNumber value="${item.price}" pattern="#,###원"/></p>
                             <p class="product_option">
                                 <c:forEach var="option" items="${item.options}" varStatus="status">
-                                    ${option.name}&nbsp;
+                                    <c:if test="${status.count > 1}" >
+                                        &nbsp;|&nbsp;
+                                    </c:if>
+                                    ${option.name}
                                 </c:forEach>
                             </p>
 
@@ -60,10 +73,12 @@
 
         </div>
 
+        <c:if test="${result.totalRecords > 12}">
+            <div id="more" onclick="viewMore()">
+                더보기
+            </div>
+        </c:if>
 
-        <div id="more" onclick="viewMore()">
-            더보기
-        </div>
 
 
     </div>

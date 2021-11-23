@@ -5,7 +5,7 @@ html { font-size: 62.5%; }
 @media (max-width: 768px)  {
 /* 가로 768px 이하 1rem == 8.75px  */
 html { font-size: 54.6875%; }
-body{ padding-top: 7rem; }
+/*body{ padding-top: 7rem; }*/
 }
 
 html{
