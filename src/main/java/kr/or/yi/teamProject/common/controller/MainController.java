@@ -27,6 +27,9 @@ public class MainController {
         //전체 페이지, 섹션별 페이지
 
         pager.setAmount(12);
+        pager.setPublish("true");
+        pager.setHide("false");
+
 
 
         pager = itemService.getInfoForPaging(pager);
@@ -46,6 +49,8 @@ public class MainController {
         //전체 페이지, 섹션별 페이지
 
         pager.setAmount(12);
+        pager.setPublish("true");
+        pager.setHide("false");
 
         pager = itemService.getInfoForPaging(pager);
 

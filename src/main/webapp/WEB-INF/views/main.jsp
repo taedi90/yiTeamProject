@@ -37,11 +37,9 @@
         <c:if test="${result.category ne null}">
             <script>
                 const category = ${result.category};
-                const items = ${result.totalRecords}
+                const items = ${result.totalRecords};
             </script>
         </c:if>
-
-
 
         <div class="product_container">
 

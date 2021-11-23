@@ -26,6 +26,7 @@ function cbkViewMore(res) {
 
     try {
         result = JSON.parse(res);
+        console.log(result);
     } catch (e) {
         console.log(e);
         return;
