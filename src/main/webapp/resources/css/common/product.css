@@ -353,5 +353,5 @@ border:none ! important;
 
 
 .nav{
-    position: relative;
+    position: inherit !important;
 }

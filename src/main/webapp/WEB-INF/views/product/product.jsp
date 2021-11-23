@@ -47,7 +47,7 @@
                                 </div>
                                 <!-- 적립금 -->
                                 <div class="point">
-                                    <img src="img/icon_point3.svg" alt="point" class="point_img"> 500
+                                    <img src="${path}/img/common/icon_point.svg" alt="point" class="point_img"> 500
                                 </div>
                                 <div class="product_option_table">
                                     <table>

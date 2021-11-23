@@ -15,7 +15,7 @@
             <sec:authorize access="hasAnyRole('ADMIN','MANAGER')">
                 &nbsp;|&nbsp;<a href="manage">관리자페이지</a>
             </sec:authorize>
-            &nbsp;| 마이페이지 | 장바구니
+            &nbsp;| <a href="mypage"> 마이페이지 </a> | 장바구니
         </div>
 
         <!-- 모바일 메뉴 -->
