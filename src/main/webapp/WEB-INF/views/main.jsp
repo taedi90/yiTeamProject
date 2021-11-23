@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- 스프링 시큐리티 태그 --%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <html lang="ko">
@@ -28,77 +29,6 @@
     <%@ include file="division/common/nav.jsp" %>
 
 
-    <!-- content -->
-    <%--    <div class="content">--%>
-
-    <%--            <div class="event_banner">--%>
-
-    <%--            </div>--%>
-
-    <%--            <div class="best">--%>
-
-    <%--                <div class="best_product_wrap">--%>
-    <%--                    --%>
-    <%--                    <div class="best_product">--%>
-    <%--                        <div class="best_product_img">이미지영역</div>--%>
-    <%--                        <div class="best_product_info_wrap">--%>
-    <%--                            <a class="product" href="#">--%>
-    <%--                                <div class="best_product_name">[EVENT] 11월 특가 롱원피스</div>--%>
-    <%--                                <div class="best_product_price"> --%>
-    <%--                                    <div style="display: inline-block;"><span>50,000원</span>--%>
-    <%--                                        <span><strike>55,000원</strike></span>--%>
-    <%--                                    </div>--%>
-    <%--                                    <span style="display: inline-block;"> 500원 적립</span>--%>
-    <%--                                </div>--%>
-    <%--                                <div class="best_product_size"> S / M / L / XL</div>--%>
-    <%--                                <div class="best_product_information"> 선선한 가을날 잘 어울리는 원피스</div>--%>
-    <%--                                <div class="best_product_color">--%>
-    <%--                                    <span style="background-color: rgba(255, 255, 255, 0.918);"></span>--%>
-    <%--                                    <span style="background-color: lightpink;"></span>--%>
-    <%--                                </div>--%>
-    <%--                            </a>                --%>
-    <%--                        </div>--%>
-    <%--                    </div>--%>
-
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-    <%--                    <div class="best_product"></div>--%>
-
-    <%--                </div>--%>
-
-    <%--            </div>--%>
-
-    <%--        </div>--%>
-
-    <%--${result}--%>
-
-
-    <%--  <main>
-
-         <sec:authorize access="isAnonymous()">
-             <a href="login">로그인</a>
-         </sec:authorize>
-
-         <sec:authorize access="isAuthenticated()">
-             <a href="logout">로그아웃</a>
-             <p>principal : <sec:authentication property="principal.member"/></p>
-             <p>아이디 : <sec:authentication property="principal.username"/></p>
-             <p>이름 : <sec:authentication property="principal.member.name"/></p>
-             <p>이메일 : <sec:authentication property="principal.member.email"/></p>
-             <p>권한 : <sec:authentication property="principal.member.authority"/></p>
-         </sec:authorize>
-
-     </main> --%>
-
-
     <div class="content">
         <div class="event_banner"></div>
         <div class="product_container">
@@ -109,13 +39,15 @@
                 <a href="detail?itemNo=${item.itemNo}">
                     <div class="product">
                         <div class="image_holder">
-                            <img src="upload/${item.image}/thumb_350.png" alt="">
+                            <img src="upload/${item.image}/thumb_350.png" onerror="this.src='${path}/img/common/lazy.svg'" alt="">
+<%--                            <img class="lazy" src="${path}/img/common/lazy.svg" data-src="upload/${item.image}/thumb_350.png" onerror="this.src='${path}/img/common/lazy.svg'" alt="">--%>
                         </div>
                         <div class="desc">
-                            <p>${item.category.title}</p>
-                            <p>${item.title}</p>
-                            <p>${item.price}원</p>
-                            <p>
+                            <p class="product_category">${item.category.title}</p>
+                            <p class="product_title">${item.title}</p>
+
+                            <p class="product_price"><fmt:formatNumber value="${item.price}" pattern="#,###원"/></p>
+                            <p class="product_option">
                                 <c:forEach var="option" items="${item.options}" varStatus="status">
                                     ${option.name}&nbsp;
                                 </c:forEach>
@@ -127,6 +59,13 @@
             </c:forEach>
 
         </div>
+
+
+        <div id="more" onclick="viewMore()">
+            더보기
+        </div>
+
+
     </div>
 
 
@@ -134,6 +73,9 @@
 </div>
 
 
-<script src="${path}/js/payment/jquery-3.6.0.min.js"></script>
+<%--<script src="${path}/js/payment/jquery-3.6.0.min.js"></script>--%>
+<script src="${path}/js/common/lazy.js"></script>
+<script src="${path}/js/common/main.js"></script>
+<script src="${path}/js/common/ajax.js"></script>
 </body>
 </html>
