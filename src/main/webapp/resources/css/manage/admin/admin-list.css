@@ -1,0 +1,93 @@
+#table_wrap {
+    display: inline-block;
+    max-width: 130rem;
+    min-width: 100rem;
+    width: 100%;
+}
+#table_wrap > * {
+    margin-top: 1rem;
+}
+
+/* 제목 */
+#title {
+    text-align: left;
+    font-size: var(--font-2xl);
+}
+
+/* 버튼 */
+#actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+#searchbar {
+    position: relative;
+    margin: 0;
+    width: 30rem;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#searchbar input{
+    width: 25rem;
+}
+
+#searchbar button{
+    width: 5rem;
+    border-radius: 0;
+}
+
+#autocomplete {
+    margin: 0;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0rem 0.3rem 0.3rem var(--border-base);
+    width: 30rem;
+    font-size: var(--font-sm);
+    /*display: none;*/
+    z-index: 10000;
+    cursor: default;
+}
+
+ol, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+li div {
+    padding: 1rem;
+}
+
+li > div > span {
+    font-weight: bold;
+    color: #3a32c3;
+}
+
+li div:hover {
+    background-color: #e5e5e5;
+}
+
+/* 테이블 */
+#content {
+    font-size: var(--font-sm);
+    text-align: center;
+}
+
+#content table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 0.2rem solid var(--border-base);
+    border-bottom: 0.2rem solid var(--border-base);
+}
+
+#content th, td {
+    white-space: nowrap;
+    border-top: 0.1rem solid var(--border-base);
+    border-bottom: 0.1rem solid var(--border-base);
+    margin: 0;
+    padding: 0.8rem 2rem 0.8rem 2rem;
+    text-align: center;
+}

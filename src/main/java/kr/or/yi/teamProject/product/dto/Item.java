@@ -1,5 +1,6 @@
 package kr.or.yi.teamProject.product.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import kr.or.yi.teamProject.user.dto.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * 상품정보 전달 용 클래스
@@ -24,7 +26,9 @@ public class Item {
     private String name; //상품명
     private int price; //가격
     private int discount; //할인 가격
+    @JsonFormat(timezone = "Asia/Seoul")
     private Date startDiscount; //할인 시작일
+    @JsonFormat(timezone = "Asia/Seoul")
     private Date endDiscount; //할인 종료일
     private String title; //제목
     private String text; //내용

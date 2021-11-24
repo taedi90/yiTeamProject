@@ -2,13 +2,7 @@
     display: none;
 }
 
-.mobile_menu{
-    display: none;
-}
 
-.moblie_logo_img{
-    display: none;
-}
 
 .header{
     width: 100%;
@@ -31,9 +25,16 @@
 }
 
 
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-
-
+.logo_img{
+    width: 35rem;
+    /*height: auto;*/
+}
 
 
 @media (max-width:768px) {
@@ -42,52 +43,44 @@
     }
 
     .header{
-        height: 7rem;
-        line-height: 7rem;
-        background-color: white;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        /*height: 7rem;*/
+        /*line-height: 7rem;*/
+        /*background-color: white;*/
+        /*position: fixed;*/
+        /*top: 0;*/
+        /*left: 0;*/
+        /*right: 0;*/
+        /*display: flex;*/
+        /*align-items: center;*/
+        /*justify-content: space-between;*/
+        display: none;
     }
 
-    .mobile_menu img{
-        width: 2rem;
-        height: 2rem;
-    }
+    /*.mobile_menu img{*/
+    /*    width: 2rem;*/
+    /*    height: 2rem;*/
+    /*}*/
         
-    .mobile_user img{
-        width: 2rem;
-        height: 2rem;
-    }
+    /*.mobile_user img{*/
+    /*    width: 2rem;*/
+    /*    height: 2rem;*/
+    /*}*/
 
-    .logo{
-        display: inline-block;
-        align-content:center;
-        width: 50%;
-        height:100%;
-        
-    }
-    
-    .logo_img{
-    	display:none;  	
-    }
-    
-    .moblie_logo_img{
-    	display:block;
-    	margin:auto;
-    	margin-top:1.5rem;
-    }
 
-    .mobile_menu{
-        display: inline-block;
-        width: 13%;
-        vertical-align: left;
-        margin-left: -1.5rem;
-    }
+    
+    /*.moblie_logo_img{*/
+    /*	display:block;*/
+    /*	margin:auto;*/
+    /*	margin-top:1.5rem;*/
+    /*}*/
+
+    /*.mobile_menu{*/
+    /*    display: inline-block;*/
+    /*    width: 9rem;*/
+    /*    !*vertical-align: left;*!*/
+    /*    !*margin-left: -1.5rem;*!*/
+
+    /*}*/
 
     .main_menu:hover .sub_menu{
         display: block;
@@ -95,13 +88,13 @@
         position: absolute;
     }
 
-    .mobile_user{
-        width: 13%;
-        display: flex;
-        justify-content: right;
-    }
+    /*.mobile_user{*/
+    /*    width: 9rem;*/
+    /*    display: flex;*/
+    /*    justify-content: right;*/
+    /*}*/
 
-    .mobile_user img{
-        margin-right: 0.8rem;
-    }
+    /*.mobile_user img{*/
+    /*    margin-right: 0.8rem;*/
+    /*}*/
 }

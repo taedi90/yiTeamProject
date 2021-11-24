@@ -1,10 +1,5 @@
 'use strict';
 
-// let data ={
-//     name: document.getElementById(""),
-//
-// }
-
 function getData(){
     let product = new Object(); //상품 정보를 담을 객체
     let category = new Object(); //카테고리 정보를 담을 객체
@@ -17,6 +12,13 @@ function getData(){
             product[i.name] = i.value;
         }
     }
+
+    //에디터 내용은 따로 받기
+    const seRootIframe = document.querySelector("iframe");
+    const seChildIframe = seRootIframe.contentWindow.document.querySelector("#se2_iframe");
+    const seBody = seChildIframe.contentWindow.document.body;
+    product["text"] = seBody.innerHTML;
+
 
     //카테고리 추가하기
     category.categoryNo = document.getElementById("category_no").value;
@@ -161,8 +163,13 @@ function uploadBtnEvent(){
     xhr.onload = function () {
         if (xhr.status === 200 || xhr.status === 201) { // 통신 성공 시
             document.querySelector("[name='image']").value = JSON.parse(xhr.response).object;
-            document.querySelector("#detail").style.background = "";
-            document.querySelector("#detail").style.background = "white url('upload/" + JSON.parse(xhr.response).object  + "/thumb_130.png') no-repeat right top/18rem";
+
+            const imageHolder = document.querySelector(".image_holder");
+
+            imageHolder.innerHTML = `<img src="upload/${JSON.parse(xhr.response).object}/thumb_130.png?a=${new Date().getTime()}" alt="썸네일 이미지" />`;
+
+            thumbInput.value = null;
+
         } else { // 통신 실패 시
             //
         }
@@ -208,11 +215,7 @@ function cbkImageUpload(results){
 //에디터 사진 버튼 클릭
 function addImage(){
 
-
-
     document.querySelector("#seUpload").click();
-
-
 
 }
 
@@ -233,17 +236,55 @@ function tempSave() {
     data.publish = false;
 
     //업데이트 요청
-    ajax('item', getData(), cbkTempSave, (e) => console.log(e), 'put');
+    ajax('item', data, cbkTempSave, (e) => console.log(e), 'put');
 
 }
 
 function cbkTempSave(res) {
     const result = JSON.parse(res);
     if(result.success == true) {
-        toastAlert("임시 저장 완료!");
+        newToast("임시 저장 완료!");
     } else {
-        toastAlert("임시 저장 실패!");
+        newToast("임시 저장 실패!");
     }
 }
 
+/**
+ * 취소하기(삭제)
+ */
 
+function cancel(){
+    const data = [{itemNo: document.querySelector("[name='itemNo']").value}];
+
+    ajax('item', data, cbkCancel,(res) => console.error(res),'delete');
+}
+
+function cbkCancel(result){
+    window.location.href = "manage?section=product&func=list";
+}
+
+
+/**
+ * 저장하기
+ */
+function save() {
+
+    //작성한 내용 불러오기
+    let data = getData();
+
+    //발행여부 false
+    data.publish = true;
+
+    //업데이트 요청
+    ajax('item', data, cbkSave, (e) => console.log(e), 'put');
+
+}
+
+function cbkSave(res) {
+    const result = JSON.parse(res);
+    if(result.success == true) {
+        window.location.href = "manage?section=product&func=list";
+    } else {
+        newToast("등록 실패!");
+    }
+}

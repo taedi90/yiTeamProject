@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/item")
 public class ItemController {
 
-    @Autowired
+    @Setter(onMethod_ = @Autowired)
     ItemMapper itemMapper;
 
     @Setter(onMethod_ = @Autowired)
@@ -39,7 +39,7 @@ public class ItemController {
     //아이템 수정
     @PutMapping
     public CommonResult putItem(@RequestBody Item item){
-//        log.info(item.toString());
+        log.info(item.toString());
         CommonResult commonResult = itemService.updateItem(item);
 
         return commonResult;

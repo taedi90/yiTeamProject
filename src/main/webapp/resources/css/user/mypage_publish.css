@@ -1,0 +1,117 @@
+.mypage_nav{
+    position: relative;
+    background-color: white;
+    font-size: var(--font-sm);
+    font-weight: 500;
+    line-height: 5.4rem;
+}
+
+.mypage_nav_left{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 5rem;
+}
+
+.mypage_nav_left ul li{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    list-style: none;
+}
+
+
+.welcome{
+    text-align: center;    
+}
+
+
+.mypage_nav_menu{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.mypage_nav_menu ul li{
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 2rem;
+    list-style: none;
+}
+
+
+.content{
+    width: 100%;
+    background-color: var(--bg-base);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 10rem;
+}
+
+
+.content_wrap{
+    width: 80%;
+    padding-top: 2.5rem;
+}
+
+.side_wrap{
+    width: 35rem;
+    float: left;
+    position: relative;
+}
+
+.side_all{
+    width: 28rem;
+}
+
+.side_title{
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 1;
+    padding-bottom: 2.5rem;
+}
+
+.side_content_all{
+    border: 1px solid #cecdcd;
+}
+
+.mypage_menu{
+    padding: 0 2.5rem;
+
+}
+
+.mypage_menu h3{
+    font-size: var(--font-xl);
+    padding: 2.5rem 0 1.5rem;
+    line-height: 1.5;
+    letter-spacing: -0.1rem;
+}
+
+.mypage_menu ul{
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.mypage_menu ul li{
+    padding-bottom: 0.5rem;
+    display: block;
+    list-style: none;
+    font-size: var(--font-sm);
+    line-height: 1.5;
+    letter-spacing: -0.1rem;
+}
+
+
+.mypage_menu ul li a{
+    color: black;
+    text-decoration: none;
+}
+
+.mypage_content_wrap{
+    width: calc(100% - 40rem);
+    min-height: 40rem;
+    float: left;
+    margin-top: 6.5rem;
+}

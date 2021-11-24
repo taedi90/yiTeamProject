@@ -96,9 +96,9 @@ public class ItemMapperTest extends TestCase {
     public void selectItem() {
         log.info("=== 아이템 선택 ===");
 
-        ArrayList<Item> result = mapper.selectItem(item);
+        Item result = mapper.selectItem(item.getItemNo());
 
-        assertTrue(result.size() > 0);
+        assertNotNull(result);
     }
 
     @Ignore("매 테스트 종료마다 리스트 출력하므로 제외 함")

@@ -4,29 +4,23 @@
     min-width: 95rem;
     width: fit-content;
     font-size: var(--font-base);
-    text-align: left;
+    text-align: center;
     padding: 3rem 0 3rem 0;
 }
 
 #table_wrap > div {
-    border: 0.1rem solid black;
-    border-radius: 0.5rem;
+    border: 0.1rem solid var(--border-base);
+    /*border-radius: 0.5rem;*/
     margin-bottom: 2rem;
     padding: 3rem;
+    box-shadow: 0.3rem 0.3rem 0.3rem grey;
+    text-align: left;
 }
 
 .value_col input{
-    padding: 1rem;
-    border: 0;
-    border-bottom: solid 0.1rem black;
     width: 100%;
     max-width: 60rem;
     font-size: var(--font-lg);
-}
-
-input:focus{
-    background: var(--bg-color-base-hover);
-    outline: none;
 }
 
 .value_col select{
@@ -34,6 +28,11 @@ input:focus{
     font-size: var(--font-lg);
     max-width: 30rem;
     width: 100%;
+}
+
+.value_col select:focus{
+    background-color: var(--bg-color-base);
+    outline: none;
 }
 
 .row{
@@ -60,7 +59,7 @@ input:focus{
 .option_input input {
     padding: 1rem;
     border: 0;
-    border-bottom: solid 0.1rem black;
+    border-bottom: solid 0.1rem var(--border-base);
     font-size: var(--font-lg);
     max-width: 26rem;
     width: 100%;
@@ -70,4 +69,24 @@ input:focus{
     font-size: var(--font-lg);
     padding: 1rem;
     width: 4.2rem;
+}
+
+#detail_info {
+    display: flex;
+}
+
+#detail_info .info_holder {
+    width: 100%;
+}
+
+#detail_info .image_holder {
+    width: 13rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#button_holder {
+    display: flex;
+    justify-content: center;
 }

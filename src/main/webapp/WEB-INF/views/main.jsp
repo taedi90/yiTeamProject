@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- 스프링 시큐리티 태그 --%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <html lang="ko">
@@ -17,157 +18,77 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
-    <link rel="stylesheet" href="${path}/css/common/common.css">
+    <link rel="stylesheet" href="${path}/css/common/main.css">
+    <link rel="stylesheet" href="${path}/css/common/main_content.css">
     <title>메인페이지</title>
 </head>
 <body>
-	
-	<div id="wrap">
-	<%@ include file="division/common/header.jsp" %>
-	<%@ include file="division/common/nav.jsp" %>
+
+<div id="wrap">
+    <%@ include file="division/common/header.jsp" %>
+    <%@ include file="division/common/nav.jsp" %>
 
 
-	<!-- content -->
     <div class="content">
 
-        <div class="event_banner">
+        <c:if test="${result.category eq null}">
+            <div class="event_banner"></div>
+        </c:if>
+        <c:if test="${result.category ne null}">
+            <script>
+                const category = ${result.category};
+                const items = ${result.totalRecords};
+            </script>
+        </c:if>
+
+        <div class="product_container">
+
+            <c:forEach var="item" items="${result.records}" varStatus="status">
+                <a href="detail?itemNo=${item.itemNo}">
+                    <div class="product">
+                        <div class="image_holder">
+                            <img src="upload/${item.image}/thumb_350.png" onerror="this.onerror=null;this.src='${path}/img/common/lazy.svg'" alt="">
+<%--                            <img class="lazy" src="${path}/img/common/lazy.svg" data-src="upload/${item.image}/thumb_350.png" onerror="this.src='${path}/img/common/lazy.svg'" alt="">--%>
+                        </div>
+                        <div class="desc">
+                            <p class="product_category">${item.category.title}</p>
+                            <p class="product_title">${item.title}</p>
+
+                            <p class="product_price"><fmt:formatNumber value="${item.price}" pattern="#,###원"/></p>
+                            <p class="product_option">
+                                <c:forEach var="option" items="${item.options}" varStatus="status">
+                                    <c:if test="${status.count > 1}" >
+                                        &nbsp;|&nbsp;
+                                    </c:if>
+                                    ${option.name}
+                                </c:forEach>
+                            </p>
+
+                        </div>
+                    </div>
+                </a>
+            </c:forEach>
 
         </div>
 
-        <div class="best">
-
-            <div>
-
-                <h1>지금 가장 인기있는 상품</h1><br><br><br>
-
+        <c:if test="${result.totalRecords > 12}">
+            <div id="more" onclick="viewMore()">
+                더보기
             </div>
-
-            <table border="1" class="best_product_table">
-
-                <tr class="best_product_img">
-                    <td> img 1 </td>
-                    <td> img 2 </td>
-                    <td> img 3 </td>
-                    <td> img 4 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 1 </td>
-                    <td> con 2 </td>
-                    <td> con 3 </td>
-                    <td> con 4 </td>
-                </tr>
-
-                <tr class="best_product_img">
-                    <td> img 5 </td>
-                    <td> img 6 </td>
-                    <td> img 7 </td>
-                    <td> img 8 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 5 </td>
-                    <td> con 6 </td>
-                    <td> con 7 </td>
-                    <td> con 8 </td>
-                </tr>
-
-            </table>
-
-            <table border="1" class="mobile_best_product_table">
-
-                <tr class="best_product_img">
-                    <td> img 1 </td>
-                    <td> img 2 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> 이름 <br>
-                        가격 </td>
-                    <td> con 2 </td>
-                </tr>
-
-                <tr class="best_product_img">
-                    <td> img 3 </td>
-                    <td> img 4 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 3 </td>
-                    <td> con 4 </td>
-                </tr>
-
-                <tr class="best_product_img">
-                    <td> img 5 </td>
-                    <td> img 6 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 5 </td>
-                    <td> con 6 </td>
-                </tr>
-
-                <tr class="best_product_img">
-                    <td> img 7 </td>
-                    <td> img 8 </td>
-                </tr>
-
-                <tr class="best_product_name">
-                    <td> con 7 </td>
-                    <td> con 8 </td>
-                </tr>
+        </c:if>
 
 
-            </table>
-
-        </div>
 
     </div>
 
-${items}
-<c:forEach var="item" items="${items}" varStatus="status">
-    <p>${item.image}</p>
-    <h2>${item.title}</h2>
-    <h4>${item.category.title}</h4>
-    <p>${item.price}원</p>
-    <c:forEach var="option" items="${item.options}" varStatus="status">
-        <p>${option.name}</p>
-    </c:forEach>
 
-</c:forEach>
+    <%@ include file="division/common/footer.jsp" %>
+</div>
 
 
-
-
-
-   <%--  <main>
-
-        <sec:authorize access="isAnonymous()">
-            <a href="login">로그인</a>
-        </sec:authorize>
-
-        <sec:authorize access="isAuthenticated()">
-            <a href="logout">로그아웃</a>
-            <p>principal : <sec:authentication property="principal.member"/></p>
-            <p>아이디 : <sec:authentication property="principal.username"/></p>
-            <p>이름 : <sec:authentication property="principal.member.name"/></p>
-            <p>이메일 : <sec:authentication property="principal.member.email"/></p>
-            <p>권한 : <sec:authentication property="principal.member.authority"/></p>
-        </sec:authorize>
-
-    </main> --%>
-    
-    
-    <div class="content" style="height:1000px">
-    
-    </div>
-    
-    
-    
-    	<%@ include file="division/common/footer.jsp" %>
-    </div>
-
-
-    <script src="${path}/js/payment/jquery-3.6.0.min.js"></script>
+<%--<script src="${path}/js/payment/jquery-3.6.0.min.js"></script>--%>
+<script src="${path}/js/common/lazy.js"></script>
+<script src="${path}/js/common/main.js"></script>
+<script src="${path}/js/common/ajax.js"></script>
 </body>
 </html>

@@ -1,0 +1,70 @@
+
+.point_and_coupon{
+    background-color: var(--bg-grey);
+    padding: 4rem 0;
+}
+
+.point_and_coupon ul{
+    display: table;
+    width: 100%;
+}
+
+.point_and_coupon ul li{
+    display: table-cell;
+    vertical-align: top;
+    width: 50%;
+    box-sizing: border-box;
+    padding: 0 3rem;
+    border-right: 1px solid rgb(73, 73, 73);
+    list-style: none;
+}
+
+.point_and_coupon ul li:first-child{
+    padding-left: 4rem;
+}
+
+.point_and_coupon ul li:last-child{
+    border:none;
+}
+
+.point_and_coupon h6{
+    font-size: var(--font-base);
+    letter-spacing: -0.1rem;
+    padding-bottom: 2rem;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+.point_and_coupon a{
+    display: block;
+    font-size: var(--font-2xl);
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+}
+
+.mypage_order_list h1{
+    font-size: var(--font-xl);
+    padding: 6rem 0 2.5rem;
+    letter-spacing: -0.1rem;
+}
+
+.order_list{
+    padding: 5rem 0;
+    text-align: center;
+    font-size: var(--font-base);
+    border: 1px solid rgb(73, 73, 73);
+}
+
+.mypage_deliver_list h1{
+    font-size: var(--font-xl);
+    padding: 6rem 0 2.5rem;
+    letter-spacing: -0.1rem;
+}
+
+.deliver_list{
+    padding: 5rem 0;
+    text-align: center;
+    font-size: var(--font-base);
+    border: 1px solid rgb(73, 73, 73);
+}

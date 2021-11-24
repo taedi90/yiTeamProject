@@ -12,5 +12,13 @@
 </head>
 <body>
     <h1>이메일 인증 성공</h1>
+
+    잠시후 메인으로 이동합니다..
+
+    <script>
+        setTimeout(()=>{
+            location.href = "main";
+        }, 3000);
+    </script>
 </body>
 </html>

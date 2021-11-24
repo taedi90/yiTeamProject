@@ -1,0 +1,49 @@
+#table_wrap {
+    display: inline-block;
+    max-width: 130rem;
+    min-width: 100rem;
+    width: 100%;
+}
+#table_wrap * {
+    margin-top: 1rem;
+}
+
+/* 제목 */
+#title {
+    text-align: left;
+    font-size: var(--font-2xl);
+}
+
+/* 버튼 */
+#actions {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#actions * {
+    margin-left: 0.5rem;
+}
+
+/* 테이블 */
+#content {
+    font-size: var(--font-sm);
+    text-align: center;
+}
+
+#content table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 0.2rem solid var(--border-base);
+    border-bottom: 0.2rem solid var(--border-base);
+}
+
+#content th, td {
+    white-space: nowrap;
+    border-top: 0.1rem solid var(--border-base);
+    border-bottom: 0.1rem solid var(--border-base);
+    margin: 0;
+    padding: 0.8rem 2rem 0.8rem 2rem;
+    text-align: center;
+}

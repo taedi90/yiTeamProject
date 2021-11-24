@@ -5,6 +5,7 @@ import kr.or.yi.teamProject.common.util.MailUtil;
 import kr.or.yi.teamProject.common.util.RandomStringCreateUtil;
 import kr.or.yi.teamProject.user.dto.Auth;
 import kr.or.yi.teamProject.user.dto.Member;
+import kr.or.yi.teamProject.user.dto.MemberPager;
 import kr.or.yi.teamProject.user.enums.RegisterResult;
 import kr.or.yi.teamProject.user.enums.Role;
 import kr.or.yi.teamProject.user.enums.SendConfirmMailResult;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,10 +39,10 @@ public class MemberServiceImpl implements MemberService {
     @Setter(onMethod_ =  {@Autowired})
     PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Setter(onMethod_ =  {@Autowired})
     private JavaMailSender mailSender;
 
-    @Autowired
+    @Setter(onMethod_ =  {@Autowired})
     @Qualifier("jasyptStringEncryptor")
     StringEncryptor encryptor;
 
@@ -183,6 +185,53 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
+
+
+    @Override
+    public Member selectMember(Member member) {
+        return memberMapper.selectMember(member);
+    }
+
+    private MemberPager getInfoForPaging(MemberPager pager) {
+
+        pager = memberMapper.getInfoForPaging(pager);
+
+        return pager;
+    }
+
+    //관리자 페이지 회원 리스트 조회
+    @Override
+    public MemberPager selectMemberListForManage(MemberPager pager) {
+
+        pager = getInfoForPaging(pager);
+
+        List<Member> list = memberMapper.selectMemberListForManage(pager);
+
+        pager.setRecords(list);
+
+        return pager;
+    }
+
+    //관리자 조회
+    @Override
+    public MemberPager selectMemberListForAdmin(MemberPager pager) {
+
+        pager = getInfoForPaging(pager);
+
+        List<Member> list = memberMapper.selectMemberListForAdmin(pager);
+
+        pager.setRecords(list);
+
+        return pager;
+    }
+
+    //비 관리자 조회
+    @Override
+    public List<Member> selectNonManagerList(String username) {
+        return memberMapper.selectNonManagerList(username);
+    }
+
+
     public boolean sendEmail(Member member, String authKey) {
         try {
             MailUtil sendMail = new MailUtil(mailSender);
@@ -194,7 +243,7 @@ public class MemberServiceImpl implements MemberService {
                     .append(member.getUsername())
                     .append("&confirm=")
                     .append(authKey)
-                    .append("' target='_blenk'>이메일 인증 확인</a>")
+                    .append("' target='_blank'>이메일 인증 확인</a>")
                     .toString());
             sendMail.setFrom("no-reply@taedi.net", "발송용");
             sendMail.setTo(member.getEmail());

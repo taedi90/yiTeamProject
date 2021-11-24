@@ -71,6 +71,20 @@
     background-color: #f3f2f2;
 }
 
+.blank{
+    margin-left: 5%;
+    width: 15%;
+    display: flex;
+    justify-content: left;
+}
+
+.blank img{
+    margin-top:.7rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-left: 1.5rem;
+}
+
 .icon{
     margin-right: 5%;
     width: 15%;
@@ -80,8 +94,8 @@
 
 .icon img{
     margin-top:.7rem;
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
     margin-left: 1.5rem;
 }
 
@@ -89,15 +103,21 @@
     position: absolute;
 }
 
-.blank{
-    width: 15%;
-    margin-left: 5%;
+
+
+@media (min-width: 768.1px) {
+    .mobile_menu{
+        display: none;
+    }
+    .mobile_logo {
+        display: none;
+    }
 }
 
 @media (max-width:768px) {
-    .nav{
-        display: none;
-    }
+    /*.nav{*/
+    /*    display: none;*/
+    /*}*/
 
     .mobile_nav{
         display: none;
@@ -110,7 +130,45 @@
         width: 10rem;
     }
 
-    .mobile_nav.active{
-        display: block;
+    .active{
+        display: flex !important;
     }
+
+    .menu {
+        position: absolute;
+        top: 5.1rem;
+        display: none;
+        flex-flow: column;
+        width: 100%;
+    }
+
+    .menu > ul {
+        background-color: white;
+    }
+
+    .menu > ul > li {
+        margin: 0.5rem 0 0.5rem 0;
+        display: block;
+        cursor: pointer;
+
+    }
+
+    .menu > ul > li:hover {
+        background-color: lightgrey;
+    }
+
+    .mobile_logo{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height:100%;
+
+    }
+
+    .mobile_logo img{
+        width: 13rem;
+        /*height: auto;*/
+    }
+
 }

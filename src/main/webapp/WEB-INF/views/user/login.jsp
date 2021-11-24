@@ -42,19 +42,19 @@
     </div>
 
     <div id="from_social">
-        <a href="oauth2/authorization/google">
-            <div class="social_login_button">
-                구글 계정으로 로그인
+        <a href="oauth2/authorization/kakao">
+            <div class="social_login_button from_kakao">
+                <img src="img/user/kakao.png" alt="" height="45px" width="183px">
             </div>
         </a>
-        <a href="oauth2/authorization/kakao">
-            <div class="social_login_button">
-                카카오 계정으로 로그인
+        <a href="oauth2/authorization/google">
+            <div class="social_login_button from_google">
+                <img src="img/user/google.png" alt="" height="46px" width="191px">
             </div>
         </a>
     </div>
 
-
+    <div><a href="main" style="color: lightgray">메인으로</a></div>
 </div>
 
 </body>

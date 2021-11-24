@@ -74,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/manage").hasAnyRole("MANAGER", "ADMIN")
+                .antMatchers("/mypage").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated(); // 그 외에는 인증 된 사용자만 접근 가능
 
@@ -117,26 +118,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sameOrigin();
 
         //예외 핸들링
-        http
-                .exceptionHandling()
-                .authenticationEntryPoint( new AuthenticationEntryPoint() {//인증 되지 않은(미 로그인) 유저의 요청
-
-                    @Override
-                    public void commence(HttpServletRequest request, HttpServletResponse response,
-                                         AuthenticationException authException) throws IOException, ServletException {
-                        log.info(authException.getMessage());
-                        request.getRequestDispatcher("/login").forward(request, response);
-                    }
-                })
-                .accessDeniedHandler( new AccessDeniedHandler() {// 액세스 권한이 없는 사용자의 요청
-
-                    @Override
-                    public void handle(HttpServletRequest request, HttpServletResponse response,
-                                       AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                        log.info(accessDeniedException.getMessage());
-                        request.getRequestDispatcher("/access-denied").forward(request, response);
-                    }
-                });
+//        http
+//                .exceptionHandling()
+//                .authenticationEntryPoint( new AuthenticationEntryPoint() {//인증 되지 않은(미 로그인) 유저의 요청
+//
+//                    @Override
+//                    public void commence(HttpServletRequest request, HttpServletResponse response,
+//                                         AuthenticationException authException) throws IOException, ServletException {
+//                        log.info(authException.getMessage());
+//                        request.getRequestDispatcher("/login").forward(request, response);
+//                    }
+//                })
+//                .accessDeniedHandler( new AccessDeniedHandler() {// 액세스 권한이 없는 사용자의 요청
+//
+//                    @Override
+//                    public void handle(HttpServletRequest request, HttpServletResponse response,
+//                                       AccessDeniedException accessDeniedException) throws IOException, ServletException {
+//                        log.info(accessDeniedException.getMessage());
+//                        request.getRequestDispatcher("/access-denied").forward(request, response);
+//                    }
+//                });
 
     }
 

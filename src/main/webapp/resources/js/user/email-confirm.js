@@ -2,8 +2,8 @@
 // 버튼 눌렀을 때 액션
 function sendMail(){
     let data = {
-        username: document.form.username.value,
-        email: document.form.email.value
+        username: document.querySelector("[name='username']").value,
+        email: document.querySelector("[name='email']").value
     }
 
     ajax('email-confirm', data, afterSendMail);
