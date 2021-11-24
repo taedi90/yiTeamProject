@@ -271,7 +271,7 @@ input[type=number]::-webkit-outer-spin-button{
     justify-content: center;
 }
 
-.product_buy_buttons > a {
+.product_buy_buttons > span {
 display: inline-block;
 vertical-align: top;
 width: calc(50% - 1rem);
@@ -284,15 +284,17 @@ line-height: 6rem;
 border:none ! important;
 }
 
-.product_buy_button_cart{
+.product_button_cart{
     color: white;
     margin-right: 1rem;
     background-color: black;
+    cursor: pointer;
 }
 
-.product_buy_button_buy{
+.product_button_buy{
     color: white;
     background-color: #D35460;
+    cursor: pointer;
 }
 
 .detail_tab{
