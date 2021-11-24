@@ -87,9 +87,24 @@
  
 <!-- updateOrder --> 
     <update id="updateOrder" parameterType="kr.or.yi.teamProject.order.dto.Order">
-
-		UPDATE `order` 
-		SET `zipcode`=#{zipcode}, `address1`=#{address1}, `address2`=#{address2}, `name`=#{name}, `phone`=#{phone} 
+    	UPDATE `order`
+		<set>
+			<if test="zipcode != null">
+				`zipcode`=#{zipcode},			
+			</if>
+			<if test="address1 != null">
+				 `address1`=#{address1},			
+			</if>
+			<if test="address2 != null">
+				`address2`=#{address2},			
+			</if>
+			<if test="name != null">
+				`name`=#{name},			
+			</if>
+			<if test="phone != null">
+				`phone`=#{phone}			
+			</if>		
+		</set> 
 		WHERE order_no=#{orderNo}
     </update> 
  

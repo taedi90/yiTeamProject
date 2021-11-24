@@ -9,6 +9,7 @@ public interface OrderService {
 
 	int insertOrderMember(Order order);
 	List<Order> selectOrderList();
-	public void createOrderMember(Order order, OrderItem orderItem);
+//	public void createOrderMember(Order order, OrderItem orderItem);
+	public void createOrderMember(Order order, List<OrderItem> orderItems);
 	
 }

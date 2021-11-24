@@ -14,7 +14,7 @@
       <link rel="stylesheet" href="${path}/css/order/order.css">
 </head>
 <body>
-<%--  ${orderItemList} --%> 
+  ${orderItemList}  
 <%-- <sec:authentication property="principal.member.name"/> --%>
 	<div id="wrap">
 	<%@ include file="../division/common/header.jsp" %>

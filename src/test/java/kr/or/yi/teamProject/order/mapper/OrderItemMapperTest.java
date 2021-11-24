@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -72,8 +73,12 @@ public class OrderItemMapperTest {
 				
 	}
 
-//	@Test
+	@Test
 	public void test03_orderItemSelectList() {
+//		
+//		  UUID test = UUID.randomUUID();
+//		  System.out.println("============================================================"+test);
+		  
 		log.info("=================orderSelectListTest 확인===================");
 		
 		OrderItem orderItem = new OrderItem();

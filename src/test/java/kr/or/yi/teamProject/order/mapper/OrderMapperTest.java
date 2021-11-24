@@ -72,9 +72,7 @@ public class OrderMapperTest {
 		order.setOrderNo(5L);		
 		order.setMember(Member.builder().username("test").build());
 
-		
 		OrderItem orderitem = new OrderItem();
-		
 		Category category = Category.builder().categoryNo(1).build();
 		Item item = Item.builder().itemNo(293)
 					.category(category).build();
@@ -84,12 +82,26 @@ public class OrderMapperTest {
 						.build();
 
 		
-		orderitem.setOrder(order);	
-		orderitem.setOption(option);
-		orderitem.setPriceItem(3000);
-		orderitem.setPriceOption(3000);
-		service.createOrderMember(order, orderitem);
-	}
+		
+
+		
+//		
+//		for(int i = 0 ; i<3 ; i++) {
+//			
+//
+//			
+//			orderitem.setOrder(order);	
+//			orderitem.setOption(option);
+//			orderitem.setPriceItem(3000);
+//			orderitem.setPriceOption(3000);	
+//			
+//			list.add(orderitem);
+//			
+//			
+//		}
+//
+//		service.createOrderMember(order, OrderItem);
+}
 	
 	
 	

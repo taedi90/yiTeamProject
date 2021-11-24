@@ -42,6 +42,7 @@
        		<result property="priceItem" column="price_item"/>		<!-- 상품 금액 -->
        		<result property="priceOption" column="price_option"/>	<!-- 옵션 금액 -->
        		<result property="priceCoupon" column="price_coupon"/>	<!-- 할인 금액 -->
+       		<result property="optionName" column="option_name"/>	<!-- 옵션명 -->
        		<result property="couponHistory.coupon.couponNo" column="coupon_no"/>	<!-- 쿠폰번호 -->
        		<result property="couponHistory.coupon.name" column="name"/>	<!-- 할인 명 -->
        		
@@ -73,15 +74,12 @@
  	<select id="selectDetailOrder" parameterType="kr.or.yi.teamProject.order.dto.OrderDetail" resultMap="orderDetailMap">			       
 		SELECT oi.`order_item_no`,
 	           oi.`price_item`,
-			   oi.`order_item_no`,	
-			   oi.`price_option`,			
-			   o.`order_no` , 
-			   oi.`item_no` , 
+			   oi.`price_option`,			 
+			   oi.`item_no`, 
 			   oi.`option_no`, 
 			   oi.`option_name`,
-			   oi.`price_item` ,
-			   oi.`price_option` ,
 			   oi.`price_coupon`,
+			   o.`order_no` ,
 			   o.`username` ,
 			   o.`non_username`,
 			   i.`name` as `i_name`,
@@ -123,9 +121,6 @@
 		LEFT OUTER join `option` as op on oi.`option_no` = op.`option_no`
 	 	where o.`order_no` = #{orderNo} 
  	</select> -->
- 	
-
-
  	
 
  	

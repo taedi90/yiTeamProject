@@ -97,6 +97,65 @@
 
 	<!-- orderItem update -->	
 	<update id="updateOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">
+			UPDATE `order_item`
+			<set>
+				<if test="couponHistory.issueNumber != null">
+					`issue_number`=#{couponHistory.issueNumber},
+				</if>
+				<if test="couponHistory.coupon.couponNo != null">
+					`coupon_no`=#{couponHistory.coupon.couponNo},
+				</if>
+				<if test="priceItem != null">
+					`price_item`=#{priceItem}, 
+				</if>
+				<if test="priceCoupon != null">
+					`price_coupon`=#{priceCoupon},
+				</if>
+				<if test="prepareDate != null">
+					`prepare_date`=#{prepareDate},
+				</if>
+				<if test="carrier.carrierNo != null">
+					`delivery_carrier_no`=#{carrier.carrierNo},
+				</if>
+				<if test="trackingNumber != null">
+					`tracking_number`=#{trackingNumber},
+				</if>
+				<if test="deliveryEndDate != null">
+					`delivery_end_date`=#{deliveryEndDate},
+				</if>
+				<if test="deliveryStartDate != null">
+					`delivery_start_date`=#{deliveryStartDate},
+				</if>
+				<if test="confirmDate != null">
+					`confirm_date`=#{confirmDate},
+				</if>
+				<if test="cancelDate != null">
+					`cancel_date`=#{cancelDate},
+				</if>
+				<if test="returnDate != null">
+					`return_date`=#{returnDate},
+				</if>
+				<if test="returnCarrierNo != null">
+					`return_carrier_no`=#{returnCarrierNo},
+				</if>
+				<if test="returnNumber != null">
+					`return_number`=#{returnNumber},
+				</if>
+				<if test="returnConfirmDate != null">
+					`return_confirm_date`=#{returnConfirmDate},
+				</if>
+				<if test="returnOption.returnOptionCode != null">
+					`return_option_code`=#{returnOption.returnOptionCode},
+				</if>
+				<if test="refundDate != null">
+					`refund_date`=#{refundDate}
+				</if>
+			 </set>
+			WHERE order_item_no=#{orderItemNo} AND order_no=#{order.orderNo}					  
+	</update>
+
+	<!-- orderItem update -->	
+<!-- 	<update id="updateOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">
 		<![CDATA[
 			UPDATE `order_item`
 			SET `issue_number`=#{couponHistory.issueNumber},
@@ -118,7 +177,7 @@
 				 `refund_date`=#{refundDate}
 			WHERE order_item_no=#{orderItemNo} AND order_no=#{order.orderNo}			  
 		 ]]> 	
-	</update>
+	</update> -->
 
 	<!-- orderItem delete -->	
 	<delete id="deleteOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">

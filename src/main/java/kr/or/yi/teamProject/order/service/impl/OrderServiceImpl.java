@@ -11,6 +11,7 @@ import kr.or.yi.teamProject.order.dto.OrderItem;
 import kr.or.yi.teamProject.order.mapper.OrderItemMapper;
 import kr.or.yi.teamProject.order.mapper.OrderMapper;
 import kr.or.yi.teamProject.order.service.OrderService;
+import kr.or.yi.teamProject.product.dto.Option;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -26,20 +27,47 @@ public class OrderServiceImpl implements OrderService {
 	public int insertOrderMember(Order order) {
 		return orderMapper.insertOrderMember(order);
 	}
-
+	
+	
 //	회원 주문 대기열 트랜잭션 이용해서 order테이블 다음에 orderItem테이블 insert
 	@Transactional
 	@Override
-	public void createOrderMember(Order order, OrderItem orderItem) {
+	public void createOrderMember(Order order, List<OrderItem> orderItems) {
 		int res =  orderMapper.insertOrderMember(order);
 		
 		if(res == 1 ) {
+			for(OrderItem i : orderItems) {
+								
+				OrderItem orderItem = new OrderItem();
+				
+				orderItem.setOption(Option.builder().optionNo(i.getOrderItemNo()).build());
+
+				orderItemMapper.insertOrderItem(orderItem);
+			}
 			
-			orderItemMapper.insertOrderItem(orderItem);
 		}	
 
 	}
+	
 
+	
+//	회원 주문 대기열 old
+//	@Transactional
+//	@Override
+//	public void createOrderMember(Order order, OrderItem orderItem) {
+//		int res =  orderMapper.insertOrderMember(order);
+//		
+//		if(res == 1 ) {
+//				orderItemMapper.insertOrderItem(orderItem);
+//			}	
+//	}
+
+
+	
+	
+	
+	
+	
 	@Override
 	public List<Order> selectOrderList() {
 
