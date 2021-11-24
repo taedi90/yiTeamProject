@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- 스프링 시큐리티 태그 --%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <html lang="ko">
@@ -35,19 +36,21 @@
 
                         <div class="product_info">
                             <!-- form 태그와 input type=hidden태그로 값넘겨주는게 일반적인듯? -->
+                            <h5 class="category">${result.category.title}</h5>
                             <H3 class="product_title">${result.title}</H3>
                             <!-- 금액시작 -->
                             <div class="product_price">
                                 <!-- 판매가 -->
                                 <div class="price dcpricet">
                                     <span id="price_span">
-                                        ${result.price}
+                                    	<fmt:formatNumber value="${result.price}" pattern="#,###"/>
                                     </span>
                                     <span class="won">원</span>
                                 </div>
                                 <!-- 적립금 -->
                                 <div class="point">
-                                    <img src="${path}/img/common/icon_point.svg" alt="point" class="point_img"> 500
+                                    <img src="${path}/img/common/icon_point.svg" alt="point" class="point_img"> 
+                                    <fmt:formatNumber value="${result.price*0.01}" pattern="#,###"/>
                                 </div>
                                 <div class="product_option_table">
                                     <table>
@@ -69,14 +72,14 @@
                                                             <dd>
                                                                 <select name="option" id="option">
                                                                     <option value="null">옵션선택</option>
-                                                                    <option value="1">화이트 S (+2000)</option>
-                                                                    <option value="2">화이트 M</option>
-                                                                    <option value="3">화이트 L</option>
-                                                                    <option value="4">화이트 XL</option>
-                                                                    <option value="5">핑크 S</option>
-                                                                    <option value="6">핑크 M</option>
-                                                                    <option value="7">핑크 L</option>
-                                                                    <option value="8">핑크 XL</option>
+                                                                    <c:forEach var="option" items="${result.options}" varStatus="vs">
+                                                                    	<option value="${option.optionNo}" data-option-no="${option.optionNo}" data-option-price="${option.optionPrice}" data-stock="${option.stock}" data-name="${option.name}">
+                                                                    		
+                                                                    	${option.name} (+${option.optionPrice})
+                                                                    	
+                                                                    	</option>
+                                                                    
+                                                                    </c:forEach>
                                                                 </select>
                                                             </dd>
                                                         </dl>
@@ -165,7 +168,43 @@
 	<script type="text/javascript" src="${path}/js/product/tab.js"></script>
 	
 	<script type="text/javascript" src="${path}/js/payment/iamport.js"></script>
+	
+	<script>
+    $(".product_button_buy").click(function() {       	
 
+        var selectedOptions = document.querySelectorAll(".product_quantity");
+
+        if(selectedOptions.length <= 0){
+            alert("옵션을 선택해주세요.");
+            return;
+        }
+
+        let orders = [];
+        
+        for(var i = 0; i < selectedOptions.length; i++){
+            let order = new Object();
+
+            order.optionNo = selectedOptions[i].dataset.no;
+            order.quantity = selectedOptions[i].value;
+            orders.push(order);
+        }
+
+        console.log(orders);
+
+        ajax('order', orders, cbkAction); //post => 결과 responsebody
+        
+
+    });
+
+    function cbkAction(){
+    	//if 주문번호가 있다?
+    			// order?orderNo=123242434343243 주소로 이동! (get) => String(view)
+    	//else if 없다?
+    			// 에러 메세지
+    }
+
+	</script>
+	
     ${result}
 
 </body>
