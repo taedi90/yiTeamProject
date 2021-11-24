@@ -49,7 +49,7 @@ public class OrderDetailMapperTest {
     public void _01_selectOrderByNo() {
         log.info("=== order_no로 조회 ===");
    
-        Order result = mapper.selectDetailOrder(Order.builder().orderNo(1L).build());
+        Order result = mapper.selectDetailOrder(Order.builder().orderNo(5L).build());
         log.info("조회 결과 -> " + result.toString());
         assertNotNull(result);
     }

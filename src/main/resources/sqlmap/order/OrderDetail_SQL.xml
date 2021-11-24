@@ -51,7 +51,13 @@
 	            <result property="name" column="op_name"/>			<!-- 옵션이름 -->
 	            <result property="optionPrice" column="option_price"/><!-- 옵션가격 -->
 	            <result property="stock" column="stock"/>			<!-- 수량 -->
-	            <result property="item.itemNo" column="item_no"/>	<!-- 주문상품 명 -->	            	           
+	            <association property="item"  javaType="kr.or.yi.teamProject.product.dto.Item">
+	            	<id property="itemNo" column="item_no"/>
+	            	<result property="name" column="i_name"/>	<!-- 상품명 -->	            	           
+	               <result property="price" column="price"/>	<!-- 상품가격 -->	  
+	               <result property="discount" column="discount"/>	<!-- 상품 할인가격 -->	 
+	               <result property="image" column="image"/>	<!-- 상품 이미지 -->	 
+               </association>	            	           
 			</association>	
 
        </collection>
@@ -65,6 +71,37 @@
 
  <!-- selectOrderList member -->
  	<select id="selectDetailOrder" parameterType="kr.or.yi.teamProject.order.dto.OrderDetail" resultMap="orderDetailMap">			       
+		SELECT oi.`order_item_no`,
+	           oi.`price_item`,
+			   oi.`order_item_no`,	
+			   oi.`price_option`,			
+			   o.`order_no` , 
+			   oi.`item_no` , 
+			   oi.`option_no`, 
+			   oi.`option_name`,
+			   oi.`price_item` ,
+			   oi.`price_option` ,
+			   oi.`price_coupon`,
+			   o.`username` ,
+			   o.`non_username`,
+			   i.`name` as `i_name`,
+			   i.`price`,
+			   i.`discount`,
+			   i.`image`,
+			   pay.`payment_no`,
+      		   pay.`amount` 		   
+		FROM `order` o join `order_item` oi on oi.`order_no` =  o.`order_no`
+		left outer join `member` m on o.username = m.username 
+		left outer join non_member nm  on o.non_username = nm.non_username 
+		left outer join `option` op on oi.option_no = op.option_no 
+		left outer join coupon_history ch on oi.issue_number = ch.issue_number 
+		left outer join item i on i.item_no = op.item_no 
+		left outer join `payment` as pay on pay.`order_no` = o.`order_no`
+		where o.`order_no` = #{orderNo}
+ 	</select>
+
+ <!-- selectOrderList member -->
+<!--  	<select id="selectDetailOrder" parameterType="kr.or.yi.teamProject.order.dto.OrderDetail" resultMap="orderDetailMap">			       
       	SELECT `o`.`order_no`, 
       			`o`.`zipcode`, 
       			`o`.`address1`, 
@@ -85,7 +122,7 @@
 		LEFT OUTER join `payment` as pay on pay.`order_no` = o.`order_no`
 		LEFT OUTER join `option` as op on oi.`option_no` = op.`option_no`
 	 	where o.`order_no` = #{orderNo} 
- 	</select>
+ 	</select> -->
  	
 
 

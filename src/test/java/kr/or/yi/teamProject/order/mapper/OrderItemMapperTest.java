@@ -44,32 +44,35 @@ public class OrderItemMapperTest {
 		log.info("================orderItemInsert====================");
 
 //		객체생성
-		OrderItem dto = new OrderItem();
+
+		OrderItem orderitem = new OrderItem();
 		
 		Category category = Category.builder().categoryNo(1).build();
-		Item item = Item.builder().itemNo(61)
+		Item item = Item.builder().itemNo(293)
 					.category(category).build();
 		
-		Option option = Option.builder().optionNo(95).name("아우터")
+		Option option = Option.builder().optionNo(352).name("엠사이쥬")
 						.item(item)
 						.build();
-		
 
-		dto.setOrder(Order.builder().orderNo(4L).build());
-		dto.setOption(option);
-		dto.setPriceItem(3000);
-		dto.setPriceOption(3000);
+		
+	
+
+		orderitem.setOrder(Order.builder().orderNo(5L).build());
+		orderitem.setOption(option);
+		orderitem.setPriceItem(3000);
+		orderitem.setPriceOption(3000);
 	
 		
 //		//insert
-		int res = mapper.insertOrderItem(dto);
+		int res = mapper.insertOrderItem(orderitem);
 	
 //		//결과확인
 		assertEquals(1, res);
 				
 	}
 
-	@Test
+//	@Test
 	public void test03_orderItemSelectList() {
 		log.info("=================orderSelectListTest 확인===================");
 		

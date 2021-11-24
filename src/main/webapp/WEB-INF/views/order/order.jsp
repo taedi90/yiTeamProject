@@ -14,7 +14,8 @@
       <link rel="stylesheet" href="${path}/css/order/order.css">
 </head>
 <body>
-	
+<%--  ${orderItemList} --%> 
+<%-- <sec:authentication property="principal.member.name"/> --%>
 	<div id="wrap">
 	<%@ include file="../division/common/header.jsp" %>
 	<%@ include file="../division/common/nav.jsp" %>
@@ -23,11 +24,13 @@
        <!-- content -->
     <div class="content">
         <div class="content_inner">
-		${orderItemList}
    
             <h1>order</h1>
-            <!-- 웹 주문할 상품 테이블  -->   
-            <div>       
+            <!-- 웹 주문할 상품 테이블  -->  
+            
+
+            <div>     
+  
                 <form action="#">
                     <p class="table_info">주문할 상품</p>
                         <table class="order_table order_product">
@@ -38,19 +41,23 @@
                                 <td class="order_product_coupon">쿠폰</td>
                                 <td class="order_product_price">결제가격</td>
                             </tr>
-
+	            			<c:forEach var="orderItemList" items="${orderItemList}">
                             <tr>
                                 <td>
                 	                <div class="order_items" >
-                	                    <div class="Thumbnail_130" ><img alt="" src="https://www.sappun.co.kr/shopimages/sappun/0080010004663.jpg" width="130px"></div>
+                	                
+                	                    <div class="Thumbnail_130" ><img alt="" src="${orderItemList.option.item.image}" width="130px"></div>
                 	                    <div class="order_item_info">
-                                    		<p class="order_item_name">상품명</p>
-                                    		<p class="order_item_option">옵션명</p>
-                    		                <p class="order_item_price">정상가격</p>
+                                    		<p class="order_item_name">${orderItemList.option.item.name}</p>
+                                    		<p class="order_item_option">${orderItemList.optionName}</p>
+                    		                <p class="order_item_price">${orderItemList.option.item.price}</p>
                 	                    </div>
+                	                    
+                	                    
+                	                    
                 	                </div>
                                 </td>
-                                <td>${orderItemList}수량</td>
+                                <td>수량</td>
                                 <td> 
                                     <select name="" id="">
                                     <option value="naver.com">쿠폰</option>
@@ -58,9 +65,10 @@
                                     <option value=""></option>
                                     </select>
                                 </td>
-                                <td>결제가격</td>
+                                <td>${orderItemList.option.item.price}원</td>
                             </tr>
-							
+   				            </c:forEach>  			
+   														
                         </table>
                 </form>
             </div>
@@ -68,13 +76,14 @@
  
             <!-- 주문자 정보 테이블  -->
             <div>
+
                 <form action="#">
                     <p>주문자 정보</p>
                     <table class="order_table ordering_info">
                         <!-- 주문자 이름  -->
                         <tr>           
                             <td class="order_col_name">이름</td>
-                            <td><input type="text" name="name" class="order_input"></td>
+                            <td><input type="text" name="name" class="order_input" ></td>
                         </tr>
 
 			            <!-- 이메일 -->
@@ -91,6 +100,7 @@
                         </tr>
                     </table>
                 </form>
+             
             </div>
 
             
@@ -105,18 +115,19 @@
                             <td class="order_col_name" >주소</td>
                             <td>
                                 <input type="text" value="기본 주소">
-                                <input type="button" value="주소추가하기" class="order_input select_address"  onclick="location.href='addr.html'">
+                                <input type="button" value="주소추가하기" class="order_input select_address" onclick="address()">
+                        		<div id="modal_container"></div>	
                             </td>
                         </tr>
 		                <!-- Order name -->
                         <tr>
                             <td class="order_col_name">이름</td>
-                            <td><input type="text" class="order_input"></td>
+                            <td><input type="text" class="order_input" name="name"></td>
                         </tr>
 		                <!-- Order phone -->
                         <tr>
                         <td class="order_col_name">휴대폰</td>
-                        <td><input type="tel"  class="order_input"></td>
+                        <td><input type="tel"  class="order_input" name="phone"></td>
                         </tr>
                     </table>
                </form>
@@ -231,7 +242,7 @@
                         <tr>
                             <td class="payment_info_name">포인트 사용</td>
                             <td class="payment_info_point">
-                                <input type="text">점   <br>
+                                <input type="text" class="use_point">점   <br>
                                 <span style="font-size: var(--font-xs);">총 사용가능 적립금 :0000 포인트</span>
                             </td>
                         </tr>
@@ -283,5 +294,8 @@
 
 	<script src="${path}/js/order/order.js"></script>
     <script src="${path}/js/common/jquery-3.6.0.min.js"></script>
+    <script src="${path}/js/common/modal.js" defer></script>
+    <script src="${path}/js/order/add-address.js" defer></script>
+
 </body>
 </html>

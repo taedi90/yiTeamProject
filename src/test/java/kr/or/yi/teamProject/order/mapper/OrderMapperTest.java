@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootConfig.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Transactional
+//@Transactional
 public class OrderMapperTest {
 
 	@Autowired
@@ -62,7 +62,7 @@ public class OrderMapperTest {
 	
 	
 	
-
+//  트랜잭선이용 주문대기열 입력 
 	@Test
 	public void test0_txTest() {
 		log.info("=====================test0_txTest 시작==============");
@@ -76,13 +76,14 @@ public class OrderMapperTest {
 		OrderItem orderitem = new OrderItem();
 		
 		Category category = Category.builder().categoryNo(1).build();
-		Item item = Item.builder().itemNo(61)
+		Item item = Item.builder().itemNo(293)
 					.category(category).build();
 		
-		Option option = Option.builder().optionNo(95).name("아우터")
+		Option option = Option.builder().optionNo(352).name("엠사이쥬")
 						.item(item)
 						.build();
 
+		
 		orderitem.setOrder(order);	
 		orderitem.setOption(option);
 		orderitem.setPriceItem(3000);
