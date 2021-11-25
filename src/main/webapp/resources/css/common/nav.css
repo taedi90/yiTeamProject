@@ -72,28 +72,28 @@
     background-color: #f3f2f2;
 }
 
-.blank{
+.left_icon{
     margin-left: 2%;
     width: 15%;
     display: flex;
     justify-content: left;
 }
 
-.blank img{
+.left_icon img{
     margin-top:.7rem;
     width: 3.5rem;
     height: 3.5rem;
     /*margin-left: 1.5rem;*/
 }
 
-.icon{
+.right_icon{
     margin-right: 2%;
     width: 15%;
     display: flex;
     justify-content: right;
 }
 
-.icon img{
+.right_icon img{
     margin-top:.7rem;
     width: 3.5rem;
     height: 3.5rem;
@@ -116,19 +116,15 @@
 }
 
 @media (max-width:768px) {
-    /*.nav{*/
-    /*    display: none;*/
-    /*}*/
 
-    .mobile_nav{
-        display: none;
-        float: left;
-        background-color: white;
-        text-align: center;
-        margin-top: -1rem;
-        position: fixed;
-        margin-left: -4rem;
-        width: 10rem;
+    .nav {
+        justify-content: center;
+    }
+
+    .left_icon {
+        position: absolute;
+        left: 0;
+        top: 0;
     }
 
     .active{
@@ -137,7 +133,7 @@
 
     .menu {
         position: absolute;
-        top: 5.1rem;
+        top: 10.1rem;
         display: none;
         flex-flow: column;
         width: 100%;
@@ -158,6 +154,17 @@
         background-color: lightgrey;
     }
 
+    .right_icon {
+        position: absolute;
+        top: 5rem;
+        display: none;
+        width: 100%;
+        background-color: white;
+        justify-content: space-around;
+        align-items: center;
+        height: 5.1rem;
+    }
+
     .mobile_logo{
         display: flex;
         justify-content: center;
@@ -170,14 +177,6 @@
     .mobile_logo img{
         width: 13rem;
         /*height: auto;*/
-    }
-
-    .icon {
-        margin-right: 2%;
-    }
-
-    .icon img {
-        margin-left: 0;
     }
 
 }

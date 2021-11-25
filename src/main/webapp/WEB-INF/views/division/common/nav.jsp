@@ -4,7 +4,7 @@
 	<!-- 웹 네비바 -->
     <nav class="nav">
 
-        <div class="blank" >
+        <div class="left_icon" >
             <div class="mobile_menu">
                 <img class="mobile_button" src="${path}/img/common/menu2.svg" alt="목록">
             </div>
@@ -17,8 +17,6 @@
                 <li  class="main_menu">
                     <a href="#">About</a>
                 </li>
-
-<%--                |--%>
 
                 <li  class="main_menu">
                     <a href="main">ALL</a>
@@ -47,7 +45,7 @@
             <a href="main"><img src="${path}/img/common/logo.svg" class="" alt="logo"></a>
         </div>
 
-        <div class="icon">
+        <div class="right_icon">
 
             <img src="${path}/img/common/search.svg" alt="검색">
 			<a href="cart"><img src="${path}/img/common/cart.svg" alt="장바구니"></a>
