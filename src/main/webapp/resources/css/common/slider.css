@@ -1,0 +1,130 @@
+/* 슬라이더 */
+.slide_wrap {
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    font-size: 10px;
+}
+
+.slide_box {
+    width: 100%;
+    margin: auto;
+    overflow-x: hidden;
+}
+
+.slide_content {
+    margin-right: 10px;
+    display: flex;
+    float: left;
+    height: 100%;
+    opacity: 0.5;
+}
+
+.slide_content.slide_active {
+    opacity: 1;
+}
+
+.slide_content img {
+    object-fit: cover;
+}
+
+.slide_btn_box > div {
+    position: absolute;
+    top: calc(50% - 2.5em);
+
+    width: 1em;
+    height: 5em;
+    max-height: 70px;
+    color: #999;
+    background: #e5e5e5;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5em;
+
+}
+
+.slide_btn_box > .slide_btn_prev {
+    left: 3%;
+}
+
+.slide_btn_box > .slide_btn_next {
+    right: 3%;
+}
+
+.slide_btn_box > .slide_btn_next:after {
+    content: '';
+    top: 0.6em;
+    left: -1.2em;
+    width: 3.725em;
+    height: 3.725em;
+    background: #e5e5e5;
+    border-radius: 0.6em;
+    clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
+    position: absolute;
+    transform: rotate(45deg);
+}
+
+.slide_btn_box > .slide_btn_prev:after {
+    content: '';
+    top: 0.6em;
+    right: -1.2em;
+    width: 3.725em;
+    height: 3.725em;
+    background: #e5e5e5;
+    border-radius: 0.6em;
+    clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
+    position: absolute;
+    transform: rotate(225deg);
+}
+
+
+.slide_btn_box > .slide_btn_prev:hover {
+    background-color: #ffffff
+}
+
+.slide_btn_box > .slide_btn_prev:hover:after {
+    background-color: #ffffff
+}
+
+.slide_btn_box > .slide_btn_next:hover {
+    background-color: #ffffff
+}
+
+.slide_btn_box > .slide_btn_next:hover:after {
+    background-color: #ffffff
+}
+
+.slide_pagination {
+    position: absolute;
+    left: 50%;
+    bottom: 3%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    transform: translateX(-50%);
+}
+
+.slide_pagination .dot {
+    display: inline-block;
+    width: 1.3em;
+    height: 1.3em;
+    margin: 0 0.5em;
+    overflow: hidden;
+    background: #ddd;
+    border-radius: 50%;
+    transition: 0.3s;
+    opacity: 0.5;
+}
+
+.slide_pagination .dot.dot_active {
+    background: #333;
+}
+
+.slide_pagination .dot a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

@@ -20,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
     <link rel="stylesheet" href="${path}/css/common/main.css">
     <link rel="stylesheet" href="${path}/css/common/main_content.css">
+    <link rel="stylesheet" href="${path}/css/common/slider.css">
     <title>메인페이지</title>
 </head>
 <body>
@@ -32,7 +33,44 @@
     <div class="content">
 
         <c:if test="${result.category eq null}">
-            <div class="event_banner"></div>
+            <div class="event_banner">
+
+                <div class="slide_wrap">
+                    <div class="slide_box">
+                        <div class="slide_list clearfix">
+                            <div class="slide_content slide01">
+                                <img src="${path}/img/common/slider/slide1.png" alt="">
+                            </div>
+                            <div class="slide_content slide02">
+                                <img src="${path}/img/common/slider/slide2.png" alt="">
+                            </div>
+                            <div class="slide_content slide03">
+                                <img src="${path}/img/common/slider/slide3.png" alt="">
+                            </div>
+                            <div class="slide_content slide04">
+                                <img src="${path}/img/common/slider/slide4.png" alt="">
+                            </div>
+                            <div class="slide_content slide05">
+                                <img src="${path}/img/common/slider/slide5.png" alt="">
+                            </div>
+                        </div>
+                        <!-- // .slide_list -->
+                    </div>
+                    <!-- // .slide_box -->
+                    <div class="slide_btn_box">
+                        <div class="slide_btn_prev">
+                        </div>
+                        <div class="slide_btn_next"></div>
+<%--                        <button type="button" class="slide_btn_prev"><</button>--%>
+<%--                        <button type="button" class="slide_btn_next">></button>--%>
+                    </div>
+                    <!-- // .slide_btn_box -->
+                    <ul class="slide_pagination"></ul>
+                    <!-- // .slide_pagination -->
+                </div>
+
+            </div>
+            <script src="${path}/js/common/slider.js" defer></script>
         </c:if>
         <c:if test="${result.category ne null}">
             <script>

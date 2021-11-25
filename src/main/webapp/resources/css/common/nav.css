@@ -9,6 +9,7 @@
     background-color: white;
     border-bottom: .1rem solid black;
     font-size: var(--font-base);
+    z-index: 30000;
 }
 
 .menu{
@@ -72,7 +73,7 @@
 }
 
 .blank{
-    margin-left: 5%;
+    margin-left: 2%;
     width: 15%;
     display: flex;
     justify-content: left;
@@ -82,7 +83,7 @@
     margin-top:.7rem;
     width: 3.5rem;
     height: 3.5rem;
-    margin-left: 1.5rem;
+    /*margin-left: 1.5rem;*/
 }
 
 .icon{
@@ -169,6 +170,14 @@
     .mobile_logo img{
         width: 13rem;
         /*height: auto;*/
+    }
+
+    .icon {
+        margin-right: 2%;
+    }
+
+    .icon img {
+        margin-left: 0;
     }
 
 }
