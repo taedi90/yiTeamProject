@@ -10,24 +10,21 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/mypage")
-public class MypageController {
+@RequestMapping("/cart")
+public class CartController {
 	
-	//마이페이지 메인
+	//장바구니
 	@GetMapping
-	public String goMypage(HttpServletRequest request){
+	public String goCart(HttpServletRequest request){
 	
 		if(request.isUserInRole("ROLE_USER")) {
-            log.info("이미 로그인 했을 경우 마이페이지로 이동");
-           
-		return "user/mypage";
+	           log.info("이미 로그인 했을 경우 장바구니로 이동");
+	          
+		return "user/cart";
 		
 		}
-		
+			
 		log.info("로그인하지 않았을 경우 로그인페이지로 이동");
 		return "user/login";	
 	}
-	
-	
-	
 }

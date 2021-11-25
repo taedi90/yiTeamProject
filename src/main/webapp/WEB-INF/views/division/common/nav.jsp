@@ -50,7 +50,7 @@
         <div class="icon">
 
             <img src="${path}/img/common/search.svg" alt="검색">
-            <img src="${path}/img/common/cart.svg" alt="장바구니">
+			<a href="cart"><img src="${path}/img/common/cart.svg" alt="장바구니"></a>
             <a href="mypage"><img src="${path}/img/common/mypage.svg" alt="목록"></a>
 
         </div>
