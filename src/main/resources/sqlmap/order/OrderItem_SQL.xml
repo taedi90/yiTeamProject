@@ -90,6 +90,15 @@
 	<insert id="insertOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">	
 		<![CDATA[  
 		INSERT INTO `order_item`
+		(`order_no`, `option_no`)
+		VALUES(#{order.orderNo},  #{option.optionNo})	
+	    ]]> 
+	</insert>
+
+	<!-- orderItem insert -->
+	<insert id="insertOrderItem2" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">	
+		<![CDATA[  
+		INSERT INTO `order_item`
 		(`order_no`,  `item_no`, `option_no`, `option_name`, `price_item`, `price_option`)
 		VALUES(#{order.orderNo}, #{option.item.itemNo}, #{option.optionNo}, #{option.name}, #{priceItem}, #{priceOption})	
 	    ]]> 

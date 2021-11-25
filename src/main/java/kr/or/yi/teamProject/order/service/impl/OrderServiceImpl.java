@@ -32,21 +32,20 @@ public class OrderServiceImpl implements OrderService {
 //	회원 주문 대기열 트랜잭션 이용해서 order테이블 다음에 orderItem테이블 insert
 	@Transactional
 	@Override
-	public void createOrderMember(Order order, List<OrderItem> orderItems) {
-		int res =  orderMapper.insertOrderMember(order);
+	public int createOrderMember(Order order, List<OrderItem> orderItems) {
 		
-		if(res == 1 ) {
+		int res1 =  orderMapper.insertOrderMember(order);
+		
+		int res2 = 0;
+		
+		if(res1 == 1 ) {
 			for(OrderItem i : orderItems) {
 								
-				OrderItem orderItem = new OrderItem();
-				
-				orderItem.setOption(Option.builder().optionNo(i.getOrderItemNo()).build());
-
-				orderItemMapper.insertOrderItem(orderItem);
+				res2 = orderItemMapper.insertOrderItem(i);
 			}
 			
 		}	
-
+			return res2;
 	}
 	
 

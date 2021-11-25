@@ -55,11 +55,15 @@
 
 <!-- 회원주문 insertOrderMember -->
 
-		<insert id="insertOrderMember" parameterType="kr.or.yi.teamProject.order.dto.Order">
+		<insert id="insertOrderMember" parameterType="kr.or.yi.teamProject.order.dto.Order" >
         	INSERT INTO `order`
 			(`order_no`, `username`) 
 			VALUES
 			(#{orderNo}, #{member.username})
+			
+<!-- 			<selectKey resultType="int" keyProperty="orderNo" order="AFTER">
+				SELECT LAST_INSERT_ID()
+			</selectKey> -->
 		</insert>
 
     
