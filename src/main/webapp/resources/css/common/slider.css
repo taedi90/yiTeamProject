@@ -2,8 +2,8 @@
 .slide_wrap {
     position: relative;
     margin: auto;
-    padding-bottom: 30px;
     overflow: hidden;
+    font-size: 10px;
 }
 
 .slide_box {
@@ -13,79 +13,94 @@
 }
 
 .slide_content {
+    margin-right: 10px;
     display: flex;
     float: left;
     height: 100%;
+    opacity: 0.5;
 }
 
-.slide_content > p {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 100px;
-    font-weight: bold;
-    color: #555;
-}
-
-.slide_content.slide01 {
-    background: #ddbdff;
-}
-
-.slide_content.slide02 {
-    background: #9fd6c2;
-}
-
-.slide_content.slide03 {
-    background: #abe2f7;
-}
-
-.slide_content.slide04 {
-    background: #f08c78;
-}
-
-.slide_content.slide05 {
-    background: #fbdb65;
+.slide_content.slide_active {
+    opacity: 1;
 }
 
 .slide_content img {
     object-fit: cover;
 }
 
-.slide_btn_box > button {
+.slide_btn_box > div {
     position: absolute;
-    top: 50%;
-    margin-top: -45px;
-    width: 60px;
-    height: 60px;
-    font-size: 16px;
+    top: calc(50% - 2.5em);
+
+    width: 1em;
+    height: 5em;
+    max-height: 70px;
     color: #999;
-    background: white;
+    background: #e5e5e5;
     border: none;
-    border-radius: 50%;
     cursor: pointer;
-    opacity: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5em;
+
 }
 
 .slide_btn_box > .slide_btn_prev {
-    left: 10px;
+    left: 3%;
 }
 
 .slide_btn_box > .slide_btn_next {
-    right: 10px;
+    right: 3%;
 }
 
+.slide_btn_box > .slide_btn_next:after {
+    content: '';
+    top: 0.6em;
+    left: -1.2em;
+    width: 3.725em;
+    height: 3.725em;
+    background: #e5e5e5;
+    border-radius: 0.6em;
+    clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
+    position: absolute;
+    transform: rotate(45deg);
+}
+
+.slide_btn_box > .slide_btn_prev:after {
+    content: '';
+    top: 0.6em;
+    right: -1.2em;
+    width: 3.725em;
+    height: 3.725em;
+    background: #e5e5e5;
+    border-radius: 0.6em;
+    clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
+    position: absolute;
+    transform: rotate(225deg);
+}
+
+
 .slide_btn_box > .slide_btn_prev:hover {
-    background-color: #e5e5e5
+    background-color: #ffffff
+}
+
+.slide_btn_box > .slide_btn_prev:hover:after {
+    background-color: #ffffff
 }
 
 .slide_btn_box > .slide_btn_next:hover {
-    background-color: #e5e5e5
+    background-color: #ffffff
+}
+
+.slide_btn_box > .slide_btn_next:hover:after {
+    background-color: #ffffff
 }
 
 .slide_pagination {
     position: absolute;
     left: 50%;
-    bottom: 50px;
+    bottom: 3%;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -94,9 +109,9 @@
 
 .slide_pagination .dot {
     display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin: 0 5px;
+    width: 1.3em;
+    height: 1.3em;
+    margin: 0 0.5em;
     overflow: hidden;
     background: #ddd;
     border-radius: 50%;

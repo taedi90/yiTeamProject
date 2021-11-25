@@ -9,6 +9,7 @@
     background-color: white;
     border-bottom: .1rem solid black;
     font-size: var(--font-base);
+    z-index: 30000;
 }
 
 .menu{

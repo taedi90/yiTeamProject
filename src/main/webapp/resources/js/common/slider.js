@@ -10,7 +10,13 @@
     const slideLen = slideContents.length;  // slide length
     const slideSpeed = 300; // slide speed
     const startNum = 0; // initial slide index (0 ~ 4)
-    let slideWidth = 0; // slide width
+    const wrapRatio = 7/19; // 19:7
+    const slideRatio = 1; // 3:4
+    const minWrapHeight = 375;
+    let wrapWidth = 0;
+    let wrapHeight = 0;
+    let slideWidth = 0;
+    let slideHeight = 0;
 
     // Copy first and last slide
     let firstChild = slideList.firstElementChild;
@@ -22,44 +28,65 @@
     slideList.appendChild(clonedFirst);
     slideList.insertBefore(clonedLast, slideList.firstElementChild);
 
-    window.addEventListener('resize', () => {
-        getWidth();
 
+    window.addEventListener('resize', () => {
+        resizeSlide();
         for (let i = 0; i < slideLen + 2; i++) {
             if(slideContents[i].classList.contains("slide_active")){
                 init(i);
                 break;
             }
         }
-
     });
 
-    //interval
-    let interval = setInterval(nextItem, 3000);
+    // Auto slide
+    let interval = setInterval(nextItem, 5000);
     function nextItem() {
         slideBtnNext.click();
     }
 
     function resetInterval(){
         clearInterval(interval);
-        interval = setInterval(nextItem, 3000);
+        interval = setInterval(nextItem, 5000);
     }
 
 
-    function getWidth(){
-        const windowWidth = document.body.clientWidth;
-        slideWidth = windowWidth;
+    function resizeSlide(){
+
+        // let realWidth = document.body.clientWidth;
+        let realWidth = slideWrap.parentNode.clientWidth;
+
+        // resize button element
+        if(realWidth < 1200){
+            slideWrap.style.fontSize = ((1200 - (1200 - realWidth)/2) / 1200) * 10 + "px";
+        }else {
+            slideWrap.style.fontSize = "10px";
+        }
+
+
+
+        wrapWidth = realWidth;
+        wrapHeight = wrapWidth * wrapRatio;
+        if(wrapHeight < minWrapHeight) {
+            wrapHeight = minWrapHeight;
+        }
+
+
+        slideHeight = wrapHeight;
+        slideWidth = wrapHeight / slideRatio;
 
         const slideContentAll = document.querySelectorAll('.slide_content');  // each slide dom
         for (let i = 0; i < slideLen + 2; i++) {
             slideContentAll[i].style.width = slideWidth;
+            slideContentAll[i].style.height = slideHeight;
         }
-        slideWrap.style.width = slideWidth;
+        slideWrap.style.width = wrapWidth;
+        slideWrap.style.height = wrapHeight;
     }
-    getWidth();
+    resizeSlide();
 
     function init(curIndex = startNum){
-        slideList.style.width = slideWidth * (slideLen + 2) + "px";
+        slideList.style.width = (slideWidth + 10) * (slideLen + 2) + "px";
 
         // Add pagination dynamically
         let pageChild = '';
@@ -71,25 +98,29 @@
         pagination.innerHTML = pageChild;
         const pageDots = document.querySelectorAll('.dot'); // each dot from pagination
 
-        slideList.style.transform = "translate3d(-" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
+        const adjustment = -((wrapWidth - slideWidth)/2);
+
+        // slideList.style.transform = "translate3d(-" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
+        slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10) * (curIndex + 1)))  + "px, 0px, 0px)";
 
         //let curIndex = startNum; // current slide index (except copied slide)
         let curSlide = slideContents[curIndex]; // current slide dom
         curSlide.classList.add('slide_active');
 
+
+
         /** Next Button Event */
         slideBtnNext.addEventListener('click', function() {
-
             resetInterval();
 
             if (curIndex <= slideLen - 1) {
                 slideList.style.transition = slideSpeed + "ms";
-                slideList.style.transform = "translate3d(-" + (slideWidth * (curIndex + 2)) + "px, 0px, 0px)";
+                slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10)* (curIndex + 2))) + "px, 0px, 0px)";
             }
             if (curIndex === slideLen - 1) {
                 setTimeout(function() {
                     slideList.style.transition = "0ms";
-                    slideList.style.transform = "translate3d(-" + slideWidth + "px, 0px, 0px)";
+                    slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10) * (curIndex + 1))) + "px, 0px, 0px)";
                 }, slideSpeed);
                 curIndex = -1;
             }
@@ -102,17 +133,18 @@
 
         /** Prev Button Event */
         slideBtnPrev.addEventListener('click', function() {
-
             resetInterval();
 
-            if (curIndex >= 0) {
+            if (curIndex > 0) {
                 slideList.style.transition = slideSpeed + "ms";
-                slideList.style.transform = "translate3d(-" + (slideWidth * curIndex) + "px, 0px, 0px)";
+                slideList.style.transform = "translate3d(-" + (adjustment + (slideWidth + 10) * curIndex) + "px, 0px, 0px)";
             }
             if (curIndex === 0) {
+                slideList.style.transition = slideSpeed + "ms";
+                slideList.style.transform = "translate3d(" + (-adjustment) + "px, 0px, 0px)";
                 setTimeout(function() {
                     slideList.style.transition = "0ms";
-                    slideList.style.transform = "translate3d(-" + (slideWidth * slideLen) + "px, 0px, 0px)";
+                    slideList.style.transform = "translate3d(-" + (adjustment + (slideWidth + 10) * slideLen) + "px, 0px, 0px)";
                 }, slideSpeed);
                 curIndex = slideLen;
             }
@@ -141,7 +173,7 @@
                 curSlide = slideContents[curIndex];
                 curSlide.classList.add('slide_active');
                 slideList.style.transition = slideSpeed + "ms";
-                slideList.style.transform = "translate3d(-" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
+                slideList.style.transform = "translate3d(-" + (adjustment+ (slideWidth + 10) * (curIndex + 1)) + "px, 0px, 0px)";
             });
         });
     }

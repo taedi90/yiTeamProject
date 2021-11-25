@@ -39,27 +39,30 @@
                     <div class="slide_box">
                         <div class="slide_list clearfix">
                             <div class="slide_content slide01">
-                                <img src="${path}/img/common/logo.svg" alt="">
+                                <img src="${path}/img/common/slider/slide1.png" alt="">
                             </div>
                             <div class="slide_content slide02">
-                                <p>2</p>
+                                <img src="${path}/img/common/slider/slide2.png" alt="">
                             </div>
                             <div class="slide_content slide03">
-                                <p>3</p>
+                                <img src="${path}/img/common/slider/slide3.png" alt="">
                             </div>
                             <div class="slide_content slide04">
-                                <p>4</p>
+                                <img src="${path}/img/common/slider/slide4.png" alt="">
                             </div>
                             <div class="slide_content slide05">
-                                <p>5</p>
+                                <img src="${path}/img/common/slider/slide5.png" alt="">
                             </div>
                         </div>
                         <!-- // .slide_list -->
                     </div>
                     <!-- // .slide_box -->
                     <div class="slide_btn_box">
-                        <button type="button" class="slide_btn_prev"><</button>
-                        <button type="button" class="slide_btn_next">></button>
+                        <div class="slide_btn_prev">
+                        </div>
+                        <div class="slide_btn_next"></div>
+<%--                        <button type="button" class="slide_btn_prev"><</button>--%>
+<%--                        <button type="button" class="slide_btn_next">></button>--%>
                     </div>
                     <!-- // .slide_btn_box -->
                     <ul class="slide_pagination"></ul>
