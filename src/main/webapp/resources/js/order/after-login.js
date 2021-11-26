@@ -17,6 +17,7 @@
 
         if (parseInt(result) != null) {
             window.location.href = "order?orderNo=" + result;
+            return;
         }
 
         // 에러 메세지

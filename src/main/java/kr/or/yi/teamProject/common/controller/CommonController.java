@@ -1,7 +1,11 @@
 package kr.or.yi.teamProject.common.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 공통 부분 컨트롤러
@@ -9,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author taedi
  */
 
-
+@Slf4j
 @Controller
 public class CommonController {
     @GetMapping("/access-denied")
@@ -26,7 +30,8 @@ public class CommonController {
     //order 테스트용
 //    @PostMapping("/order")
 //    @ResponseBody
-//    public String orderTest(){
+//    public String orderTest(@RequestBody List<Map<String,Object>> list){
+//        list.get(0).forEach((k,v)-> {log.info(k + (String) v);});
 //        return "2021112610101099999";
 //    }
 //
