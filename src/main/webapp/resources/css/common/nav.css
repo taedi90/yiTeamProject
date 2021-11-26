@@ -163,6 +163,7 @@
         justify-content: space-around;
         align-items: center;
         height: 5.1rem;
+        margin: 0;
     }
 
     .mobile_logo{
