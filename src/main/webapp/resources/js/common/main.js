@@ -50,21 +50,21 @@ function cbkViewMore(res) {
 
         child.innerHTML =
             `
-                                <div class="product">
-                        <div class="image_holder">
-                            <img src="upload/${item.image}/thumb_350.png" onerror="this.src='/shop/img/common/lazy.svg'" alt="">
-                        </div>
-                        <div class="desc">
-                            <p class="product_category">${item.category.title}</p>
-                            <p class="product_title">${item.title}</p>
-
-                            <p class="product_price">${item.price.toLocaleString('ko-KR')}원</p>
-                            <p class="product_option">
-                                ${options}
-                            </p>
-
-                        </div>
-                    </div>
+            <div class="product">
+                <div class="image_holder">
+                    <img src="upload/${item.image}/thumb_350.png" onerror="this.src='/shop/img/common/lazy.svg'" alt="">
+                </div>
+                <div class="desc">
+                    <p class="product_category">${item.category.title}</p>
+                    <p class="product_title">${item.title}</p>
+    
+                    <p class="product_price">${item.price.toLocaleString('ko-KR')}원</p>
+                    <p class="product_option">
+                        ${options}
+                    </p>
+    
+                </div>
+            </div>
             `;
         parent.appendChild(child);
     }

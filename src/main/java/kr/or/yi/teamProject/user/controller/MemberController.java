@@ -152,4 +152,23 @@ public class MemberController {
 
         return list;
     }
+
+    @PostMapping("/check-user")
+    @ResponseBody
+    public CommonResult checkUser(HttpServletRequest request,
+                                  HttpServletResponse response,
+                                  @RequestParam("targetUrl")String targetUrl) {
+
+        // 이미 로그인 되어 있다면 리턴
+        if(request.isUserInRole("ROLE_USER")) {
+            return CommonResult.SUCCESS;
+        }
+
+        // 로그인 후 리다이렉트 희망 주소가 있다면 세션에 저장
+        if(targetUrl != null){
+            request.getSession().setAttribute("targetUrl", targetUrl);
+        }
+
+        return CommonResult.FAILURE;
+    }
 }
