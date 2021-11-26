@@ -1,10 +1,40 @@
 'use strict';
 
+window.addEventListener('load', getTotalPrice());
+
+
+function getTotalPrice(){	
+	/*todo
+		css하나로 합치기
+		order_item_price를 쿠폰 적용한 값으로 바꾸기			
+	*/	
+		
+	
+	var orderItems = document.querySelectorAll(".order_items");
+	var totalPrice = 0;
+	
+	
+    for (let orderItem of orderItems) {
+		var itemPrice = orderItem.querySelector(".order_product_price").innerText;
+		itemPrice = parseInt(itemPrice.replace(/[^0-9\.]/g,""));
+    	totalPrice +=  itemPrice;    	  
+	}
+
+	
+	totalPrice = totalPrice.toLocaleString('ko-KR') + "원";
+	
+/*	document.querySelectorAll(".payment_info_product_sum")[1].innerText = totalPrice;	
+	document.querySelectorAll(".payment_info_product_sum")[0].innerText = totalPrice;*/	
+	document.querySelector(".payment_info_product_sum").innerText = totalPrice;	
+}
+
+
+
 function getOrderData(){
 	/*order*/
 	let order = new Object(); // 주문정보를 담을 객체	
 	let member =  new Object(); // 회원정보를 담는 객체
-	let nonMember =  new Object(); // 비회원정보를 담는 객체
+
 	
 	/*address*/
 	let address = new Object(); // 주소정보를 담을 객체
