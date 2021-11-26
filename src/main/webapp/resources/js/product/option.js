@@ -13,6 +13,9 @@ $("#option").change(function(){
         
     //인풋상자배열저장
     var inputs = document.querySelectorAll(".product_quantity");
+
+    // 옵션 콤보박스 초기화
+    $("#option").val("");
     
     if(inputs.length >0){
 		for(let i = 0; i < inputs.length; i++){
@@ -54,8 +57,9 @@ $("#option").change(function(){
     
     if(optionNo !== null){
         $(".selected_option").append(newSelectedOption);
-    } 
-    
+    }
+
+
     
 
 }); 
