@@ -168,18 +168,19 @@
     </div>
 
 
-    <script src="${path}/js/common/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+    <script src="${path}/js/common/jquery-3.6.0.min.js" defer></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" defer></script>
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js" defer></script>
 
-	<script type="text/javascript" src="${path}/js/common/nav.js"></script>
-	<script type="text/javascript" src="${path}/js/common/ajax.js"></script>
+	<script type="text/javascript" src="${path}/js/common/nav.js" defer></script>
+	<script type="text/javascript" src="${path}/js/common/ajax.js" defer></script>
+	<script type="text/javascript" src="${path}/js/common/order-util.js" defer></script>
+
+	<script type="text/javascript" src="${path}/js/product/option.js" defer></script>
+	<script type="text/javascript" src="${path}/js/product/tab.js" defer></script>
+	<script type="text/javascript" src="${path}/js/product/order.js" defer></script>
 	
-	<script type="text/javascript" src="${path}/js/product/option.js"></script>
-	<script type="text/javascript" src="${path}/js/product/tab.js"></script>
-	<script type="text/javascript" src="${path}/js/product/order.js"></script>
-	
-	<script type="text/javascript" src="${path}/js/payment/iamport.js"></script>
+	<script type="text/javascript" src="${path}/js/payment/iamport.js" defer></script>
 	
 	
 	<script>

@@ -23,19 +23,19 @@
                 </li>
 
                 <li  class="main_menu">
-                    <a href="?category=1">OUTER</a>
+                    <a href="main?category=1">OUTER</a>
                 </li>
 
                 <li  class="main_menu">
-                    <a href="?category=2">DRESS</a>
+                    <a href="main?category=2">DRESS</a>
                 </li>
 
                 <li  class="main_menu">
-                    <a href="?category=3">TOP</a>
+                    <a href="main?category=3">TOP</a>
                 </li >
 
                 <li  class="main_menu">
-                    <a href="?category=4">BOTTOM</a>
+                    <a href="main?category=4">BOTTOM</a>
                 </li>
             </ul>
 
