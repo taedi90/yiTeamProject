@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.user.mapper.CartMapper">
+
+    <resultMap id="cartMap" type="kr.or.yi.teamProject.user.dto.Cart">
+        <result property="quantity" column="quantity"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="modDate" column="mod_date"/>
+        <association property="options" javaType="kr.or.yi.teamProject.product.dto.Option">
+            <result property="optionNo" column="option_no"/>
+            <association property="options" javaType="kr.or.yi.teamProject.product.dto.Item">
+                <result property="itemNo" column="item_no"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="selectCart" resultType="kr.or.yi.teamProject.product.dto.Option">
+        SELECT `option_no`, `item_no`, `quantity`, `reg_date`, `mod_date`
+        FROM `cart`
+        WHERE `username` = #{username}
+    </select>
+
+</mapper>

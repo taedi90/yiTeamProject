@@ -2,11 +2,20 @@ package kr.or.yi.teamProject.user.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import kr.or.yi.teamProject.security.dto.CustomUser;
+import kr.or.yi.teamProject.user.dto.Cart;
+import kr.or.yi.teamProject.user.dto.Member;
+import kr.or.yi.teamProject.user.service.CartService;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -15,16 +24,26 @@ public class CartController {
 	
 	//장바구니
 	@GetMapping
-	public String goCart(HttpServletRequest request){
-	
-		if(request.isUserInRole("ROLE_USER")) {
-	           log.info("이미 로그인 했을 경우 장바구니로 이동");
-	          
+	public String goCart(){
 		return "user/cart";
-		
-		}
-			
-		log.info("로그인하지 않았을 경우 로그인페이지로 이동");
-		return "user/login";	
+	}
+
+	@Setter(onMethod_ = @Autowired)
+	CartService cartService;
+
+	@PostMapping
+	@ResponseBody
+	public List<Cart> postCart(HttpServletRequest request,
+						   @RequestBody List<Map<String, String>> webCart,
+						   Authentication authentication){
+
+
+		CustomUser user = (CustomUser) authentication.getPrincipal();
+		Member member = user.getMember();
+
+		List<Cart> result = cartService.getCart(webCart, member);
+
+
+		return result;
 	}
 }

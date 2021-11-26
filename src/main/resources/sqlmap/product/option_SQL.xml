@@ -3,6 +3,30 @@
 
 <!-- mapper 클래스 경로 -->
 <mapper namespace="kr.or.yi.teamProject.product.mapper.OptionMapper">
+
+    <resultMap id="optionMap" type="kr.or.yi.teamProject.product.dto.Item">
+        <id property="optionNo" column="option_no"/>
+        <result property="name" column="name"/>
+        <result property="optionPrice" column="option_price"/>
+        <result property="stock" column="stock"/>
+        <association property="options" javaType="kr.or.yi.teamProject.product.dto.Option">
+            <id property="itemNo" column="item_no" />
+            <result property="name" column="name"/>
+            <result property="price" column="price"/>
+            <result property="discount" column="discount"/>
+            <result property="startDiscount" column="start_discount"/>
+            <result property="endDiscount" column="end_discount"/>
+            <result property="title" column="title"/>
+            <result property="text" column="text"/>
+            <result property="image" column="image"/>
+            <result property="couponAllow" column="coupon_allow"/>
+            <result property="hide" column="hide"/>
+            <result property="regDate" column="reg_date"/>
+            <result property="modDate" column="mod_date"/>
+            <result property="publish" column="publish"/>
+        </association>
+    </resultMap>
+
     <insert id="insertOption" parameterType="kr.or.yi.teamProject.product.dto.Option" useGeneratedKeys="true" keyProperty="optionNo">
         INSERT INTO `option` (`item_no`, `name`, `option_price`, `stock`)
         VALUES (#{item.itemNo}, #{name}, #{optionPrice}, #{stock})
@@ -11,6 +35,13 @@
     <select id="selectOption" parameterType="kr.or.yi.teamProject.product.dto.Option" resultType="kr.or.yi.teamProject.product.dto.Option">
         SELECT `option_no`, `item_no`, `name`, `option_price`, `stock`
         FROM `option`
+        WHERE `option_no` = #{optionNo}
+    </select>
+
+    <select id="selectOptionDetail" parameterType="kr.or.yi.teamProject.product.dto.Option" resultMap="optionMap">
+        SELECT `option_no`, o.`item_no`, `name`, `option_price`, `stock`, i.`price`, i.`discount`, i.`start_discount`, i.`title`, i.`image`
+        FROM `option` o
+        LEFT OUTER JOIN `item` i ON o.`item_no` = i.`item_no`
         WHERE `option_no` = #{optionNo}
     </select>
 

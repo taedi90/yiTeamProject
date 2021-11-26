@@ -33,6 +33,9 @@
 
     // 선택 상품 가져오기
     function getSelectedItems(){
+
+        selectedItems = [];
+
         let selectedOptions = document.querySelectorAll(".product_quantity");
 
         if (selectedOptions.length <= 0) {

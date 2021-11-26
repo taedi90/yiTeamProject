@@ -20,10 +20,36 @@ function toOrder(selectedItems, isCart = false){
                 ajax('order', selectedItems, cbkSetOrder);
             }
         } else {
-            window.localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+            if (isCart == true) {
+                let cartItems = window.localStorage.getItem("cartItems");
+                cartItems = JSON.parse(cartItems);
 
-            // 로그인 페이지로 리다이렉트
-            window.location.href = "login";
+                if(cartItems !== null) {
+                    // 배열 합치기
+                    cartItems = cartItems.concat(selectedItems);
+
+                    // 중복 처리(합치기)
+                    for(let i = 0; i < cartItems.length; i++) {
+                        for(let j = i + 1; j < cartItems.length; j++) {
+                            if(cartItems[i].optionNo === cartItems[j].optionNo) {
+                                cartItems[i].quantity = parseInt(cartItems[i].quantity) + parseInt(cartItems[j].quantity);
+                                cartItems.splice(j--, 1);
+                            }
+                        }
+                    }
+                } else {
+                    cartItems = selectedItems;
+                }
+                console.log(cartItems);
+                window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                alert("장바구니 담기 완료!");
+
+            } else {
+                window.localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+                // 로그인 페이지로 리다이렉트
+                window.location.href = "login";
+            }
+
         }
     }
 
