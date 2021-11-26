@@ -12,10 +12,9 @@
     ajax('order', selectedItems, cbkSetOrder);
 
     // order 이동
-    function cbkSetOrder(res) {
-        const result = JSON.parse(res);
-
+    function cbkSetOrder(result) {
         if (parseInt(result) != null) {
+            alert(result);
             window.location.href = "order?orderNo=" + result;
             return;
         }

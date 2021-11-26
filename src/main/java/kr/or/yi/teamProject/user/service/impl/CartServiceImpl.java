@@ -1,5 +1,6 @@
 package kr.or.yi.teamProject.user.service.impl;
 
+import kr.or.yi.teamProject.product.dto.Option;
 import kr.or.yi.teamProject.product.mapper.OptionMapper;
 import kr.or.yi.teamProject.user.dto.Cart;
 import kr.or.yi.teamProject.user.dto.Member;
@@ -7,11 +8,14 @@ import kr.or.yi.teamProject.user.mapper.CartMapper;
 import kr.or.yi.teamProject.user.service.CartService;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class CartServiceImpl implements CartService {
 
     @Setter(onMethod_ =  @Autowired)
@@ -23,7 +27,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public List<Cart> getCart(List<Map<String, String>> webCart, Member member) {
-        List<Cart> result;
+        List<Cart> result = new ArrayList<>();
 
         if(member != null){
             //db 조회
@@ -32,10 +36,22 @@ public class CartServiceImpl implements CartService {
 
         if(webCart != null){
 
-            webCart.forEach(m -> {
-                m.get("optionNo");
-                m.get("quantity");
-            });
+            for(int i = 0; i < webCart.size(); ++i) {
+                Map<String, String> cartItem = webCart.get(i);
+
+                long optionNo = Long.parseLong(cartItem.get("optionNo"));
+                int quantity = Integer.parseInt(cartItem.get("quantity"));
+
+                Cart cart = Cart.builder()
+                        .member(member)
+                        .quantity(quantity)
+                        .option(Option.builder().optionNo(optionNo).build())
+                        .build();
+
+                result.add(cart);
+            }
+
+
 
 
             //db 결과와 합치기

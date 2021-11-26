@@ -54,9 +54,9 @@ function toOrder(selectedItems, isCart = false){
     }
 
     // 주문 콜백
-    function cbkSetOrder(res) {
-        const result = JSON.parse(res);
+    function cbkSetOrder(result) {
         if (parseInt(result) != null) {
+            alert(parseInt(result));
             // order?orderNo=123242434343243 주소로 이동! (get) => String(view)
             window.location.href = "order?orderNo=" + result;
         }
