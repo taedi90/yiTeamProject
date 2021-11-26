@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- 스프링 시큐리티 태그 --%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+
 
 <html lang="ko">
 <head>
@@ -11,280 +13,178 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
     <title>주문 페이지</title>
+      <link rel="stylesheet" href="${path}/css/common/main.css">
       <link rel="stylesheet" href="${path}/css/order/order.css">
 </head>
 <body>
-  ${orderItemList}  
-<%-- <sec:authentication property="principal.member.name"/> --%>
+<%--   ${orderDetail} --%>  
+
+
 	<div id="wrap">
 	<%@ include file="../division/common/header.jsp" %>
 	<%@ include file="../division/common/nav.jsp" %>
 
 
        <!-- content -->
-    <div class="content">
-        <div class="content_inner">
-   
-            <h1>order</h1>
-            <!-- 웹 주문할 상품 테이블  -->  
-            
-
-            <div>     
-  
-                <form action="#">
-                    <p class="table_info">주문할 상품</p>
-                        <table class="order_table order_product">
-            
-                            <tr>
-                                <td class="order_product_name">상품명</td>
-                                <td class="order_product_cnt">수량</td>
-                                <td class="order_product_coupon">쿠폰</td>
-                                <td class="order_product_price">결제가격</td>
-                            </tr>
-	            			<c:forEach var="orderItemList" items="${orderItemList}">
-                            <tr>
-                                <td>
-                	                <div class="order_items" >
-                	                
-                	                    <div class="Thumbnail_130" ><img alt="" src="${orderItemList.option.item.image}" width="130px"></div>
-                	                    <div class="order_item_info">
-                                    		<p class="order_item_name">${orderItemList.option.item.name}</p>
-                                    		<p class="order_item_option">${orderItemList.optionName}</p>
-                    		                <p class="order_item_price">${orderItemList.option.item.price}</p>
-                	                    </div>
-                	                    
-                	                    
-                	                    
-                	                </div>
-                                </td>
-                                <td>수량</td>
-                                <td> 
-                                    <select name="" id="">
-                                    <option value="naver.com">쿠폰</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value=""></option>
-                                    </select>
-                                </td>
-                                <td>${orderItemList.option.item.price}원</td>
-                            </tr>
-   				            </c:forEach>  			
-   														
-                        </table>
-                </form>
+  <div class="content">
+        <div class="content_inner_order">
+            <div class="row">
+                <h1>order</h1>
             </div>
-    
- 
-            <!-- 주문자 정보 테이블  -->
+<!-- 주문할 상품 테이블 -->
+            <div class="row table_info spacing_out">
+                <p>주문할 상품</p>
+                <span> 주문금액 50,000원 이상 무료배송입니다.</span>
+             </div>
+
+<!-- 주문상품 -->             
             <div>
-
-                <form action="#">
-                    <p>주문자 정보</p>
-                    <table class="order_table ordering_info">
-                        <!-- 주문자 이름  -->
-                        <tr>           
-                            <td class="order_col_name">이름</td>
-                            <td><input type="text" name="name" class="order_input" ></td>
-                        </tr>
-
-			            <!-- 이메일 -->
-                        <tr>
-                            <td class="order_col_name">E-mail</td>
-                            <td>
-                                <input type="text"> @ <input type="text"> 
-                                <select name="email" id="email">
-                                <option value="naver.com">직접입력하기</option>
-                                <option value="naver.com">naver.com</option>
-                                <option value=""></option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-             
-            </div>
-
-            
-            
-            <!-- 배송지 정보 테이블  -->
-            <div>
-                <form action="#">
-                    <p>배송지 정보 </p>
-                    <table class="order_table delivery_info">
-		                <!-- 주소 -->
-                        <tr>
-                            <td class="order_col_name" >주소</td>
-                            <td>
-                                <input type="text" value="기본 주소">
-                                <input type="button" value="주소추가하기" class="order_input select_address" onclick="address()">
-                        		<div id="modal_container"></div>	
-                            </td>
-                        </tr>
-		                <!-- Order name -->
-                        <tr>
-                            <td class="order_col_name">이름</td>
-                            <td><input type="text" class="order_input" name="name"></td>
-                        </tr>
-		                <!-- Order phone -->
-                        <tr>
-                        <td class="order_col_name">휴대폰</td>
-                        <td><input type="tel"  class="order_input" name="phone"></td>
-                        </tr>
-                    </table>
-               </form>
-            </div>
-
-
-            <!-- 모바일 총결제 금액 -->
-            <div class="mobile_order_div">
-
-               <div>
-                    <form action="#">
-                        <p>총 결제 금액</p>
-                        <table class="mobile_payment_info" >
-                            <tr>
-                                <td class="payment_info_name">상품합계</td>
-                                <td class="payment_info_product_sum"><input type="text">원</td>
-                            </tr>
-    
-                            <tr>
-                                <td class="payment_info_name">포인트 사용</td>
-                                <td class="payment_info_point">
-                                    <input type="text"> 점 <br>
-                                    <span style="font-size: var(--font-xs);">총 사용가능 적립금 :0000 포인트</span>
-                                </td>
-                            </tr>
-    
-                            <tr>
-                                <td class="payment_info_name">배송비</td>
-                                <td class="payment_info_delivery_charge">
-                                    <input type="text">원   <br>
-                                    <span style="font-size: var(--font-xs);">5만원이상 구매시 무료배송(이외 2500원)</span>
-                                </td>
-                            </tr>
-       
-                            <tr>
-                                <td class="payment_info_name payment_info_payment_amount">결제금액</td>
-                                <td class="payment_info_payment_amount"><input type="text">원</td>
-                            </tr>
-                        </table>
-                    </form>
+                <div class="order_product">
+                    <div class="order_product_name border_row">상품명</div>
+                    <div class="order_product_cnt border_row">수량</div>
+                    <div class="order_product_coupon border_row">쿠폰</div>
+                    <div class="order_product_price border_row">결제가격</div>
                 </div>
-            </div>
-        
 
-
-   
-            <!-- 모바일 주문할 상품 테이블  -->    
-            <div>  
-       
-                <form action="#">
-                    <p class="mobile_table_info">주문할 상품</p>
-                    <table class="mobile_order_table mobile_order_product">
-            
-                        <tr>
-                            <td class="mobile_order_product_name">상품명</td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                            	<div class="mobile_order_items" >
-                                	<div class="Thumbnail_80" ><img alt="" src="https://www.sappun.co.kr/shopimages/sappun/0080010004663.jpg" width="80px"></div>
-                                	<div class="mobile_order_item_info">
-                                		<p class="mobile_order_item_name" >상품명</p>
-                                		<p class="mobile_order_item_option">옵션명</p>
-                    		            <p class="mobile_order_item_price">정상가격</p>
-                                		<p class="mobile_order_product_cnt">수량</p>
-                	                </div>
-                	            </div>
-                            </td>
-                        </tr>
-            
-                        <tr>
-                            <td class="mobile_order_product_coupon">쿠폰</td>
-                            <td class="mobile_order_product_price">결제가격</td>
-                        </tr>
-            
-                        <tr>
-                            <td> 
-                                <select name="" id="" class="mobile_coupon">
-                                    <option value="naver.com">쿠폰</option>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value=""></option>
-                                </select>
-                            </td>
-                            <td>결제가격</td>
-                        </tr>
-
-                    </table>
-                </form>
-    
-            </div>
-        </div>
-    
-
-
-
-
-
-
-
-        <!-- 웹 결제금액 -->
-        <div class="order_div">
-            <div>
-                <form action="#">
-                <p>총 결제 금액</p>
-                    <table class="payment_info" >
-                        <tr>
-                            <td class="payment_info_name">상품합계</td>
-                            <td class="payment_info_product_sum"><input type="text">원</td>
-                        </tr>
-
-                        <tr>
-                            <td class="payment_info_name">포인트 사용</td>
-                            <td class="payment_info_point">
-                                <input type="text" class="use_point">점   <br>
-                                <span style="font-size: var(--font-xs);">총 사용가능 적립금 :0000 포인트</span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="payment_info_name">배송비</td>
-                            <td class="payment_info_delivery_charge">
-                                <input type="text">원   <br>
-                                <span style="font-size: var(--font-xs);">5만원이상 구매시 무료배송(이외 2500원)</span>
-                            </td>
-                        </tr>
-   
-                        <tr>
-                            <td class="payment_info_name payment_info_payment_amount">결제금액</td>
-                            <td class="payment_info_payment_amount"><input type="text">원</td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            
-            <div class="payment_info_div">
-                <div> 
-                    <input type="checkbox" value="ok" class="payment_info_agree"> 구매진행에 동의합니다. 
+				<c:forEach var="orderItemList" items="${orderDetail.itemList}">
+                <div class="order_items">
+                    <div class="order_product_name">                 
+                        <div class="Thumbnail"><img alt="" src="upload/${orderItemList.option.item.image}/thumb_130.png" width="130px"></div>
+                        <div>
+                        	<div class="order_item_info">
+                            	<div><span class="order_item_name">${orderItemList.option.item.name}</span></div>
+                            	<div><span class="order_item_option">[옵션]${orderItemList.option.name}</span></div>                            
+                            	<div><span class="order_item_price">
+                                	<fmt:formatNumber value="${orderItemList.option.item.price}" pattern="#,###원"/>
+                            	</span></div>
+                        	</div>
+                        </div>
+                    </div>
+                    
+                    	<div class="order_product_cnt">수량</div>
+                    	<div class="order_product_coupon">쿠폰</div>
+                    	<div class="order_product_price"> 
+	                        <fmt:formatNumber value="${orderItemList.option.item.price}" pattern="#,###원"/>
+                    	</div>
+                   
                 </div>
+ 				</c:forEach>  
+            </div>
+
+           
+<!-- 주문자 정보 테이블 -->
+
+            <div class="row spacing_out" >
+                <p>주문자 정보</p>
                 
-                <div>
-                    <input type="button" value="구매하기" class="payment_info_order">
-                </div>
-          
-
             </div>
-        </div> 
 
-    </div>
+            <hr>
 
-    <!-- 모바일 결제버튼 -->
-    <div class="mobile_payment_info_div">
-        <div> 
-            <input type="checkbox" value="ok" class="payment_info_agree"> 구매진행에 동의합니다. 
+            <div class="row">
+                <div class="key_col"><label for="">이름</label></div>
+                <div class="value_col"></div>
+            </div>
+
+            <div class="row email_row">
+                <div class="key_col email"><label for="">이메일</label></div>
+                
+                <div class="value_col">
+                
+	                <div>
+	                 	<input type="text"> @ <input type="text"> 
+	                </div>
+	                
+	                <div>
+	                	<select name="email" id="email">
+		                    <option value="naver.com">직접입력하기</option>
+		                    <option value="naver.com">naver.com</option>
+		                    <option value=""></option>
+	                    </select>
+	                </div>
+                                  
+                </div>
+            </div>
+
+<!-- 배송지 정보 -->
+<div>
+            <div class="row spacing_out">
+                <p>배송지 정보</p>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="key_col"><label for="">주소</label></div>
+                <div class="value_col"> 기본주소
+                    <input type="button" value="주소추가하기" class="order_input select_address" onclick="address()">
+                    <div id="modal_container"></div>
+                </div>
+            </div>
+
+            <div class="row ">
+                <div class="key_col"><label for="">이름</label></div>
+                <div class="value_col">
+                    <input type="text" class="order_input" name="name">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="key_col"><label for="">휴대폰</label></div>
+                <div class="value_col">
+                    <input type="tel"  class="order_input" name="phone">
+                </div>
+            </div>
+</div>
+
+
         </div>
-        <div style="border: 1px solid red;">
-            <input type="button" value="구매하기" class="payment_info_order">
+
+<!-- 결제 금액 확인 -->
+        <div class="content_inner_payment">
+            <div class="row total_title">
+                <p>총 결제 금액</p>
+            </div>
+
+			<hr>
+			    
+            <div class="row">
+                <div class="key_col payment_info_name"><label for="">상품합계</label></div>
+                <div class="value_col payment_info_product_sum">원</div>
+            </div>
+
+            
+            <div class="row">
+                <div class="key_col payment_info_name"><label for="">포인트 </label></div>
+                <div class="value_col payment_info_point">
+                    <input type="text" class="use_point">점
+                </div>
+            </div>
+          
+            <div class="row">
+                <div class="key_col payment_info_name"><label for="">배송비</label></div>
+                <div class="value_col payment_info_delivery_charge">
+                    원 
+                </div>
+            </div>
+
+            
+            <div class="row">
+                <div class="key_col payment_info_name payment_info_payment_amount"><label for="">결제금액</label></div>
+                <div class="value_col payment_info_payment_amount">원</div>
+            </div>
+
+ 			<div class="mobile_sticky">
+            <div class="row payment_info_agree"> 
+                <input type="checkbox" value="ok" class="payment_info_agree"> 
+                <span>구매진행에 동의합니다.</span>
+            </div>
+            
+            <div class="row payment_btn">
+                <input type="button" value="구매하기" class="payment_info_order">
+            </div>
+			</div>
+
         </div>
     </div>
     
@@ -292,10 +192,14 @@
     	<%@ include file="../division/common/footer.jsp" %>
     </div>
 
+
 	<script src="${path}/js/order/order.js"></script>
     <script src="${path}/js/common/jquery-3.6.0.min.js"></script>
     <script src="${path}/js/common/modal.js" defer></script>
     <script src="${path}/js/order/add-address.js" defer></script>
+
+
+
 
 </body>
 </html>
