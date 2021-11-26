@@ -18,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 회원 (로그인, 로그아웃, 회원가입) 관련 컨트롤러
@@ -151,5 +152,25 @@ public class MemberController {
         List<Member> list = memberService.selectNonManagerList(member.getUsername());
 
         return list;
+    }
+
+    @PostMapping("/check-user")
+    @ResponseBody
+    public CommonResult checkUser(HttpServletRequest request,
+                                  @RequestBody Map<String,Object> map) {
+
+        // 이미 로그인 되어 있다면 리턴
+        if(request.isUserInRole("ROLE_USER")) {
+            return CommonResult.SUCCESS;
+        }
+
+        // 로그인 후 리다이렉트 희망 주소가 있다면 세션에 저장
+        String targetUrl = (String) map.get("targetUrl");
+
+        if(targetUrl != null){
+            request.getSession().setAttribute("targetUrl", targetUrl);
+        }
+
+        return CommonResult.FAILURE;
     }
 }

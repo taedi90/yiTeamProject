@@ -20,18 +20,25 @@
 
     // Copy first and last slide
     let firstChild = slideList.firstElementChild;
+    let secondChild = slideList.querySelector(':nth-child(2)');
+    let secondToLastChild = slideList.querySelector(':nth-last-child(2)');
     let lastChild = slideList.lastElementChild;
+
     let clonedFirst = firstChild.cloneNode(true);
+    let clonedSecond = secondChild.cloneNode(true);
+    let clonedSecondToLast = secondToLastChild.cloneNode(true);
     let clonedLast = lastChild.cloneNode(true);
 
     // Add copied Slides
     slideList.appendChild(clonedFirst);
+    slideList.appendChild(clonedSecond);
     slideList.insertBefore(clonedLast, slideList.firstElementChild);
+    slideList.insertBefore(clonedSecondToLast, slideList.firstElementChild);
 
 
     window.addEventListener('resize', () => {
         resizeSlide();
-        for (let i = 0; i < slideLen + 2; i++) {
+        for (let i = 0; i < slideLen + 4; i++) {
             if(slideContents[i].classList.contains("slide_active")){
                 init(i);
                 break;
@@ -63,8 +70,6 @@
             slideWrap.style.fontSize = "10px";
         }
 
-
-
         wrapWidth = realWidth;
         wrapHeight = wrapWidth * wrapRatio;
         if(wrapHeight < minWrapHeight) {
@@ -76,7 +81,7 @@
         slideWidth = wrapHeight / slideRatio;
 
         const slideContentAll = document.querySelectorAll('.slide_content');  // each slide dom
-        for (let i = 0; i < slideLen + 2; i++) {
+        for (let i = 0; i < slideLen + 4; i++) {
             slideContentAll[i].style.width = slideWidth;
             slideContentAll[i].style.height = slideHeight;
         }
@@ -86,7 +91,7 @@
     resizeSlide();
 
     function init(curIndex = startNum){
-        slideList.style.width = (slideWidth + 10) * (slideLen + 2) + "px";
+        slideList.style.width = (slideWidth + 10) * (slideLen + 4) + "px";
 
         // Add pagination dynamically
         let pageChild = '';
@@ -100,10 +105,8 @@
 
         const adjustment = -((wrapWidth - slideWidth)/2);
 
-        // slideList.style.transform = "translate3d(-" + (slideWidth * (curIndex + 1)) + "px, 0px, 0px)";
-        slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10) * (curIndex + 1)))  + "px, 0px, 0px)";
+        slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10) * (curIndex + 2)))  + "px, 0px, 0px)";
 
-        //let curIndex = startNum; // current slide index (except copied slide)
         let curSlide = slideContents[curIndex]; // current slide dom
         curSlide.classList.add('slide_active');
 
@@ -115,12 +118,12 @@
 
             if (curIndex <= slideLen - 1) {
                 slideList.style.transition = slideSpeed + "ms";
-                slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10)* (curIndex + 2))) + "px, 0px, 0px)";
+                slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10)* (curIndex + 3))) + "px, 0px, 0px)";
             }
             if (curIndex === slideLen - 1) {
                 setTimeout(function() {
                     slideList.style.transition = "0ms";
-                    slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10) * (curIndex + 1))) + "px, 0px, 0px)";
+                    slideList.style.transform = "translate3d(-" + (adjustment + ((slideWidth + 10) * (curIndex + 2))) + "px, 0px, 0px)";
                 }, slideSpeed);
                 curIndex = -1;
             }
@@ -135,16 +138,16 @@
         slideBtnPrev.addEventListener('click', function() {
             resetInterval();
 
-            if (curIndex > 0) {
+            if (curIndex >= 0) {
                 slideList.style.transition = slideSpeed + "ms";
-                slideList.style.transform = "translate3d(-" + (adjustment + (slideWidth + 10) * curIndex) + "px, 0px, 0px)";
+                slideList.style.transform = "translate3d(-" + (adjustment + (slideWidth + 10) * (curIndex + 1)) + "px, 0px, 0px)";
             }
             if (curIndex === 0) {
-                slideList.style.transition = slideSpeed + "ms";
-                slideList.style.transform = "translate3d(" + (-adjustment) + "px, 0px, 0px)";
+                // slideList.style.transition = slideSpeed + "ms";
+                // slideList.style.transform = "translate3d(" + (-adjustment) + (slideWidth + 10) * (curIndex +) + "px, 0px, 0px)";
                 setTimeout(function() {
                     slideList.style.transition = "0ms";
-                    slideList.style.transform = "translate3d(-" + (adjustment + (slideWidth + 10) * slideLen) + "px, 0px, 0px)";
+                    slideList.style.transform = "translate3d(-" + (adjustment + (slideWidth + 10) * (slideLen + 1)) + "px, 0px, 0px)";
                 }, slideSpeed);
                 curIndex = slideLen;
             }
@@ -173,7 +176,7 @@
                 curSlide = slideContents[curIndex];
                 curSlide.classList.add('slide_active');
                 slideList.style.transition = slideSpeed + "ms";
-                slideList.style.transform = "translate3d(-" + (adjustment+ (slideWidth + 10) * (curIndex + 1)) + "px, 0px, 0px)";
+                slideList.style.transform = "translate3d(-" + (adjustment+ (slideWidth + 10) * (curIndex + 2)) + "px, 0px, 0px)";
             });
         });
     }

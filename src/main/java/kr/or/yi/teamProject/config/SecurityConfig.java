@@ -74,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/manage").hasAnyRole("MANAGER", "ADMIN")
+                .antMatchers("/order").hasRole("USER")
                 .antMatchers("/mypage").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated(); // 그 외에는 인증 된 사용자만 접근 가능

@@ -54,7 +54,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         // 리다이렉트
         SavedRequest savedRequest = requestCache.getRequest(request, response);
 
-        if(savedRequest != null){ // 인증이 필요한 리소스에 접근하려다 로그인 화면으로 넘어간경우
+        String targetUrl = (String) request.getSession().getAttribute("targetUrl");
+        if(targetUrl != null){ // 추가 : 타겟 url이 있을 경우
+            request.getSession().removeAttribute("targetUrl");
+            redirectStrategy.sendRedirect(request, response, targetUrl);
+        } else if(savedRequest != null){ // 인증이 필요한 리소스에 접근하려다 로그인 화면으로 넘어간경우
             redirectStrategy.sendRedirect(request, response, savedRequest.getRedirectUrl());
         }else{  // 직접 로그인 페이지로 이동해서 들어온경우 메인페이지로 리다이렉트
             redirectStrategy.sendRedirect(request, response, "/");

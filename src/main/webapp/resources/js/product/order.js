@@ -1,32 +1,53 @@
-$(".product_button_buy").click(function() {       	
+(function () {
 
-        var selectedOptions = document.querySelectorAll(".product_quantity");
+    let selectedItems = []; //선택 상품
 
-        if(selectedOptions.length <= 0){
-            alert("옵션을 선택해주세요.");
+    const productButtonBuy = document.querySelector(".product_button_buy"); // 구매 버튼
+    const productButtonCart = document.querySelector(".product_button_cart"); // 카트 버튼
+
+    productButtonBuy.addEventListener('click',() => {
+
+        // 선택 상품 확인
+        const result = getSelectedItems();
+        if (result === false) {
             return;
         }
 
-        let orders = [];
-        
-        for(var i = 0; i < selectedOptions.length; i++){
+        // 주문 요청
+        toOrder(selectedItems);
+
+    });
+
+    productButtonCart.addEventListener('click',() => {
+
+        // 선택 상품 확인
+        const result = getSelectedItems();
+        if (result === false) {
+            return;
+        }
+
+        // 장바구니 담기
+        toOrder(selectedItems,true);
+
+    });
+
+    // 선택 상품 가져오기
+    function getSelectedItems(){
+        let selectedOptions = document.querySelectorAll(".product_quantity");
+
+        if (selectedOptions.length <= 0) {
+            alert("옵션을 선택해주세요.");
+            return false;
+        }
+
+        for (let i = 0; i < selectedOptions.length; i++) {
             let order = new Object();
 
             order.optionNo = selectedOptions[i].dataset.no;
             order.quantity = selectedOptions[i].value;
-            orders.push(order);
+            selectedItems.push(order);
         }
 
-        console.log(orders);
-
-        ajax('order', orders, cbkAction); //post => 결과 responsebody
-        
-
-    });
-
-    function cbkAction(){
-    	//if 주문번호가 있다?
-    			// order?orderNo=123242434343243 주소로 이동! (get) => String(view)
-    	//else if 없다?
-    			// 에러 메세지
+        return true;
     }
+})();
