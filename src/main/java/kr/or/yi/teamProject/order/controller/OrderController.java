@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,10 @@ import kr.or.yi.teamProject.order.service.OrderDetailService;
 import kr.or.yi.teamProject.order.service.OrderItemService;
 import kr.or.yi.teamProject.order.service.OrderService;
 import kr.or.yi.teamProject.product.controller.ItemController;
+import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.dto.Option;
+import kr.or.yi.teamProject.security.dto.CustomUser;
+import kr.or.yi.teamProject.user.dto.Member;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -46,22 +50,19 @@ public class OrderController {
 	OrderService orderService;
 	
 	
-	
 
     // 주문 조회	old
   @GetMapping("/order")
   public String order(@RequestParam("orderNo")Long orderNo, Model model) {
+	  
+	  System.out.println("=====================================================");
 	  	  	  
-	  Order order = Order.builder().orderNo(orderNo).build();
-	  
-	  Order order1 = orderDetailService.selectDetailOrder(order);
-	  
-	  System.out.println("=============orderItemList================"+order1);
-	  
-	  
-	  model.addAttribute("orderItemList",order1); 
-
-  	return "order/order";
+	  Order orderDetail = orderDetailService.selectDetailOrder(Order.builder().orderNo(orderNo).build());
+				  
+	  model.addAttribute("orderDetail",orderDetail);
+	  log.info(orderDetail.toString());
+	  	  
+  	  return "/order/order";
   }
 
   
@@ -69,15 +70,20 @@ public class OrderController {
   //주문대기열 추가
   @PostMapping("/order")
   @ResponseBody
-  public String insertOrder(@RequestBody List<Map<String, Object>> list, Model model) {
+  public String insertOrder(@RequestBody List<Map<String, Object>> list, Model model, Authentication authentication) {
+	  
+	  // 로그인 정보 가져오기
+      CustomUser user = (CustomUser) authentication.getPrincipal();
+      Member member = user.getMember();
 	  
 	
 	  log.info("=====================insertOrder========================");
 	  log.info(list.toString());
 
-		//	  옵션 유효성 검사
-		//	  재고 확인
-		  
+	  //옵션 유효성 검사
+	  //재고 확인
+
+	  
 	  //주문번호 난수 생성
 	  SecureRandom rnd = null;
       try {
@@ -93,10 +99,14 @@ public class OrderController {
 	  long orderno =  (parseNow * 100000) + rndnum;
 	  
 	  System.out.println("==============orderno=============="+orderno);
-	  
 
-	  Order order = Order.builder().orderNo(orderno).build();
-	   
+	  
+	  //order 객체생성
+	  Order order = new Order() ;	 
+	  order.setOrderNo(orderno);
+	  order.setMember(member);
+
+	  
 	   
 	   // 해쉬맵 리스트를 풀어서 orderItems에 담기
 	   List<OrderItem> orderItems =new ArrayList<>();
@@ -112,8 +122,7 @@ public class OrderController {
 	      
 	      
 	      for(int i = 0; i<Integer.parseInt(m.get("quantity").toString());i++) {
-	         
-	         
+	                  
 	         orderItems.add(orderItem);
 	         log.info("===============orderItems.toString()==============="+orderItems.toString());
 	      }
