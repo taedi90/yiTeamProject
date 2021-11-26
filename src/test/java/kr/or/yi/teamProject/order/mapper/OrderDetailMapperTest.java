@@ -48,8 +48,9 @@ public class OrderDetailMapperTest {
 	@Test
     public void _01_selectOrderByNo() {
         log.info("=== order_no로 조회 ===");
+        Long num = Long.parseLong("2021112515001281366");
    
-        Order result = mapper.selectDetailOrder(Order.builder().orderNo(5L).build());
+        Order result = mapper.selectDetailOrder(Order.builder().orderNo(num).build());
         log.info("조회 결과 -> " + result.toString());
         assertNotNull(result);
     }

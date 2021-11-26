@@ -60,34 +60,9 @@
 			(`order_no`, `username`) 
 			VALUES
 			(#{orderNo}, #{member.username})
-			
-<!-- 			<selectKey resultType="int" keyProperty="orderNo" order="AFTER">
-				SELECT LAST_INSERT_ID()
-			</selectKey> -->
 		</insert>
 
     
-    
-<!--    <insert id="insertOrderMember" parameterType="kr.or.yi.teamProject.order.dto.Order">
-		<![CDATA[  
-        	INSERT INTO `order`
-			(`order_no`, `username`, `zipcode`, `address1`, `address2`, `name`, `phone`, `point`, `status`) 
-			VALUES
-			(#{orderNo}, #{member.username}, #{zipcode}, #{address1}, #{address2}, #{name}, #{phone}, #{point}, #{status})
-        ]]>    
-    </insert>	
--->
-
-
-<!-- 비회원 주문 insertOrderNonMember -->
-<!--     <insert id="insertOrderNonMember" parameterType="kr.or.yi.teamProject.order.dto.Order">
-		<![CDATA[  
-        	INSERT INTO `order`
-			(`order_no`, `username`, `zipcode`, `address1`, `address2`, `name`, `phone`, `point`, `status`) 
-			VALUES
-			(#{orderNo}, #{nonMember.username}, #{zipcode}, #{address1}, #{address2}, #{name}, #{phone}, #{point}, #{status})
-        ]]>    
-    </insert>	 -->
  
 <!-- updateOrder --> 
     <update id="updateOrder" parameterType="kr.or.yi.teamProject.order.dto.Order">
