@@ -44,11 +44,19 @@ $("#option").change(function(){
                 <span class="option_price"> ${parseInt(price+optionPrice).toLocaleString('ko-KR')}</span> 원 </strong>
             </div>
         </div>`;
-       
         
-    if(optionNo !== 'null'){
+        
+       
+    if(optionNo == null){
+		return;
+	}
+	
+    
+    if(optionNo !== null){
         $(".selected_option").append(newSelectedOption);
-    }
+    } 
+    
+    
 
 }); 
 

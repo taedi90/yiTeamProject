@@ -24,15 +24,22 @@
     max-width: 170rem;
 }
 .detail_top{
-    margin-bottom: 10rem ! important;
+    margin-bottom: 5rem;
 }
 
 .product_img{
     width: calc(100% - 50rem);
-    min-width: 95rem;
+    min-width: 90rem;
     box-sizing: border-box;
     padding-right: 3rem;
     text-align:center;
+    overflow: hidden;
+}
+
+.product_img img{
+	width:80rem;
+	height:80rem;
+	object-fit:cover;
 }
 
 
@@ -362,6 +369,8 @@ border:none ! important;
     display: block;
     height: 150rem;
     border: 1px solid red;
+    text-align:center;
+    justify-content:center;
 }
 
 #tab_product_review{
@@ -401,7 +410,6 @@ border:none ! important;
 		width:100%;
 		min-width:auto;
 		padding-right:0;
-		border:1px solid black;
 	}
 	
 	.product_img img{

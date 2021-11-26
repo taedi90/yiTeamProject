@@ -31,7 +31,7 @@
                 <div class="fix_wrap">
                     <!-- 상품 상세페이지 시작 -->
                     <div class="detail_top container">
-                        <div class="product_img" style="height: 70rem;">
+                        <div class="product_img">
                             <img src="upload/${result.image}/thumb.png" alt="">
                         </div>
 
@@ -77,7 +77,7 @@
                                    	                        <dt>색상&사이즈</dt>
                                        	                    <dd>
 	                                                               <select name="option" id="option">
-    	                                                               <option value="null">옵션선택</option>
+    	                                                               <option value="">옵션선택</option>
         	                                                           <c:forEach var="option" items="${result.options}" varStatus="vs">
             	                                                        <option value="${option.optionNo}" data-option-no="${option.optionNo}" data-option-price="${option.optionPrice}" data-stock="${option.stock}" data-name="${option.name}">
                 	                                                   		
@@ -181,6 +181,17 @@
 	
 	<script type="text/javascript" src="${path}/js/payment/iamport.js"></script>
 	
+	
+	<script>
+	
+	var ll = document.quaerySelectorAll('.new_selected_option').length;
+	var aa = document.querySelectorAll('.option_price');
+	
+	for (i = 0; i < ll; i++){
+		[i] = aa[i].innerText;
+	}
+	
+	</script>
 	
     ${result}
 
