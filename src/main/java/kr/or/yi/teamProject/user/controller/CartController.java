@@ -33,17 +33,47 @@ public class CartController {
 
 	@PostMapping
 	@ResponseBody
-	public List<Cart> postCart(HttpServletRequest request,
-						   @RequestBody List<Map<String, String>> webCart,
+	public List<Cart> postCart(@RequestBody(required = false) List<Map<String, String>> webCart,
 						   Authentication authentication){
 
-
-		CustomUser user = (CustomUser) authentication.getPrincipal();
-		Member member = user.getMember();
+		Member member = null;
+		if(authentication != null) {
+			CustomUser user = (CustomUser) authentication.getPrincipal();
+			member = user.getMember();
+		}
 
 		List<Cart> result = cartService.getCart(webCart, member);
 
-
 		return result;
+	}
+
+	@PutMapping
+	public void putCart(Authentication authentication,
+						@RequestBody Map<String, String> webItem){
+
+		Member member = null;
+		if(authentication != null) {
+			CustomUser user = (CustomUser) authentication.getPrincipal();
+			member = user.getMember();
+		}else {
+			return;
+		}
+
+		cartService.updateCart(webItem, member);
+	}
+
+	@DeleteMapping
+	public void deleteCart(Authentication authentication,
+						@RequestBody Map<String, String> webItem){
+
+		Member member = null;
+		if(authentication != null) {
+			CustomUser user = (CustomUser) authentication.getPrincipal();
+			member = user.getMember();
+		}else {
+			return;
+		}
+
+		cartService.deleteCart(webItem, member);
 	}
 }

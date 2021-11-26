@@ -157,7 +157,7 @@ public class MemberController {
     @PostMapping("/check-user")
     @ResponseBody
     public CommonResult checkUser(HttpServletRequest request,
-                                  @RequestBody Map<String,Object> map) {
+                                  @RequestBody(required = false) Map<String,Object> map) {
 
         // 이미 로그인 되어 있다면 리턴
         if(request.isUserInRole("ROLE_USER")) {

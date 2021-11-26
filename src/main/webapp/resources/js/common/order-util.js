@@ -6,7 +6,11 @@ function toOrder(selectedItems, isCart = false){
     // 회원 권한 확인
     function checkUser() {
 
-        ajax('check-user', {targetUrl: "/after-login"}, cbkCheckUser);
+        if (isCart == true){
+            ajax('check-user', {}, cbkCheckUser);
+        } else {
+            ajax('check-user', {targetUrl: "/after-login"}, cbkCheckUser);
+        }
 
     }
 
@@ -66,6 +70,7 @@ function toOrder(selectedItems, isCart = false){
 
     // 카트 콜백
     function cbkSetCart(res){
-        window.location.href = "cart";
+        alert("장바구니 담기 완료!");
+        // window.location.href = "cart";
     }
 }

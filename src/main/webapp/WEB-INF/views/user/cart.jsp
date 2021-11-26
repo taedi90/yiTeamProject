@@ -106,25 +106,15 @@
 
 
         <table id="cart_list">
-<%--            <tr>--%>
-<%--                <th>선택</th>--%>
-<%--                <th>상품 이미지</th>--%>
-<%--                <th>상품명 + 옵션</th>--%>
-<%--                <th>수량</th>--%>
-<%--                <th>금액</th>--%>
-<%--                <th>삭제하기</th>--%>
-<%--            </tr>--%>
-
             <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
+                <td>상품이 존재하지 않습니다.</td>
             </tr>
-
         </table>
-    
+
+        합계
+        <div id="total_amount">
+
+        </div>
     
     	<%@ include file="../division/common/footer.jsp" %>
     </div>

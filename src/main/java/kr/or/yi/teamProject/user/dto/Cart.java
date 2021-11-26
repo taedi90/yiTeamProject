@@ -18,6 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cart {
+    private long cartNo; //번호
     private Member member; //회원
     private Option option; //옵션 + 상품 + 카테고리
     private int quantity; //수량

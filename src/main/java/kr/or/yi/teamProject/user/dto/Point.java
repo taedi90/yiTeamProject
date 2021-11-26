@@ -17,7 +17,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Point {
-    private  Member member;
+    private long pointNo;
+    private Member member;
     private int point;
     private long orderItemNo;
     private long reviewNo;

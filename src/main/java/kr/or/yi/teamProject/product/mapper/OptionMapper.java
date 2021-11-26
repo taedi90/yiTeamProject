@@ -9,5 +9,5 @@ public interface OptionMapper {
     int updateOption(Option option);
     int deleteOption(Option option);
     Option selectOption(Option option);
-    Option selectOptionDetail(Option option);
+    Option selectOptionDetail(long optionNo);
 }

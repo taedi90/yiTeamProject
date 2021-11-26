@@ -7,68 +7,128 @@ import kr.or.yi.teamProject.user.dto.Member;
 import kr.or.yi.teamProject.user.mapper.CartMapper;
 import kr.or.yi.teamProject.user.service.CartService;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class CartServiceImpl implements CartService {
 
-    @Setter(onMethod_ =  @Autowired)
+    @Setter(onMethod_ = @Autowired)
     OptionMapper optionMapper;
 
-    @Setter(onMethod_ =  @Autowired)
+    @Setter(onMethod_ = @Autowired)
     CartMapper cartMapper;
 
     @Override
-    @Transactional
+    //@Transactional(isolation = Isolation.READ_COMMITTED)
     public List<Cart> getCart(List<Map<String, String>> webCart, Member member) {
-        List<Cart> result = new ArrayList<>();
+        List<Cart> cartItems = new ArrayList<>();
 
-        if(member != null){
-            //db 조회
-            result = cartMapper.selectCart(member.getUsername());
-        }
+        if (webCart != null) {
+            // cart 객체로 변환
+            for (int i = 0; i < webCart.size(); ++i) {
+                Map<String, String> webItem = webCart.get(i);
 
-        if(webCart != null){
+                long optionNo = Long.parseLong(webItem.get("optionNo"));
+                int quantity = Integer.parseInt(webItem.get("quantity"));
 
-            for(int i = 0; i < webCart.size(); ++i) {
-                Map<String, String> cartItem = webCart.get(i);
-
-                long optionNo = Long.parseLong(cartItem.get("optionNo"));
-                int quantity = Integer.parseInt(cartItem.get("quantity"));
+                Option option = optionMapper.selectOptionDetail(optionNo);
 
                 Cart cart = Cart.builder()
                         .member(member)
                         .quantity(quantity)
-                        .option(Option.builder().optionNo(optionNo).build())
+                        .option(option)
                         .build();
 
-                result.add(cart);
+                cartItems.add(cart);
             }
-
-
-
-
-            //db 결과와 합치기
         }
 
-        //기존 db 지우기
+        if (member == null) {
+            //비회원의 경우 카트 반환
+            return cartItems;
+        }
 
-        //새로 insert 하기
+        //db 조회
+        String username = member.getUsername();
+        List<Cart> dbCart = cartMapper.selectCart(username);
 
-        // 가져오고
+        //웹 카트와 병합
+        cartItems.addAll(cartMapper.selectCart(username));
 
-        // 지우고
+        //중복 검사(중복 레코드 수량 합치기)
+        boolean isModified = false;
+        if(webCart != null && dbCart.size() > 0){
+            for (int i = 0; i < cartItems.size(); i++) {
+                for (int j = i + 1; j < cartItems.size(); j++) {
+                    long optionI = cartItems.get(i).getOption().getOptionNo();
+                    long optionJ = cartItems.get(j).getOption().getOptionNo();
+                    if (optionI == optionJ) {
+                        int quantity = cartItems.get(i).getQuantity() + cartItems.get(j).getQuantity();
+                        cartItems.get(i).setQuantity(quantity);
+                        cartItems.remove(j--);
+                        isModified = true;
+                    }
+                }
+            }
+        }
 
-        // 인서트하고
+        if(webCart != null || isModified == true) {
+            //기존 db 지우기
+            cartMapper.deleteCart(Cart.builder().member(member).build());
+
+            //새로 insert 하기
+            cartItems.forEach(c -> {cartMapper.insertCart(c);});
+
+            //조회
+            cartItems = cartMapper.selectCart(username);
+        }
 
         // 품절은 stock 보고 판단
 
-        return null;
+        return cartItems;
+    }
+
+    @Override
+    public void updateCart(Map<String, String> webItem, Member member) {
+
+        long optionNo = Long.parseLong(webItem.get("optionNo"));
+        int quantity = Integer.parseInt(webItem.get("quantity"));
+
+        Option option = Option.builder().optionNo(optionNo).build();
+
+        Cart cart = Cart.builder()
+                .member(member)
+                .quantity(quantity)
+                .option(option)
+                .build();
+
+        cartMapper.updateCart(cart);
+
+
+    }
+
+    @Override
+    public void deleteCart(Map<String, String> webItem, Member member) {
+
+        long optionNo = Long.parseLong(webItem.get("optionNo"));
+
+        Option option = Option.builder().optionNo(optionNo).build();
+
+        Cart cart = Cart.builder()
+                .member(member)
+                .option(option)
+                .build();
+
+        cartMapper.deleteCart(cart);
     }
 }

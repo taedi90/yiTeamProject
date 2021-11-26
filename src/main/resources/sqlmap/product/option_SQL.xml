@@ -4,12 +4,12 @@
 <!-- mapper 클래스 경로 -->
 <mapper namespace="kr.or.yi.teamProject.product.mapper.OptionMapper">
 
-    <resultMap id="optionMap" type="kr.or.yi.teamProject.product.dto.Item">
+    <resultMap id="optionMap" type="kr.or.yi.teamProject.product.dto.Option">
         <id property="optionNo" column="option_no"/>
         <result property="name" column="name"/>
         <result property="optionPrice" column="option_price"/>
         <result property="stock" column="stock"/>
-        <association property="options" javaType="kr.or.yi.teamProject.product.dto.Option">
+        <association property="item" javaType="kr.or.yi.teamProject.product.dto.Item">
             <id property="itemNo" column="item_no" />
             <result property="name" column="name"/>
             <result property="price" column="price"/>
@@ -38,8 +38,8 @@
         WHERE `option_no` = #{optionNo}
     </select>
 
-    <select id="selectOptionDetail" parameterType="kr.or.yi.teamProject.product.dto.Option" resultMap="optionMap">
-        SELECT `option_no`, o.`item_no`, `name`, `option_price`, `stock`, i.`price`, i.`discount`, i.`start_discount`, i.`title`, i.`image`
+    <select id="selectOptionDetail" resultMap="optionMap">
+        SELECT o.`option_no`, o.`item_no`, o.`name`, o.`option_price`, o.`stock`, i.`price`, i.`discount`, i.`start_discount`, i.`title`, i.`image`
         FROM `option` o
         LEFT OUTER JOIN `item` i ON o.`item_no` = i.`item_no`
         WHERE `option_no` = #{optionNo}
