@@ -32,6 +32,20 @@ html{
     --font-xl: 2rem;
     --font-2xl: 2.5rem;
     --font-3xl: 3rem;
+
+    /* 예비 */
+    --bg-color-base: #F0E5DB;
+    --bg-color-base-hover: #E7D9CD;
+
+    --txt-color-base: #9f877e;
+    --txt-color-base-hover: #564c4c;
+
+    --txt-color-data: #000000;
+    --txt-color-warn: #8B0000;
+
+    --border-darker: #BFB7B0;
+    --border-base: #dadada;
+    --border-bright: #e5e5e5;
 }
 
 body {
@@ -48,4 +62,33 @@ padding: 0;
     width: 100%;
 }
 
+/* 기본 요소 디자인 */
+select {
+    padding: 0.5rem 3rem 0.5rem 1rem;
+    font-family: inherit;
+    font-size: var(--font-sm);
+    background: url(../../img/manage/component/combo.svg) no-repeat 100% 50%;
+    background-size: contain;
+    border: 0.1rem solid var(--border-base);
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+button {
+    /*height: 2.9rem;*/
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    font-size: var(--font-sm);
+    /*color: var(--txt-color-base-hover);*/
+    /*background-color: var(--bg-color-base-hover);*/
+    border: 0.1rem solid var(--border-base);
+    border-radius: 0.3rem;
+}
+
+button:hover {
+    color: var(--txt-color-base-hover);
+    background-color: var(--bg-color-base-hover);
+    border: 0.1rem solid var(--border-base);
+}
 

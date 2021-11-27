@@ -137,6 +137,7 @@
 
 	<script type="text/javascript" src="${path}/js/common/nav.js"></script>
 	<script type="text/javascript" src="${path}/js/common/order-util.js"></script>
-	
+	<script type="text/javascript" src="${path}/js/common/modal.js"></script>
+
 </body>
 </html>

@@ -1,3 +1,12 @@
+/**
+ * 장바구니 담기 & 주문 요청 스크립트
+ *
+ * @requires modal.js
+ * @requires ajax.js
+ *
+ * @author taedi <taedi90@gmail.com>
+ */
+
 'use strict';
 function toOrder(selectedItems, isCart = false){
 
@@ -45,7 +54,7 @@ function toOrder(selectedItems, isCart = false){
                     cartItems = selectedItems;
                 }
                 window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
-                alert("장바구니 담기 완료!");
+                cbkSetCart();
 
             } else {
                 window.localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
@@ -68,7 +77,10 @@ function toOrder(selectedItems, isCart = false){
 
     // 카트 콜백
     function cbkSetCart(res){
-        alert("장바구니 담기 완료!");
-        // window.location.href = "cart";
+        newModal(`장바구니 담기 완료!<br>이동하시겠습니까?`, 2, goCart);
+    }
+
+    function goCart(){
+        window.location.href = "cart";
     }
 }
