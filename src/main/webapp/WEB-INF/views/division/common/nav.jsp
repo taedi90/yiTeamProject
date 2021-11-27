@@ -47,7 +47,10 @@
 
         <div class="right_icon">
 
-            <img src="${path}/img/common/search.svg" alt="검색">
+            <div id="nav_search">
+                <img id="nav_search_icon" src="${path}/img/common/search.svg" alt="검색">
+                <input id="nav_searchbar" class="hidden" type="text">
+            </div>
 			<a href="cart"><img src="${path}/img/common/cart.svg" alt="장바구니"></a>
             <a href="mypage"><img src="${path}/img/common/mypage.svg" alt="목록"></a>
 

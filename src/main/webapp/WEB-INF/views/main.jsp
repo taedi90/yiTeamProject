@@ -32,7 +32,7 @@
 
     <div class="content">
 
-        <c:if test="${result.category eq null}">
+        <c:if test="${result.category eq null and result.keyword eq null}">
             <div class="event_banner">
 
                 <div class="slide_wrap">
@@ -71,6 +71,14 @@
 
             </div>
             <script src="${path}/js/common/slider.js" defer></script>
+        </c:if>
+        <c:if test="${result.keyword ne null}">
+            <div id="search_info">
+                <span>"&nbsp;&nbsp;${result.keyword}&nbsp;&nbsp;"</span> &nbsp;&nbsp;&nbsp;검색 결과
+            </div>
+            <script>
+                const keyword = '${result.keyword}';
+            </script>
         </c:if>
         <c:if test="${result.category ne null}">
             <script>

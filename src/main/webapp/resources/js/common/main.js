@@ -3,6 +3,7 @@
 let page = 2;
 const btnMore = document.querySelector("div#more");
 
+//더보기
 function viewMore() {
 
     let pager = new Object();
@@ -11,6 +12,10 @@ function viewMore() {
 
     if(typeof category !== 'undefined'){
         pager.category = category;
+    }
+
+    if(typeof keyword !== 'undefined'){
+        pager.keyword = keyword;
     }
 
     btnMore.style.display = "none";

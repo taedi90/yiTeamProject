@@ -74,9 +74,10 @@
 
 .left_icon{
     margin-left: 2%;
-    width: 15%;
     display: flex;
     justify-content: left;
+    position: absolute;
+    left: 0;
 }
 
 .left_icon img{
@@ -88,9 +89,11 @@
 
 .right_icon{
     margin-right: 2%;
-    width: 15%;
     display: flex;
     justify-content: right;
+    z-index: 3001;
+    position: absolute;
+    right: 0;
 }
 
 .right_icon img{
@@ -98,13 +101,43 @@
     width: 3.5rem;
     height: 3.5rem;
     margin-left: 1.5rem;
+    cursor: pointer;
 }
 
 .sub_menu{
     position: absolute;
 }
 
+#nav_search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+#nav_search_icon {
+    background-color: white;
+}
+
+#nav_searchbar {
+    margin: 1rem 0 0.3rem 0;
+    padding: 0.3rem 0 0.3rem 0;
+    border: 0;
+    font-size: var(--font-xl);
+    border-bottom: solid 0.1rem var(--border-darker);
+    -webkit-transition:width 0.2s;
+    width: 20rem;
+}
+
+#nav_searchbar:focus {
+    background: var(--bg-base);
+    outline: none;
+}
+
+#nav_searchbar.hidden {
+    transition-property: width;
+    transition-duration: 0.2s;
+    width: 0;
+}
 
 @media (min-width: 768.1px) {
     .mobile_menu{
@@ -180,4 +213,7 @@
         /*height: auto;*/
     }
 
+    #nav_searchbar {
+        width: calc(100vw - 20rem);
+    }
 }

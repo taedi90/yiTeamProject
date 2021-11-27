@@ -99,3 +99,13 @@ a:visited {
     background-color: var(--bg-color-payment);
     color: white;
 }
+
+#search_info {
+    padding: 5rem 0 5rem 0;
+    font-size: var(--font-2xl);
+}
+
+#search_info span {
+    font-style: italic;
+    font-weight: bold;
+}
