@@ -13,7 +13,7 @@
  * @author taedi <taedi90@gmail.com>
  */
 
-const modalContainer = document.querySelector("#modal_container"); //모달창이 들어갈 부모요소
+let modalContainer = document.querySelector("#modal_container"); //모달창이 들어갈 부모요소
 const modalOverlay = `<div id="modal_overlay" style="background-color: rgba(0,0,0,0.6);width: 100%;height: 100%;position: absolute;"></div>`; //모달창 오버레이(검정배경)
 let idNum = 1; //모달창 식별 번호
 let zIndexStart = 100; //다른 요소보다 뒤에 표시되면 값을 상향 조정
@@ -24,6 +24,13 @@ const buttonAlert = `<button class="modal_button" type="button" onclick="confirm
 const buttonConfirm =
     `<button type="button" class="modal_button" onclick="confirmFunc(this)">예</button>
 <button type="button" class="modal_button" onclick="cancelFunc(this)">아니오</button>`;
+
+//없을 경우 생성하기
+if(modalContainer == null){
+    modalContainer = document.createElement("div");
+    modalContainer.id = "modal_container";
+    document.body.appendChild(modalContainer);
+}
 
 //모달컨테이너 초기화
 modalContainer.innerHTML = ``;
