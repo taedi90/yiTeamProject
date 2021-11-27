@@ -44,7 +44,6 @@ function toOrder(selectedItems, isCart = false){
                 } else {
                     cartItems = selectedItems;
                 }
-                console.log(cartItems);
                 window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
                 alert("장바구니 담기 완료!");
 
@@ -60,7 +59,6 @@ function toOrder(selectedItems, isCart = false){
     // 주문 콜백
     function cbkSetOrder(result) {
         if (parseInt(result) != null) {
-            alert(parseInt(result));
             // order?orderNo=123242434343243 주소로 이동! (get) => String(view)
             window.location.href = "order?orderNo=" + result;
         }

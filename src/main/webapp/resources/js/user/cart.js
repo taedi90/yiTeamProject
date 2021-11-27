@@ -41,18 +41,23 @@
 
             const unitPrice = elem.option.item.price + elem.option.optionPrice;
             const price = unitPrice * elem.quantity;
+            const isSoldOut = Boolean(elem.option.stock <= 0);
 
             let child = document.createElement("tr");
             child.id = "item" + elem.option.optionNo;
-            child.classList.add("item")
+            child.classList.add("item");
             child.innerHTML =
                 `
-                <td><input type="checkbox" checked></td>
+                <td><input type="checkbox" class="check_input" ${(isSoldOut ? "disabled" : "checked")}></td>
                 <td><img src="upload/${elem.option.item.image}/thumb_80.png" alt=""></td>
                 <td>${elem.option.item.title}<br>${elem.option.name} (${elem.option.optionPrice})</td>
-                <td><input class="quantity_input" type="number" data-option-no="${elem.option.optionNo}" data-unit-price="${unitPrice}" min="1" value="${elem.quantity}"></td>
+                <td>
+                    ${(isSoldOut ? "재고 부족" :
+                    '<input class="quantity_input" type="number" data-option-no="' + elem.option.optionNo 
+                    + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">')}
+                </td>
                 <td class="item_price">${price.toLocaleString('ko-KR') + "원"}</td>
-                <td><button class="remove_button" data-option-no="${elem.option.optionNo}">삭제하기</button></td>
+                <td><button class="remove_button" data-option-no="${elem.option.optionNo}"}>삭제하기</button></td>
                 `;
 
             cartList.appendChild(child);
@@ -60,10 +65,12 @@
 
         }
 
-        const quantityInputs = document.querySelectorAll(".quantity_input");
-        const removeButtons = document.querySelectorAll(".remove_button");
-
         //event listener 등록(수량 변경, 금액 변경, 삭제)
+        const quantityInputs = document.querySelectorAll(".quantity_input"); //수량
+        const removeButtons = document.querySelectorAll(".remove_button"); //삭제하기
+        const checkInputs = document.querySelectorAll(".check_input"); //체크상자
+
+        // 수량 변경
         quantityInputs.forEach(
             (quantityInput) => {
                 quantityInput.addEventListener('change', () =>{
@@ -89,7 +96,7 @@
         )
 
 
-
+        //카트 빼기
         removeButtons.forEach(
             (removeButton) => {
                 removeButton.addEventListener('click',() =>{
@@ -109,26 +116,73 @@
             }
         )
 
+        //상품 선택
+        checkInputs.forEach(
+            (checkInput) => {
+                checkInput.addEventListener('change', ()=>{
+                    getTotalAmount();
+                });
+            }
+        )
 
+        //주문하기
+        const purchaseButton = document.querySelector("#purchase_button");
+        purchaseButton.addEventListener('click', ()=>{
+
+            let selectedItems = [];
+
+            checkInputs.forEach( (checkInput) => {
+                //선택 상품만 주문창으로 넘어가기
+                if(checkInput.checked){
+                    //옵션, 수량
+                    const row = checkInput.parentNode.parentNode;
+                    const quantityElem = row.querySelector(".quantity_input");
+                    let order = new Object();
+
+                    order.optionNo = quantityElem.dataset.optionNo;
+                    order.quantity = quantityElem.value;
+                    selectedItems.push(order);
+
+                }
+            });
+
+            if(selectedItems.length > 0){
+                toOrder(selectedItems,false);
+            }
+
+        });
 
     }
 
     //합계 및 배송비
     function getTotalAmount(){
-        const totalAmount = document.querySelector("#total_amount"); //합계 요소
-        const items = document.querySelectorAll(".quantity_input"); //합계 요소
-        let total = 0;
-        items.forEach((item) =>{
-           total += item.dataset.unitPrice * item.value;
-        });
 
-        totalAmount.innerHTML = total.toLocaleString('ko-KR') + "원";
+        const checkInputs = document.querySelectorAll(".check_input"); //체크상자
+
+        const itemPrice = document.querySelector("#item_price"); //상품 금액
+        const deliveryFee = document.querySelector("#delivery_fee"); //배송비
+        const totalPrice = document.querySelector("#total_price"); //합계
+
+
+        let iPrice = 0;
+        checkInputs.forEach( (checkInput) => {
+                const row = checkInput.parentNode.parentNode;
+                const quantityElem = row.querySelector(".quantity_input");
+                console.log(quantityElem);
+                if(quantityElem){
+                    iPrice += quantityElem.dataset.unitPrice * quantityElem.value;
+                }
+            }
+
+        )
+
+        if(iPrice > 0){
+            itemPrice.innerHTML = "상품 금액 " + iPrice.toLocaleString('ko-KR') + "원";
+            const fee = (iPrice >= 50000 ? 0 : 2500);
+            deliveryFee.innerHTML = "배송비 " +  fee.toLocaleString('ko-KR') + "원";
+            totalPrice.innerHTML ="총합계 " +  (iPrice + fee).toLocaleString('ko-KR') + "원";
+        }
+
     }
-
-
-
-    //수량 변경
-
-    //카트 빼기
 
 })();

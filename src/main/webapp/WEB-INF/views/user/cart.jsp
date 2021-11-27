@@ -50,8 +50,8 @@
 	
 	
 	<!-- content -->
-<%--        <div class="content">--%>
-<%--            <div class="content_wrap">--%>
+        <div class="content">
+            <div class="content_wrap">
 <%--                <div class="side_wrap">--%>
 <%--                    <div class="side_all">--%>
 <%--                        <h1 class="side_title">MY PAGE</h1>--%>
@@ -95,26 +95,37 @@
 <%--                </div>--%>
 
 
+                <table id="cart_list">
+                    <tr>
+                        <td>상품이 존재하지 않습니다.</td>
+                    </tr>
+                </table>
 
-<%--            </div>--%>
+                <div>
+                    <div id="item_price">
+                        상품 금액
+                    </div>
+                    <div id="delivery_fee">
+                        배송비
+                    </div>
+                    <div id="total_price">
+                        총 합계
+                    </div>
+                </div>
+
+                <div>
+                    <button id="purchase_button">주문하기</button>
+                </div>
 
 
 
-
-<%--        </div>--%>
-
-
-
-        <table id="cart_list">
-            <tr>
-                <td>상품이 존재하지 않습니다.</td>
-            </tr>
-        </table>
-
-        합계
-        <div id="total_amount">
+            </div>
 
         </div>
+
+
+
+
     
     	<%@ include file="../division/common/footer.jsp" %>
     </div>
@@ -125,8 +136,7 @@
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 
 	<script type="text/javascript" src="${path}/js/common/nav.js"></script>
-	
-	<script type="text/javascript" src="${path}/js/payment/iamport.js"></script>
+	<script type="text/javascript" src="${path}/js/common/order-util.js"></script>
 	
 </body>
 </html>
