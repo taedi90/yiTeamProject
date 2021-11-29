@@ -10,14 +10,14 @@ $("#option").change(function(){
     var optionName = optionBox.data("name");     
     // 옵션 금액
     var optionPrice = optionBox.data("optionPrice");
-        
+    
+    // 옵션 콤보박스 초기화
+     $("#option").val("");     
+         
     //인풋상자배열저장
     var inputs = document.querySelectorAll(".product_quantity");
-
-    // 옵션 콤보박스 초기화
-    $("#option").val("");
-    
-    if(inputs.length >0){
+	
+	if(inputs.length >0){
 		for(let i = 0; i < inputs.length; i++){
 			if(inputs[i].dataset.no==optionNo){
 				quantityUp(inputs[i]);
@@ -25,17 +25,19 @@ $("#option").change(function(){
 			}
 		}
 	}
+    
+    
         
         
         
     var newSelectedOption = 
         
         `<div class="new_selected_option">
-            <div style="width:38rem; float: left;">
+            <div style="width:calc(100% - 2.5rem); float: left;">
                 <span class="selected_option_name"> ${title.innerText} ${optionName} </span>
             </div>
             <div>
-                <img src="img/common/icon_x.png" alt="x" class="delete_selected_option" onclick="$(this).parents('.new_selected_option').remove()">
+                <img src="img/common/icon_x.png" alt="x" class="delete_selected_option" onclick="removeOption(this)">
             </div>
             <div style="text-align: right;">
                 <div class="quantity">
@@ -75,6 +77,7 @@ function quantityUp(elem){
 
     inputBox.stepUp();
     calPrice(parent);
+    getTotalPrice();
 }
 
 
@@ -89,7 +92,20 @@ function quantityDown(elem){
 
     inputBox.stepDown();
     calPrice(parent);
+    getTotalPrice();
 }
+
+
+function removeOption(elem){
+	
+	let parent = elem.closest('.new_selected_option');
+	parent.remove();
+		
+    getTotalPrice();
+    
+    
+}
+
 
 function calPrice(elem){
     let inputBox = elem.querySelector('.product_quantity');
@@ -100,3 +116,30 @@ function calPrice(elem){
 
     priceBox.innerHTML = ((price + optionPrice) * quantity).toLocaleString('ko-KR');
 }
+
+
+	window.onchange = function(){
+		getTotalPrice();
+	}
+	
+	
+	function getTotalPrice(){
+		var optionPrice = document.querySelectorAll('.option_price');
+		var totalPrice = 0;
+		let opt = [];
+		for(var i = 0; i < optionPrice.length; i++){
+		
+			opt.push(parseInt(optionPrice[i].innerText.replace(/,/g, '')));
+			
+	
+		}
+		var ss = opt.reduce((initialValue, currentValue) => {
+	    			return initialValue + currentValue;}, totalPrice);
+	    			
+	    totalPrice += ss;
+	    totalPrice = totalPrice.toLocaleString('ko-KR');
+	    
+	    document.querySelector("#total_price").innerText = totalPrice;
+	    
+		
+	}

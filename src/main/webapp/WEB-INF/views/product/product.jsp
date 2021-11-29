@@ -109,7 +109,7 @@
                	                                        <div class="option_total">
                    	                                        <p class="total">
                        	                                        <span class="total_txt"> 총 상품 금액</span>
-                           	                                    <strong class="total_price" id="total_price">  </strong>
+                           	                                    <strong class="total_price" id="total_price"> 0 </strong>
                                	                                <span class="total_won"> 원 </span>
                                    	                        </p>
 
@@ -168,10 +168,7 @@
     </div>
 
     <script src="${path}/js/common/jquery-3.6.0.min.js" defer></script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" defer></script>
-	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js" defer></script>
 
-	<script type="text/javascript" src="${path}/js/common/nav.js" defer></script>
 	<script type="text/javascript" src="${path}/js/common/ajax.js" defer></script>
 	<script type="text/javascript" src="${path}/js/common/order-util.js" defer></script>
 	<script type="text/javascript" src="${path}/js/common/modal.js" defer></script>
@@ -180,21 +177,6 @@
 	<script type="text/javascript" src="${path}/js/product/tab.js" defer></script>
 	<script type="text/javascript" src="${path}/js/product/order.js" defer></script>
 
-	<script type="text/javascript" src="${path}/js/payment/iamport.js" defer></script>
-	
-	
-	<script>
-	
-	var ll = document.quaerySelectorAll('.new_selected_option').length;
-	var aa = document.querySelectorAll('.option_price');
-	
-	for (i = 0; i < ll; i++){
-		[i] = aa[i].innerText;
-	}
-	
-	</script>
-	
-    ${result}
 
 </body>
 </html>

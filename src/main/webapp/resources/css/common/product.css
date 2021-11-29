@@ -421,12 +421,20 @@ border:none ! important;
 		padding:0;
 	}
 	
-	/* .information_group h5, .information_group h3, .information_group .product_price{
-		display:inline-block;
-	} 
-	 */
-	.option_wrap dl dt{
-		display:none;
+	.information_group{
+		padding-left:1.5rem;
+	}
+	
+	.category {
+		margin-bottom:0;
+	}
+	
+	.product_price{
+		padding-top:1rem;
+	}
+	
+	.option_wrap dl dd select{
+		margin-bottom:2rem;
 	}
 	
 	.option_wrap dl dd{
@@ -437,4 +445,13 @@ border:none ! important;
 		min-width:auto;
 		max-width:auto;
 	}
+	
+	.delete_selected_option{
+		float:right;
+		margin-top:-1rem;
+	}
+	.selected_option_price{
+		margin: 0;
+	}
+	
 }
