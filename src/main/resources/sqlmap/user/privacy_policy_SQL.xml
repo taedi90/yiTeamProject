@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.user.mapper.PrivacyPolicyMapper">
+    <select id="selectPrivacyPolicy" resultType="kr.or.yi.teamProject.user.dto.PrivacyPolicy">
+        SELECT * FROM `privacy_policy` ORDER BY `reg_date` DESC LIMIT 0, 1;
+    </select>
+</mapper>

@@ -29,6 +29,7 @@
     <div id="register_form">
         <div id="input_holder">
             <form action="register" method="post" name="form">
+                <input type="hidden" class="policy_input" name="policyNo" value="${policyNo}">
                 <input type="text" class="register_input" name="username" placeholder="아이디">
                 <input type="text" class="register_input" name="name" placeholder="이름" autocomplete="username">
                 <input type="password" class="register_input" name="password" placeholder="비밀번호" autocomplete="new-password">

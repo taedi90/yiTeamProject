@@ -7,7 +7,7 @@
 
         <div class="user">
             <sec:authorize access="isAnonymous()">
-                <a href="login">Login</a>&nbsp;|&nbsp;<a href="register">Register</a>
+                <a href="login">Login</a>&nbsp;|&nbsp;<a href="policy">Register</a>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
                 <a href="logout">Logout</a>

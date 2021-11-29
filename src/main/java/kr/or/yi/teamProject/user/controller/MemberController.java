@@ -2,8 +2,12 @@ package kr.or.yi.teamProject.user.controller;
 
 import kr.or.yi.teamProject.common.enums.CommonResult;
 import kr.or.yi.teamProject.user.dto.Member;
+import kr.or.yi.teamProject.user.dto.PrivacyAgreement;
+import kr.or.yi.teamProject.user.dto.PrivacyPolicy;
 import kr.or.yi.teamProject.user.enums.RegisterResult;
 import kr.or.yi.teamProject.user.enums.SendConfirmMailResult;
+import kr.or.yi.teamProject.user.mapper.PrivacyAgreementMapper;
+import kr.or.yi.teamProject.user.mapper.PrivacyPolicyMapper;
 import kr.or.yi.teamProject.user.service.MemberService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -55,19 +59,38 @@ public class MemberController {
         return "user/login";
     }
 
+    @Setter(onMethod_ = @Autowired)
+    PrivacyPolicyMapper privacyPolicyMapper;
+
+    // 개인정보처리방침
+    @GetMapping("policy")
+    public String getPolicy(Model model) {
+        PrivacyPolicy policy = privacyPolicyMapper.selectPrivacyPolicy();
+        model.addAttribute("policy", policy);
+        return "user/policy";
+    }
+
+
     // 회원가입 페이지
     @GetMapping("/register")
-    public String getRegister() {
+    public String getRegister(@RequestParam("policyNo")String policyNo, Model model) {
+
+        model.addAttribute("policyNo", policyNo);
 
         return "user/register";
     }
 
+    @Setter(onMethod_ = @Autowired)
+    PrivacyAgreementMapper privacyAgreementMapper;
+
     // 회원가입 요청
     @PostMapping("/register")
     @ResponseBody
-    public RegisterResult postRegister(@RequestBody Member member,
+    public RegisterResult postRegister(@RequestPart("member") Member member,
+                                       @RequestPart("policyNo")String policyNo,
                                        HttpServletResponse response) {
         log.info("client로 부터 받은 입력 값 : " + member.toString());
+        log.info("client로 부터 받은 입력 값 : " + policyNo);
 
         RegisterResult result = memberService.insertNormalMember(member);
 
@@ -76,6 +99,13 @@ public class MemberController {
 
         //이메일 발송 성공 시
         if(result.isSuccess() == true){
+
+            PrivacyAgreement privacyAgreement = PrivacyAgreement.builder()
+                    .member(member)
+                    .policyNo(Integer.parseInt(policyNo))
+                    .build();
+            privacyAgreementMapper.insertPrivacyAgreement(privacyAgreement);
+
             // 쿠키 생성
             response.addCookie(result.getCookie());
             result.setCookie(null);
