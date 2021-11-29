@@ -166,11 +166,13 @@
 
         let iPrice = 0;
         checkInputs.forEach( (checkInput) => {
-                const row = checkInput.parentNode.parentNode;
-                const quantityElem = row.querySelector(".quantity_input");
-                console.log(quantityElem);
-                if(quantityElem){
-                    iPrice += quantityElem.dataset.unitPrice * quantityElem.value;
+                if(checkInput.checked){
+                    const row = checkInput.parentNode.parentNode;
+                    const quantityElem = row.querySelector(".quantity_input");
+                    console.log(quantityElem);
+                    if(quantityElem){
+                        iPrice += quantityElem.dataset.unitPrice * quantityElem.value;
+                    }
                 }
             }
 
