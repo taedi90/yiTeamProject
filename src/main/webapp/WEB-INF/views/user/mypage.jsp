@@ -73,7 +73,6 @@
 
 <script type="text/javascript" src="${path}/js/common/modal.js" defer></script>
 <script type="text/javascript" src="${path}/js/common/ajax.js" defer></script>
-<script type="text/javascript" src="${path}/js/common/nav.js" defer></script>
 <script type="text/javascript" src="${path}/js/user/mypage.js" defer></script>
 
 <script type="text/javascript" src="${path}/js/payment/iamport.js"></script>
