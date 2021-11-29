@@ -50,14 +50,16 @@
                 `
                 <td><input type="checkbox" class="check_input" ${(isSoldOut ? "disabled" : "checked")}></td>
                 <td><img src="upload/${elem.option.item.image}/thumb_80.png" alt=""></td>
-                <td>${elem.option.item.title}<br>${elem.option.name} (${elem.option.optionPrice})</td>
+                <td class="item_title">${elem.option.item.title}<br>${elem.option.name} (${elem.option.optionPrice})</td>
                 <td>
                     ${(isSoldOut ? "재고 부족" :
+                    '<button type="button">➖</button>' +
                     '<input class="quantity_input" type="number" data-option-no="' + elem.option.optionNo 
-                    + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">')}
+                    + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">' +
+                    '<button type="button">➕</button>')}
                 </td>
                 <td class="item_price">${price.toLocaleString('ko-KR') + "원"}</td>
-                <td><button class="remove_button" data-option-no="${elem.option.optionNo}"}>삭제하기</button></td>
+                <td><img class="remove_button" data-option-no="${elem.option.optionNo}" src="img/common/x.svg" alt=""></td>
                 `;
 
             cartList.appendChild(child);

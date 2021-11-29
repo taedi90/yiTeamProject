@@ -12,7 +12,7 @@
     <title>장바구니</title>
     <link rel="stylesheet" href="${path}/css/common/main.css">
     <link rel="stylesheet" href="${path}/css/user/cart.css">
-    <link rel="stylesheet" href="${path}/css/user/mypage_publish.css">
+<%--    <link rel="stylesheet" href="${path}/css/user/mypage_publish.css">--%>
 
     <script src="${path}/js/common/ajax.js"></script>
     <script src="${path}/js/user/cart.js"></script>
@@ -23,32 +23,6 @@
 	<%@ include file="../division/common/header.jsp" %>
 	<%@ include file="../division/common/nav.jsp" %>
 
-	
-<%--	<nav class="mypage_nav">--%>
-<%--            <div class="mypage_nav_left">--%>
-<%--                <ul>--%>
-<%--                    <li>MY PAGE</li> |--%>
-<%--                    <li>LOGOUT</li>--%>
-<%--                </ul>--%>
-<%--            </div>--%>
-
-<%--            <div class="welcome">--%>
-<%--                <P><sec:authentication property="principal.member.name"/> 님 어서오세요.</P>--%>
-<%--            </div>--%>
-
-<%--            <div class="mypage_nav_menu">--%>
-<%--                <ul>--%>
-<%--                    <li>Q&A</li>--%>
-<%--                    <li>NOTICE</li>--%>
-<%--                    <li>FAQ</li>--%>
-<%--                    <li>EVENT</li>--%>
-<%--                </ul>--%>
-<%--            </div>--%>
-
-
-<%--        </nav>--%>
-	
-	
 	<!-- content -->
         <div class="content">
             <div class="content_wrap">
@@ -94,6 +68,7 @@
 
 <%--                </div>--%>
 
+                <h1> shopping bag </h1>
 
                 <table id="cart_list">
                     <tr>
@@ -102,6 +77,20 @@
                 </table>
 
                 <div>
+                    <div><input type="checkbox"></div>
+                    <div>
+                        <div>
+                            <div>사진</div>
+                            <div>꽈배기 짜임의 벌룬소매 반하이넥 H라인 니트 미니 원피스</div>
+                        </div>
+                        <div>
+                            <div><input type="text"></div>
+                            <div><button>버튼</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="summary">
                     <div id="item_price">
                         상품 금액
                     </div>
@@ -111,20 +100,18 @@
                     <div id="total_price">
                         총 합계
                     </div>
+                    <div>
+                        <button id="purchase_button">주문하기</button>
+                    </div>
                 </div>
 
-                <div>
-                    <button id="purchase_button">주문하기</button>
-                </div>
+
 
 
 
             </div>
 
         </div>
-
-
-
 
     
     	<%@ include file="../division/common/footer.jsp" %>
