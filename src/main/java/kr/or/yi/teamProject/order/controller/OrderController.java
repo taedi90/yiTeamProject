@@ -24,12 +24,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.yi.teamProject.order.dto.Order;
 import kr.or.yi.teamProject.order.dto.OrderDetail;
 import kr.or.yi.teamProject.order.dto.OrderItem;
+import kr.or.yi.teamProject.order.mapper.OrderMapper;
 import kr.or.yi.teamProject.order.service.OrderDetailService;
 import kr.or.yi.teamProject.order.service.OrderItemService;
 import kr.or.yi.teamProject.order.service.OrderService;
 import kr.or.yi.teamProject.product.controller.ItemController;
 import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.dto.Option;
+import kr.or.yi.teamProject.product.mapper.OptionMapper;
+import kr.or.yi.teamProject.product.service.ItemService;
 import kr.or.yi.teamProject.security.dto.CustomUser;
 import kr.or.yi.teamProject.user.dto.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +52,11 @@ public class OrderController {
 	@Autowired
 	OrderService orderService;
 	
+	@Autowired
+	OrderMapper orderMapper;
+	
+	@Autowired
+	OptionMapper optionMapper;
 	
 
     // 주문 조회	old
@@ -112,28 +120,26 @@ public class OrderController {
 	   List<OrderItem> orderItems =new ArrayList<>();
 	   
 	   for(Map<String, Object> m : list) {
-		   log.info("===============m========="+m);
+
 		   log.info("Long.parseLong(m.get(\"optionNo\").toString())"+Long.parseLong(m.get("optionNo").toString()));
 	      
-	      OrderItem orderItem = new OrderItem();
-	      
-	      orderItem.setOption(Option.builder().optionNo(Long.parseLong(m.get("optionNo").toString())).build());
+		   
+	     OrderItem orderItem = new OrderItem();	      
+	     Option option =  optionMapper.selectOptionDetail(Long.parseLong(m.get("optionNo").toString()));
+	     
+	     log.info("==============option==============="+option);
+   
+	      orderItem.setOption(option);
 	      orderItem.setOrder(order);
-	      
-	      
-	      for(int i = 0; i<Integer.parseInt(m.get("quantity").toString());i++) {
-	                  
+	            
+	      for(int i = 0; i<Integer.parseInt(m.get("quantity").toString());i++) {                  
 	         orderItems.add(orderItem);
-	         log.info("===============orderItems.toString()==============="+orderItems.toString());
 	      }
 	      
-	   }
-	   
-	   
-	   log.info("==========================================================");
-	   log.info(order.toString());
-	   log.info(orderItems.toString());
-	   
+	   }	   
+
+	   log.info("============객체확인==========="+order.toString()+orderItems.toString());
+   
 	   //주문대기열 추가
 	   int res = orderService.createOrderMember(order, orderItems);
 	   if(res == 1 ) {
@@ -142,7 +148,34 @@ public class OrderController {
 	   	   
 	   return "";
 
-  }  
+  }
+  
+  
+  
+  //주문 update
+  @PostMapping("/orderUpdate")
+  @ResponseBody
+  public void orderUpdate(@RequestBody Map<String, Object> updateData, Model model) {
+	  
+	  log.info("======================orderUpdate===================");
+	  log.info(updateData.toString());
+	  
+	  //객체생성
+	  Order order = new Order();
+	  
+	  order.setAddress1(updateData.get("address1").toString());
+	  order.setAddress2(updateData.get("address2").toString());
+	  order.setZipcode(updateData.get("zipcode").toString());
+	  order.setName(updateData.get("name").toString());
+	  order.setPhone(updateData.get("phone").toString());
+	  order.setOrderNo(Long.parseLong(updateData.get("orderNo").toString()));
+	  
+	  int res = orderMapper.updateOrder(order);
+	  
+	  log.info("==========result============"+res);	  
+  }
+  
+  
   
   
 
