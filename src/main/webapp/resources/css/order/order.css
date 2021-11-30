@@ -143,7 +143,7 @@ select{
 	margin-top: 1rem;
 }
 
-.order_item_option{
+.order_item_option, .order_item_option_price{
 	font-size: var(--font-sm);
 	color: var(--txt-color-3);
 	
@@ -177,6 +177,22 @@ select{
 
 
 }
+
+
+/*  배송지 */
+.add_adress{
+	height: 12rem;
+    display: block;
+}
+
+.add_adress_input{
+	margin-top: 1%;
+}
+
+
+
+
+
 
 
 /* payment */
