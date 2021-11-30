@@ -12,7 +12,7 @@
     <title>장바구니</title>
     <link rel="stylesheet" href="${path}/css/common/main.css">
     <link rel="stylesheet" href="${path}/css/user/cart.css">
-<%--    <link rel="stylesheet" href="${path}/css/user/mypage_publish.css">--%>
+<%--    <link rel="stylesheet" href="${path}/css/user/mypage.css">--%>
 
     <script src="${path}/js/common/ajax.js"></script>
     <script src="${path}/js/user/cart.js"></script>

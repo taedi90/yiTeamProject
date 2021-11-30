@@ -24,4 +24,6 @@ public interface MemberService {
     MemberPager selectMemberListForAdmin(MemberPager pager);
     List<Member> selectNonManagerList(String username);
 
+    CommonResult withDraw(Member member);
+
 }

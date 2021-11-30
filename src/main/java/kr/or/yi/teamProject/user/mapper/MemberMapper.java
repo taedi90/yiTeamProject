@@ -19,4 +19,6 @@ public interface MemberMapper {
     List<Member> selectMemberListForManage(MemberPager pager);
     List<Member> selectMemberListForAdmin(MemberPager pager);
     List<Member> selectNonManagerList(String username);
+
+    int deactivateMember(Member member);
 }
