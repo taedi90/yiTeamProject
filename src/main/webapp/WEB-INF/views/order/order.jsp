@@ -17,8 +17,8 @@
       <link rel="stylesheet" href="${path}/css/order/order.css">
 </head>
 <body>
-<%--   ${orderDetail} --%>  
-
+ 
+	<input type="hidden" value="${orderDetail.orderNo}" class="order_input" name="orderNo" id="order_no">
 
 	<div id="wrap">
 	<%@ include file="../division/common/header.jsp" %>
@@ -52,21 +52,25 @@
                         <div class="Thumbnail"><img alt="" src="upload/${orderItemList.option.item.image}/thumb_130.png" width="130px"></div>
                         <div>
                         	<div class="order_item_info">
-                            	<div><span class="order_item_name">${orderItemList.option.item.name}</span></div>
-                            	<div><span class="order_item_option">[옵션]${orderItemList.option.name}</span></div>                            
-                            	<div><span class="order_item_price">
-                                	<fmt:formatNumber value="${orderItemList.option.item.price}" pattern="#,###원"/>
-                            	</span></div>
+                            	<div><span class="order_item_name ">${orderItemList.option.item.name}</span></div>
+                            	<div>
+                            		<span class="order_item_option">[옵션]${orderItemList.option.name}</span>
+                            		<span class="order_item_option_price">(+${orderItemList.option.optionPrice})</span>
+                            	</div>                            
+                            	<div>
+                            		<span class="order_item_price">                     		
+                                		<fmt:formatNumber value="${orderItemList.option.item.price}" pattern="#,###원"/>
+                            		</span>
+                            	</div>
                         	</div>
                         </div>
                     </div>
                     
-                    	<div class="order_product_cnt">수량</div>
-                    	<div class="order_product_coupon">쿠폰</div>
-                    	<div class="order_product_price"> 
-	                        <fmt:formatNumber value="${orderItemList.option.item.price}" pattern="#,###원"/>
-                    	</div>
-                   
+                   	<div class="order_product_cnt">수량</div>
+                   	<div class="order_product_coupon">쿠폰</div>
+                   	<div class="order_product_price">
+                        <fmt:formatNumber value="${orderItemList.option.item.price + orderItemList.option.optionPrice}" pattern="#,###원"/>
+                   	</div>               
                 </div>
  				</c:forEach>  
             </div>
@@ -83,7 +87,7 @@
 
             <div class="row">
                 <div class="key_col"><label for="">이름</label></div>
-                <div class="value_col"></div>
+                <div class="value_col"><sec:authentication property="principal.member.name"/> 님</div>
             </div>
 
             <div class="row email_row">
@@ -92,16 +96,9 @@
                 <div class="value_col">
                 
 	                <div>
-	                 	<input type="text"> @ <input type="text"> 
+	                  <input type="email" class="register_input" name="email" placeholder="이메일"  value='<sec:authentication property="principal.member.email"/>' >
 	                </div>
-	                
-	                <div>
-	                	<select name="email" id="email">
-		                    <option value="naver.com">직접입력하기</option>
-		                    <option value="naver.com">naver.com</option>
-		                    <option value=""></option>
-	                    </select>
-	                </div>
+
                                   
                 </div>
             </div>
@@ -116,16 +113,21 @@
 
             <div class="row">
                 <div class="key_col"><label for="">주소</label></div>
-                <div class="value_col"> 기본주소
-                    <input type="button" value="주소추가하기" class="order_input select_address" onclick="address()">
-                    <div id="modal_container"></div>
+                <div class="value_col add_adress">
+				    <input type="text" id="sample4_postcode" placeholder="우편번호" class= "postal_code add_adress_input order_input" name="zipcode" required="required">
+				    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+				    <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="road_name_address add_adress_input order_input" name="address1" required="required"><br>
+				    <input type="hidden" id="sample4_jibunAddress" placeholder="지번주소">
+				    <span id="guide" style="color:#999;display:none"></span>
+				    <input type="text" id="sample4_detailAddress" placeholder="상세주소" name="address2" class="detailed_address add_adress_input order_input" required="required">
+				    <input type="hidden" id="sample4_extraAddress" placeholder="참고항목">
                 </div>
             </div>
 
             <div class="row ">
                 <div class="key_col"><label for="">이름</label></div>
                 <div class="value_col">
-                    <input type="text" class="order_input" name="name">
+                    <input type="text" class="order_input" name="name" id="">
                 </div>
             </div>
 
@@ -170,7 +172,7 @@
 
             
             <div class="row">
-                <div class="key_col payment_info_name payment_info_payment_amount"><label for="">결제금액</label></div>
+                <div class="key_col payment_info_name "><label for="">결제금액</label></div>
                 <div class="value_col payment_info_payment_amount">원</div>
             </div>
 
@@ -181,7 +183,7 @@
             </div>
             
             <div class="row payment_btn">
-                <input type="button" value="구매하기" class="payment_info_order">
+                <input type="button" value="구매하기" id="purchase_button" class="payment_info_order">
             </div>
 			</div>
 
@@ -190,12 +192,15 @@
     
     
     	<%@ include file="../division/common/footer.jsp" %>
-    </div>
+	</div>
 
 
-	<script src="${path}/js/order/order.js"></script>
+
     <script src="${path}/js/common/jquery-3.6.0.min.js"></script>
+    <script src="${path}/js/common/ajax.js"></script>
+    <script src="${path}/js/order/order.js"></script>
     <script src="${path}/js/common/modal.js" defer></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="${path}/js/order/add-address.js" defer></script>
 
 
