@@ -2,17 +2,14 @@
 
 window.addEventListener('load', getTotalPrice());
 
-
+// 총 결제 금액
 function getTotalPrice(){	
-	/*todo
-		css하나로 합치기
-		order_item_price를 쿠폰 적용한 값으로 바꾸기			
-	*/	
-		
+// todo order_item_price를 쿠폰 적용한 값으로 바꾸기
 	
 	var orderItems = document.querySelectorAll(".order_items");
-	var totalPrice = 0;
 	
+	var totalPrice = 0; // 함계
+	var paymentAmount = 0; //결제금액
 	
     for (let orderItem of orderItems) {
 		var itemPrice = orderItem.querySelector(".order_product_price").innerText;
@@ -20,100 +17,73 @@ function getTotalPrice(){
     	totalPrice +=  itemPrice;    	  
 	}
 
+	var fee = (totalPrice >= 50000 ? 0 : 2500);	
 	
-	totalPrice = totalPrice.toLocaleString('ko-KR') + "원";
+	paymentAmount = (totalPrice + fee).toLocaleString('ko-KR') + "원";
+	totalPrice = (totalPrice).toLocaleString('ko-KR') + "원";
+	fee = (fee).toLocaleString('ko-KR') + "원";
 	
-/*	document.querySelectorAll(".payment_info_product_sum")[1].innerText = totalPrice;	
-	document.querySelectorAll(".payment_info_product_sum")[0].innerText = totalPrice;*/	
-	document.querySelector(".payment_info_product_sum").innerText = totalPrice;	
+	document.querySelector(".payment_info_product_sum").innerText = totalPrice;	//상품 합계
+	document.querySelector(".payment_info_delivery_charge").innerText = fee;	//배송비
+	document.querySelector(".payment_info_payment_amount").innerText = paymentAmount;//결제금액	
+
 }
 
 
+// 구매하기 버튼
+const purchaseButton = document.querySelector("#purchase_button");
+purchaseButton.addEventListener('click', ()=>{ getOrderData()});
 
+
+// 넘길 정보 확인
+function ckInput(){
+	if($(".postal_code").val() == "" ||
+		$(".road_name_address").val() == "" ||
+		$(".detailed_address").val() == "" ||
+		$("input[name='name']").val() == "" ||
+		$("input[name='phone']").val() == "" ){
+			
+			alert("정보를 모두 입력해주세요");
+			return 0; 						
+		}		
+		return 1 ;
+}
+
+
+// 데이터를 json방식으로 바꾼뒤 ajax통신으로 update하기
 function getOrderData(){
-	/*order*/
-	let order = new Object(); // 주문정보를 담을 객체	
-	let member =  new Object(); // 회원정보를 담는 객체
-
 	
-	/*address*/
-	let address = new Object(); // 주소정보를 담을 객체
-		
-	/*orderItem*/	
-    let orderItems = [];// 주문상품 정보를 담는 객체    
-    let category = new Object(); //카테고리 정보를 담을 객체
-    let items = new Object(); //상품 정보를 담을 객체
-    let options = new Object(); //옵션 정보를 담을 객체
-    let coupons = new Object(); //쿠폰정보를 담을 객체
-    let carrier = new Object();//택배사 정보를 담을객체
-    let returnOpotion = new Object();// 반품사유를 담을객체
-    
-    /*payment*/
-    let paymentList = new Object();// 결제환불 정보를 담는 객체  	
-    
+	var res = ckInput();
+	
+	if(res != 1){
+		return;
+	}
+	
+// 주문정보를 담을 객체		
+	let order = new Object();
 
-
-/* Order Insert */ //포인트사용액, 주문 상태?
-   
-   //주문 정보 받아오기 (주문번호, 받는분, 휴대폰, 생성일자)
+// 주문정보 객체에 넣기
     let orderInputs = document.getElementsByClassName("order_input");
     for (let i of orderInputs) {
         order[i.name] = i.value;
     }
 
-	// 회원아이디 추가하기 
-	member.username =  document.getElementsByClassName("username");
-	order.member = member;
-
-	// 비회원아이디 추가하기 
-	nonMember.nonUsername =  document.getElementsByClassName("non_username")
-	order.nonMember = nonMember;
-
-	// 주소 추가하기 
-	let addressZip = document.getElementsByClassName("address_input");
-	for(let i of addressZip){
-		address[i.name] = i.value;
-	}
-	order.address = addressZip;
-	
-	
-
     console.log(JSON.stringify(order));
 
 
-/*	let memberInput1 = document.querySelectorAll('.member_input > [name="username"]');*/
-
-
-/* Order Update */
-// 주소, 받는분, 휴대폰 
-
-
-
-
-
-/* Order Select */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//ajax 전송
+   ajax('orderUpdate', order, afterUpdate, error);
 }
     
+    
+// ajax 통신 성공 후 결제    
+function afterUpdate(result){
+	goPayment(result);
+}
+
+function error(result){
+	alert("실패" + result);
+}
     
 	
 	
