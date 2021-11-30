@@ -70,38 +70,29 @@
 
                 <h1> shopping bag </h1>
 
-                <table id="cart_list">
+                <div id="cart_list">
                     <tr>
                         <td>상품이 존재하지 않습니다.</td>
                     </tr>
-                </table>
-
-                <div>
-                    <div><input type="checkbox"></div>
-                    <div>
-                        <div>
-                            <div>사진</div>
-                            <div>꽈배기 짜임의 벌룬소매 반하이넥 H라인 니트 미니 원피스</div>
-                        </div>
-                        <div>
-                            <div><input type="text"></div>
-                            <div><button>버튼</button></div>
-                        </div>
-                    </div>
                 </div>
 
                 <div id="summary">
-                    <div id="item_price">
-                        상품 금액
-                    </div>
-                    <div id="delivery_fee">
-                        배송비
-                    </div>
-                    <div id="total_price">
-                        총 합계
-                    </div>
-                    <div>
-                        <button id="purchase_button">주문하기</button>
+                    <div id="summary_inner">
+                        <div class="summary_row">
+                            <div>상품 금액</div>
+                            <div id="item_price"></div>
+                        </div>
+                        <div class="summary_row">
+                            <div>배송비</div>
+                            <div id="delivery_fee"></div>
+                        </div>
+                        <div class="summary_row">
+                            <div>총 합계</div>
+                            <div id="total_price"></div>
+                        </div>
+                        <div class="summary_row">
+                            <button id="purchase_button">주문하기</button>
+                        </div>
                     </div>
                 </div>
 
