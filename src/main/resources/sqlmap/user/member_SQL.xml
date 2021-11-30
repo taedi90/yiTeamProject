@@ -32,6 +32,9 @@
         <if test="username != null">
             AND mem.`username` = #{username}
         </if>
+        <if test="password != null">
+            AND mem.`password` = #{password}
+        </if>
         <if test="email != null">
             AND mem.`email` = #{email}
         </if>
@@ -165,5 +168,12 @@
         ORDER BY mem.username ASC
         LIMIT 0, 5
     </select>
+
+    <!-- 회원 비활성화 -->
+    <update id="deactivateMember" parameterType="kr.or.yi.teamProject.user.dto.Member">
+        UPDATE `member`
+        SET `enabled` = FALSE
+        WHERE `username` = #{username} AND `password` = #{password}
+    </update>
 
 </mapper>

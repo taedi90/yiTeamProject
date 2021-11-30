@@ -36,7 +36,11 @@ public class ManageController {
 
     //관리페이지 메인
     @GetMapping
-    public String getManage() {
+    public String getManage(Model model) {
+
+        model.addAttribute("url", "content/dashboard.jsp");
+//        model.addAttribute("result", pager);
+
         return "manage/manage";
     }
 

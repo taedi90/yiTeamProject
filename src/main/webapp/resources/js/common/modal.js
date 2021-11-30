@@ -99,7 +99,8 @@ function newModal(html = "", kind = 1, confirmCallback = () => {}, cancelCallbac
 //모달창 닫기
 function closeModal(elem) {
 
-    const modal = elem.parentElement.parentElement;
+    // const modal = elem.parentElement.parentElement;
+    const modal = elem.closest('.modal_window');
 
     //드래그 이벤트 제거
     modal.removeEventListener('mousedown', (e) => startPointing(e, modal));
@@ -120,22 +121,24 @@ function closeModal(elem) {
 
 function confirmFunc(elem) {
 
-    const modal = elem.parentElement.parentElement;
+    const modalId = elem.closest('.modal_window').id;
 
-    callbackObject[modal.id].confirmCallback();
-    delete callbackObject[modal.id];
+    closeModal(elem);
 
-    closeModal(elem)
+    callbackObject[modalId].confirmCallback();
+    delete callbackObject[modalId];
+
 }
 
 function cancelFunc(elem) {
 
-    const modal = elem.parentElement.parentElement;
+    const modalId = elem.closest('.modal_window').id;
 
-    callbackObject[modal.id].cancelCallback();
-    delete callbackObject[modal.id];
+    closeModal(elem);
 
-    closeModal(elem)
+    callbackObject[modalId].cancelCallback();
+    delete callbackObject[modalId];
+
 }
 
 

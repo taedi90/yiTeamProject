@@ -43,21 +43,52 @@
             const price = unitPrice * elem.quantity;
             const isSoldOut = Boolean(elem.option.stock <= 0);
 
-            let child = document.createElement("tr");
+            let child = document.createElement("div");
             child.id = "item" + elem.option.optionNo;
             child.classList.add("item");
+            // child.innerHTML =
+            //     `
+            //     <td><input type="checkbox" class="check_input" ${(isSoldOut ? "disabled" : "checked")}></td>
+            //     <td><img src="upload/${elem.option.item.image}/thumb_80.png" alt=""></td>
+            //     <td class="item_title">${elem.option.item.title}<br>${elem.option.name} (${elem.option.optionPrice})</td>
+            //     <td>
+            //         ${(isSoldOut ? "재고 부족" :
+            //         '<button type="button">➖</button>' +
+            //         '<input class="quantity_input" type="number" data-option-no="' + elem.option.optionNo
+            //         + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">' +
+            //         '<button type="button">➕</button>')}
+            //     </td>
+            //     <td class="item_price">${price.toLocaleString('ko-KR') + "원"}</td>
+            //     <td><img class="remove_button" data-option-no="${elem.option.optionNo}" src="img/common/x.svg" alt=""></td>
+            //     `;
             child.innerHTML =
                 `
-                <td><input type="checkbox" class="check_input" ${(isSoldOut ? "disabled" : "checked")}></td>
-                <td><img src="upload/${elem.option.item.image}/thumb_80.png" alt=""></td>
-                <td>${elem.option.item.title}<br>${elem.option.name} (${elem.option.optionPrice})</td>
-                <td>
-                    ${(isSoldOut ? "재고 부족" :
-                    '<input class="quantity_input" type="number" data-option-no="' + elem.option.optionNo 
-                    + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">')}
-                </td>
-                <td class="item_price">${price.toLocaleString('ko-KR') + "원"}</td>
-                <td><button class="remove_button" data-option-no="${elem.option.optionNo}"}>삭제하기</button></td>
+                <div class="check_wrap"><input type="checkbox" class="check_input" ${(isSoldOut ? "disabled" : "checked")}></div>
+                <div class="info_wrap">
+                    <div class="item_info">
+                        <div class="item_image"><img src="upload/${elem.option.item.image}/thumb_80.png" alt=""></div>
+                        <div class="item_text">
+                            <div>
+                                ${elem.option.item.title}
+                            </div>
+                            <div>
+                                ${elem.option.name} (${elem.option.optionPrice})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order_info">
+                        ${(isSoldOut ? "재고 부족" :
+                '<button type="button" onclick="quantityDown(this)">➖</button>' +
+                '<input class="quantity_input" type="number" data-option-no="' + elem.option.optionNo
+                + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">' +
+                '<button type="button" onclick="quantityUp(this)">➕</button>')}
+                        <div class="item_price">${price.toLocaleString('ko-KR') + "원"}</div>
+                    </div>
+
+                </div>
+                <div class="remove_wrap">
+                    <img class="remove_button" data-option-no="${elem.option.optionNo}" src="img/common/x.svg" style="width: 20px;height: 20px" alt="">
+                </div>
                 `;
 
             cartList.appendChild(child);
@@ -166,23 +197,46 @@
 
         let iPrice = 0;
         checkInputs.forEach( (checkInput) => {
-                const row = checkInput.parentNode.parentNode;
-                const quantityElem = row.querySelector(".quantity_input");
-                console.log(quantityElem);
-                if(quantityElem){
-                    iPrice += quantityElem.dataset.unitPrice * quantityElem.value;
+                if(checkInput.checked){
+                    const row = checkInput.parentNode.parentNode;
+                    const quantityElem = row.querySelector(".quantity_input");
+                    console.log(quantityElem);
+                    if(quantityElem){
+                        iPrice += quantityElem.dataset.unitPrice * quantityElem.value;
+                    }
                 }
             }
 
         )
 
         if(iPrice > 0){
-            itemPrice.innerHTML = "상품 금액 " + iPrice.toLocaleString('ko-KR') + "원";
+            itemPrice.innerHTML = iPrice.toLocaleString('ko-KR') + "원";
             const fee = (iPrice >= 50000 ? 0 : 2500);
-            deliveryFee.innerHTML = "배송비 " +  fee.toLocaleString('ko-KR') + "원";
-            totalPrice.innerHTML ="총합계 " +  (iPrice + fee).toLocaleString('ko-KR') + "원";
+            deliveryFee.innerHTML = fee.toLocaleString('ko-KR') + "원";
+            totalPrice.innerHTML = (iPrice + fee).toLocaleString('ko-KR') + "원";
         }
 
     }
 
 })();
+
+function quantityUp(elem){
+
+    let parent = elem.parentNode;
+    let inputBox = parent.querySelector('.quantity_input');
+
+    inputBox.stepUp();
+}
+
+
+function quantityDown(elem){
+    let parent = elem.parentNode;
+    let inputBox = parent.querySelector('.quantity_input');
+
+    if(inputBox.value <= 1){
+        alert("1개 이상 입력해주세요.");
+        return;
+    }
+
+    inputBox.stepDown();
+}

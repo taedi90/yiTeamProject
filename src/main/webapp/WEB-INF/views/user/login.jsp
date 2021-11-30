@@ -30,7 +30,7 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="checkbox" name="remember-me">로그인 유지
             <button type="submit">로그인하기</button>
-            <p>아직 회원이 아니신가요? <a href="register">회원가입</a></p>
+            <p>아직 회원이 아니신가요? <a href="policy">회원가입</a></p>
 
 
         </form>
