@@ -4,7 +4,7 @@ html { font-size: 62.5%; }
 }
 @media (max-width: 768px)  {
 /* 가로 768px 이하 1rem == 8.75px  */
-html { font-size: 54.6875%; }
+html { font-size: 54.6875%;}
 /*body{ padding-top: 7rem; }*/
 }
 
@@ -46,6 +46,7 @@ html{
     --border-darker: #BFB7B0;
     --border-base: #dadada;
     --border-bright: #e5e5e5;
+    min-width: 350px;
 }
 
 body {
@@ -92,3 +93,11 @@ button:hover {
     border: 0.1rem solid var(--border-base);
 }
 
+a {
+    color: var(--txt-color-1);
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--txt-color-1);
+}

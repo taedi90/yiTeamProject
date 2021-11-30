@@ -46,21 +46,6 @@
             let child = document.createElement("div");
             child.id = "item" + elem.option.optionNo;
             child.classList.add("item");
-            // child.innerHTML =
-            //     `
-            //     <td><input type="checkbox" class="check_input" ${(isSoldOut ? "disabled" : "checked")}></td>
-            //     <td><img src="upload/${elem.option.item.image}/thumb_80.png" alt=""></td>
-            //     <td class="item_title">${elem.option.item.title}<br>${elem.option.name} (${elem.option.optionPrice})</td>
-            //     <td>
-            //         ${(isSoldOut ? "재고 부족" :
-            //         '<button type="button">➖</button>' +
-            //         '<input class="quantity_input" type="number" data-option-no="' + elem.option.optionNo
-            //         + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">' +
-            //         '<button type="button">➕</button>')}
-            //     </td>
-            //     <td class="item_price">${price.toLocaleString('ko-KR') + "원"}</td>
-            //     <td><img class="remove_button" data-option-no="${elem.option.optionNo}" src="img/common/x.svg" alt=""></td>
-            //     `;
             child.innerHTML =
                 `
                 <div class="check_wrap"><input type="checkbox" class="check_input" ${(isSoldOut ? "disabled" : "checked")}></div>
@@ -78,10 +63,12 @@
                     </div>
                     <div class="order_info">
                         ${(isSoldOut ? "재고 부족" :
-                '<button type="button" onclick="quantityDown(this)">➖</button>' +
+                    '<div>' +
+                '<button class="quantity_down" type="button" onclick="quantityDown(this)">➖</button>' +
                 '<input class="quantity_input" type="number" data-option-no="' + elem.option.optionNo
                 + '" data-unit-price="' + unitPrice + '" min="1" value="' + elem.quantity + '">' +
-                '<button type="button" onclick="quantityUp(this)">➕</button>')}
+                '<button class="quantity_up" type="button" onclick="quantityUp(this)">➕</button>' +
+                    '</div>')}
                         <div class="item_price">${price.toLocaleString('ko-KR') + "원"}</div>
                     </div>
 
@@ -104,8 +91,11 @@
         // 수량 변경
         quantityInputs.forEach(
             (quantityInput) => {
-                quantityInput.addEventListener('change', () =>{
+                const parent = quantityInput.parentNode; //부모요소
+                const quantityDown = parent.querySelector(".quantity_down"); //수량 감소
+                const quantityUp = parent.querySelector(".quantity_up"); //수량 감소
 
+                function changePrice(){
                     const optionNo = quantityInput.dataset.optionNo;
                     const quantity = quantityInput.value;
                     const unitPrice = quantityInput.dataset.unitPrice;
@@ -122,6 +112,21 @@
 
                     quantityInput.parentNode.parentNode.querySelector(".item_price").innerHTML = price.toLocaleString('ko-KR') + "원";
                     getTotalAmount();
+                };
+
+                quantityUp.addEventListener('click',() => {
+                    quantityInput.stepUp();
+                    changePrice();
+                });
+
+                quantityDown.addEventListener('click', () => {
+                    if(quantityInput.value <= 1){
+                        alert("1개 이상 입력해주세요.");
+                        return;
+                    }
+
+                    quantityInput.stepDown();
+                    changePrice();
                 });
             }
         )
@@ -219,24 +224,3 @@
     }
 
 })();
-
-function quantityUp(elem){
-
-    let parent = elem.parentNode;
-    let inputBox = parent.querySelector('.quantity_input');
-
-    inputBox.stepUp();
-}
-
-
-function quantityDown(elem){
-    let parent = elem.parentNode;
-    let inputBox = parent.querySelector('.quantity_input');
-
-    if(inputBox.value <= 1){
-        alert("1개 이상 입력해주세요.");
-        return;
-    }
-
-    inputBox.stepDown();
-}
