@@ -231,6 +231,24 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.selectNonManagerList(username);
     }
 
+    @Override
+    public CommonResult withDraw(Member member) {
+
+        String dbPass = selectMember(member).getPassword();
+
+        boolean chkPass = passwordEncoder.matches(member.getPassword(), dbPass);
+
+        if(chkPass){
+            int res = memberMapper.deactivateMember(member);
+
+            if (res == 1){
+                return CommonResult.SUCCESS;
+            }
+        }
+
+        return CommonResult.FAILURE;
+    }
+
 
     public boolean sendEmail(Member member, String authKey) {
         try {

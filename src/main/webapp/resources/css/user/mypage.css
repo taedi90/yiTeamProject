@@ -1,46 +1,3 @@
-.mypage_nav{
-    position: relative;
-    background-color: white;
-    font-size: var(--font-sm);
-    font-weight: 500;
-    line-height: 5.4rem;
-}
-
-.mypage_nav_left{
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding-left: 5rem;
-}
-
-.mypage_nav_left ul li{
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    list-style: none;
-}
-
-
-.welcome{
-    text-align: center;    
-}
-
-
-.mypage_nav_menu{
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.mypage_nav_menu ul li{
-    display: inline-block;
-    vertical-align: top;
-    margin-right: 2rem;
-    list-style: none;
-}
-
-
 .content{
     width: 100%;
     background-color: var(--bg-base);
@@ -49,7 +6,6 @@
     justify-content: center;
     padding-bottom: 10rem;
 }
-
 
 .content_wrap{
     width: 80%;
@@ -63,7 +19,7 @@
 }
 
 .side_all{
-    width: 28rem;
+    width: 23rem;
 }
 
 .side_title{
@@ -74,11 +30,11 @@
 }
 
 .side_content_all{
-    border: 1px solid #cecdcd;
+    background-color: white;
 }
 
 .mypage_menu{
-    padding: 0 2.5rem;
+    padding: 2.5rem;
 
 }
 

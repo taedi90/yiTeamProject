@@ -12,7 +12,6 @@
     <title>장바구니</title>
     <link rel="stylesheet" href="${path}/css/common/main.css">
     <link rel="stylesheet" href="${path}/css/user/cart.css">
-<%--    <link rel="stylesheet" href="${path}/css/user/mypage_publish.css">--%>
 
     <script src="${path}/js/common/ajax.js"></script>
     <script src="${path}/js/user/cart.js"></script>
@@ -71,9 +70,6 @@
                 <h1> shopping bag </h1>
 
                 <div id="cart_list">
-                    <tr>
-                        <td>상품이 존재하지 않습니다.</td>
-                    </tr>
                 </div>
 
                 <div id="summary">
@@ -108,12 +104,6 @@
     	<%@ include file="../division/common/footer.jsp" %>
     </div>
 
-
-    <script src="${path}/js/common/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
-
-	<script type="text/javascript" src="${path}/js/common/nav.js"></script>
 	<script type="text/javascript" src="${path}/js/common/order-util.js"></script>
 	<script type="text/javascript" src="${path}/js/common/modal.js"></script>
 

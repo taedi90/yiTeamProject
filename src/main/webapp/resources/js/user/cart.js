@@ -129,8 +129,11 @@
                     changePrice();
                 });
             }
-        )
 
+
+        );
+
+        toggleSummaryBox();
 
         //카트 빼기
         removeButtons.forEach(
@@ -147,6 +150,7 @@
 
                     document.querySelector("#item" + optionNo).remove();
 
+                    toggleSummaryBox();
                     getTotalAmount();
                 });
             }
@@ -214,13 +218,24 @@
 
         )
 
+        let fee = 0;
         if(iPrice > 0){
-            itemPrice.innerHTML = iPrice.toLocaleString('ko-KR') + "원";
-            const fee = (iPrice >= 50000 ? 0 : 2500);
-            deliveryFee.innerHTML = fee.toLocaleString('ko-KR') + "원";
-            totalPrice.innerHTML = (iPrice + fee).toLocaleString('ko-KR') + "원";
+            fee = (iPrice >= 50000 ? 0 : 2500);
         }
 
+        itemPrice.innerHTML = iPrice.toLocaleString('ko-KR') + "원";
+        deliveryFee.innerHTML = fee.toLocaleString('ko-KR') + "원";
+        totalPrice.innerHTML = (iPrice + fee).toLocaleString('ko-KR') + "원";
+
+    }
+
+    function toggleSummaryBox() {
+        const items = document.querySelectorAll(".item");
+        if(items.length > 0){
+            document.querySelector("#summary").style.display = "flex";
+        }else{
+            document.querySelector("#summary").style.display = "none";
+        }
     }
 
 })();

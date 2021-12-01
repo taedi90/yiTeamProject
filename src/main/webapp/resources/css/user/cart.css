@@ -121,7 +121,8 @@ input::-webkit-inner-spin-button {
     font-weight: bold;
     padding: 2rem;
     background-color: white;
-    display: flex;
+    /*display: flex;*/
+    display: none;
     justify-content: end;
 }
 
