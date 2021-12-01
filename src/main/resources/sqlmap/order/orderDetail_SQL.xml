@@ -70,7 +70,7 @@
        </collection>
     </resultMap> 
 
- <!-- selectOrderList member -->
+ <!-- selectOrderByOrderNo -->
  	<select id="selectDetailOrder" parameterType="kr.or.yi.teamProject.order.dto.OrderDetail" resultMap="orderDetailMap">			       
 		SELECT oi.`order_item_no`,
 	           oi.`price_item`,
@@ -99,29 +99,72 @@
 		where o.`order_no` = #{orderNo}
  	</select>
 
- <!-- selectOrderList member -->
-<!--  	<select id="selectDetailOrder" parameterType="kr.or.yi.teamProject.order.dto.OrderDetail" resultMap="orderDetailMap">			       
-      	SELECT `o`.`order_no`, 
-      			`o`.`zipcode`, 
-      			`o`.`address1`, 
-      			`o`.`address2`, 
-      			`o`.`name`, 
-      			`o`.`phone`, 
-      			`m`.`username`, 
-      			`m`.`email`, 
-      			`oi`.`order_item_no`, 
-      			`oi`.`price_item`,
-      			`oi`.`price_option` ,
-      			`oi`.`price_coupon`, 
-      			`op`.`option_no`,
-      			`pay`.`payment_no`,
-      			`pay`.`amount`   	
-		from `order` as o LEFT OUTER join `member` as m on o.username = m.username 
-		LEFT OUTER join `order_item` as oi on o.`order_no` = oi.`order_no`
-		LEFT OUTER join `payment` as pay on pay.`order_no` = o.`order_no`
-		LEFT OUTER join `option` as op on oi.`option_no` = op.`option_no`
-	 	where o.`order_no` = #{orderNo} 
- 	</select> -->
+ <!-- selectOrderList -->
+ 	<select id="ordetDetailList" resultMap="orderDetailMap">			       
+		SELECT oi.`order_item_no`,
+	           oi.`price_item`,
+			   oi.`price_option`,			 
+			   oi.`option_no`, 
+			   oi.`price_coupon`,
+			   o.`order_no` ,
+			   o.`username` ,
+			   o.`non_username`,
+			   o.`reg_date`,
+			   o.`status`,
+			   op.`option_price`,
+			   op.`name` as `op_name`,
+			   i.`item_no`,
+			   i.`name` as `i_name`,
+			   i.`price`,
+			   i.`discount`,
+			   i.`image`,
+			   pay.`payment_no`,
+      		   pay.`amount`  		   
+		FROM `order` o join `order_item` oi on oi.`order_no` =  o.`order_no`
+		left outer join `member` m on o.username = m.username 
+		left outer join non_member nm  on o.non_username = nm.non_username 
+		left outer join `option` op on oi.option_no = op.option_no 
+		left outer join coupon_history ch on oi.issue_number = ch.issue_number 
+		left outer join item i on i.item_no = op.item_no 
+		left outer join `payment` as pay on pay.`order_no` = o.`order_no`
+		group by o.`order_no`
+		order by o.`reg_date` desc
+ 	</select>
+
+ <!-- selectOrderListByMember -->
+ 	<select id="orderDetailSelectList" parameterType="kr.or.yi.teamProject.user.dto.Member" resultMap="orderDetailMap">			       
+		SELECT oi.`order_item_no`,
+	           oi.`price_item`,
+			   oi.`price_option`,			 
+			   oi.`option_no`, 
+			   oi.`price_coupon`,
+			   o.`order_no` ,
+			   o.`username` ,
+			   o.`non_username`,
+			   o.`reg_date`,
+			   o.`status`,
+			   op.`option_price`,
+			   op.`name` as `op_name`,
+			   i.`item_no`,
+			   i.`name` as `i_name`,
+			   i.`price`,
+			   i.`discount`,
+			   i.`image`,
+			   pay.`payment_no`,
+      		   pay.`amount` 		   
+		FROM `order` o join `order_item` oi on oi.`order_no` =  o.`order_no`
+		left outer join `member` m on o.username = m.username 
+		left outer join non_member nm  on o.non_username = nm.non_username 
+		left outer join `option` op on oi.option_no = op.option_no 
+		left outer join coupon_history ch on oi.issue_number = ch.issue_number 
+		left outer join item i on i.item_no = op.item_no 
+		left outer join `payment` as pay on pay.`order_no` = o.`order_no`
+		where o.`username` = #{username}
+		group by o.`order_no`
+		order by o.`reg_date` desc
+ 	</select>
+
+
  	
 
  	

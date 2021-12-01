@@ -87,7 +87,7 @@
 
 
 	<!-- orderItem insert -->
-	<insert id="insertOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">	
+	<insert id="insertOrderItem2" parameterType="kr.or.yi.teamProject.order.dto.OrderItem" useGeneratedKeys="true" keyProperty="orderItemNo">	
 		<![CDATA[  
 		INSERT INTO `order_item`
 		(`order_no`, `option_no`)
@@ -96,11 +96,11 @@
 	</insert>
 
 	<!-- orderItem insert -->
-	<insert id="insertOrderItem2" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">	
+	<insert id="insertOrderItem" parameterType="kr.or.yi.teamProject.order.dto.OrderItem">	
 		<![CDATA[  
 		INSERT INTO `order_item`
 		(`order_no`,  `item_no`, `option_no`, `option_name`, `price_item`, `price_option`)
-		VALUES(#{order.orderNo}, #{option.item.itemNo}, #{option.optionNo}, #{option.name}, #{priceItem}, #{priceOption})	
+		VALUES(#{order.orderNo}, #{option.item.itemNo}, #{option.optionNo}, #{option.name}, #{option.item.price}, #{option.optionPrice})	
 	    ]]> 
 	</insert>
 
