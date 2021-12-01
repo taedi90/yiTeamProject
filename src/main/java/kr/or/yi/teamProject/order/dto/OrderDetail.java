@@ -17,6 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetail extends Order{
+	private int cnt; // orderitem 수량확인
 	private List<OrderItem> itemList;
 	private List<Payment> paymentList;
 

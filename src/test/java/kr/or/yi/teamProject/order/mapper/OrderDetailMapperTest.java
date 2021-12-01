@@ -44,7 +44,7 @@ public class OrderDetailMapperTest {
 	}
 	
 
-
+	@Ignore
 	@Test
     public void _01_selectOrderByNo() {
         log.info("=== order_no로 조회 ===");
@@ -54,6 +54,32 @@ public class OrderDetailMapperTest {
         log.info("조회 결과 -> " + result.toString());
         assertNotNull(result);
     }
+	
+	@Ignore	
+	@Test
+	public void _01_selectOrderByMember() {
+		log.info("=== order_no로 조회 ===");
+		Member member = Member.builder().username("google_tmddk65220@gmail.com").build();
+		 
+		log.info(member.toString());
+		
+		List<Order> orderDetailSelectList = mapper.orderDetailSelectList(member);
+		
+		log.info(orderDetailSelectList.toString());
+	}
+
+	@Test
+	public void _01_selectOrderList() {
+		log.info("=== List로 조회 ===");
+	
+		List<Order> orderDetailSelectList = mapper.ordetDetailList();
+		
+		for(Order i : orderDetailSelectList) {
+			log.info(i.toString());
+		}
+		
+		log.info(orderDetailSelectList.toString());
+	}
 	
 	
 
