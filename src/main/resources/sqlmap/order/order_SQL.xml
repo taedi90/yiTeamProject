@@ -57,9 +57,9 @@
 
 		<insert id="insertOrderMember" parameterType="kr.or.yi.teamProject.order.dto.Order" >
         	INSERT INTO `order`
-			(`order_no`, `username`) 
+			(`order_no`, `username`,`status`) 
 			VALUES
-			(#{orderNo}, #{member.username})
+			(#{orderNo}, #{member.username},#{status})
 		</insert>
 
     
@@ -81,7 +81,10 @@
 				`name`=#{name},			
 			</if>
 			<if test="phone != null">
-				`phone`=#{phone}			
+				`phone`=#{phone},			
+			</if>
+			<if test="status != null">
+				`status`=#{status}			
 			</if>		
 		</set> 
 		WHERE order_no=#{orderNo}
