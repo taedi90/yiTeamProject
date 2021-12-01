@@ -214,12 +214,14 @@
 
         )
 
+        let fee = 0;
         if(iPrice > 0){
-            itemPrice.innerHTML = iPrice.toLocaleString('ko-KR') + "원";
-            const fee = (iPrice >= 50000 ? 0 : 2500);
-            deliveryFee.innerHTML = fee.toLocaleString('ko-KR') + "원";
-            totalPrice.innerHTML = (iPrice + fee).toLocaleString('ko-KR') + "원";
+            fee = (iPrice >= 50000 ? 0 : 2500);
         }
+
+        itemPrice.innerHTML = iPrice.toLocaleString('ko-KR') + "원";
+        deliveryFee.innerHTML = fee.toLocaleString('ko-KR') + "원";
+        totalPrice.innerHTML = (iPrice + fee).toLocaleString('ko-KR') + "원";
 
     }
 
