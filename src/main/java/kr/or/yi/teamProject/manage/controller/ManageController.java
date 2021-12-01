@@ -7,6 +7,7 @@ import kr.or.yi.teamProject.product.service.ItemService;
 import kr.or.yi.teamProject.security.dto.CustomUser;
 import kr.or.yi.teamProject.user.dto.Member;
 import kr.or.yi.teamProject.user.dto.MemberPager;
+import kr.or.yi.teamProject.user.enums.Role;
 import kr.or.yi.teamProject.user.service.MemberService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -151,6 +152,8 @@ public class ManageController {
     @Secured("ROLE_ADMIN")
     @GetMapping(params = {"section=admin","func=list"})
     public String getAdminList(MemberPager pager, Model model) {
+
+        pager.setAuthority("ROLE_MANAGER");
 
         pager = memberService.selectMemberListForAdmin(pager);
 

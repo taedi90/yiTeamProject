@@ -85,23 +85,30 @@
             @final_page := CEIL(COUNT(*) / #{amount}) `final_page_no`,
             @start_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + 1 `start_page`,
             @end_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + #{linkCount}
-            FROM `member`
+            FROM `member` mem
         ]]>
+        <if test="authority != null">
+            LEFT OUTER JOIN `auth` authority
+            ON mem.`username` = authority.`username`
+        </if>
         <where>
+            <if test="authority != null">
+                `authority` = #{authority}
+            </if>
             <if test="name != null and name != ''">
-                `name` LIKE CONCAT('%', #{keyword}, '%')
+                mem.`name` LIKE CONCAT('%', #{keyword}, '%')
             </if>
             <if test="username != null and username != ''">
-                AND `username` LIKE CONCAT('%', #{username}, '%')
+                AND mem.`username` LIKE CONCAT('%', #{username}, '%')
             </if>
             <if test="email != null and keyword != ''">
-                AND `email` LIKE CONCAT('%', #{email}, '%')
+                AND mem.`email` LIKE CONCAT('%', #{email}, '%')
             </if>
             <if test="social != null and social != ''">
-                AND `social` = ${social}
+                AND mem.`social` = ${social}
             </if>
             <if test="confirm != null and confirm != ''">
-                AND `email_confirm` = ${confirm}
+                AND mem.`email_confirm` = ${confirm}
             </if>
         </where>
         ) a
