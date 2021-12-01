@@ -65,18 +65,15 @@ public class OrderController {
 	@PostMapping("/order")
 	@ResponseBody
 	public String insertOrder(@RequestBody List<Map<String, Object>> list, Model model, Authentication authentication) {
-
+		
+		log.info("=====================insertOrder========================");
+		
+		
 		// 로그인 정보 가져오기
 		CustomUser user = (CustomUser) authentication.getPrincipal();
 		Member member = user.getMember();
 
-		log.info("=====================insertOrder========================");
-		log.info(list.toString());
-
-		// 옵션 유효성 검사
-		// 재고 확인
 		
-
 		// 주문번호 난수 생성
 		SecureRandom rnd = null;
 		try {
@@ -90,13 +87,20 @@ public class OrderController {
 		long parseNow = Long.parseLong(now);
 		System.out.println(now);
 		long orderno = (parseNow * 100000) + rndnum;
-
+		
 		System.out.println("==============orderno==============" + orderno);
 
+		
 		// order 객체생성
 		Order order = new Order();
 		order.setOrderNo(orderno);
 		order.setMember(member);
+		order.setStatus("주문대기");
+		
+		
+		// 전체가격 선언(배송비 여부)
+		int amount = 0;
+
 
 		// 해쉬맵 리스트를 풀어서 orderItems에 담기
 		List<OrderItem> orderItems = new ArrayList<>();
@@ -107,30 +111,48 @@ public class OrderController {
 
 			OrderItem orderItem = new OrderItem();
 			Option option = optionMapper.selectOptionDetail(Long.parseLong(m.get("optionNo").toString()));
+			
+			int quantity = Integer.parseInt(m.get("quantity").toString());	
+			
+
+			//재고확인	 재고 부족시 널값 리턴
+			Option stockCk = optionMapper.selectOption(option);
+			int stock = stockCk.getStock();
+			log.info(stockCk.toString());	
+			System.out.println("=========stock========"+stock);
+			System.out.println("=========quantity========"+quantity);
+			if(quantity>stock) {
+				return "";
+			}	
+			
+		
+			//주문금액 함계 구하기
+			int optionPrice = option.getOptionPrice();
+			Item item = option.getItem();
+			int itemPrice = item.getPrice();
+			
+			amount += (itemPrice + optionPrice);
 
 			log.info("==============option===============" + option);
 
 			orderItem.setOption(option);
 			orderItem.setOrder(order);
-	
-			int quantity = Integer.parseInt(m.get("quantity").toString());
+
 			
 			for (int i = 0; i < Integer.parseInt(m.get("quantity").toString()); i++) {
 				orderItems.add(orderItem);
 			}
-			
-			
-////			재고확인
-//			Option stockCk = optionMapper.selectOption(option);
-//			int stock = stockCk.getStock();
-//			if(quantity<stock) {
-//				
-//			}
+		
 			
 		}
 
+		
+		//총결제 금액확인
+		System.out.println("============amount============"+amount);
+
 		log.info("============객체확인===========" + order.toString() + orderItems.toString());
 
+		
 		// 주문대기열 추가
 		int res = orderService.createOrderMember(order, orderItems);
 		if (res == 1) {
@@ -139,6 +161,7 @@ public class OrderController {
 		return "";
 
 	}
+	
 
 	// 주문 페이지
 	@GetMapping("/order")
@@ -154,6 +177,7 @@ public class OrderController {
 		return "/order/order";
 	}
 
+	
 	// 주문 update
 	@PostMapping("/orderUpdate")
 	@ResponseBody
@@ -171,6 +195,7 @@ public class OrderController {
 	     order.setName(updateData.get("name").toString());
 	     order.setPhone(updateData.get("phone").toString());
 	     order.setOrderNo(Long.parseLong(updateData.get("orderNo").toString()));
+	     order.setStatus("걸제대기");
 	     
 	     Long orderNo = Long.parseLong(updateData.get("orderNo").toString());
 	     
@@ -185,20 +210,5 @@ public class OrderController {
 	     return"";
 	}
 
-	// 마이페이지 주문확인
-//	@PostMapping("/mypageOrder")
-//	public String mypageOrder(@RequestParam("username") String username, Model model) {
-//		
-//		
-//		Member member = Member.builder().username(username).build();
-//	 
-//		log.info(member.toString());
-//		
-//		List<Order> orderDetailSelectList = orderDetailMapper.orderDetailSelectList(member);
-//		
-//		model.addAttribute("orderDetailSelectList",orderDetailSelectList);
-//				
-//		return "/user/mypage";
-//	}
 
 }
