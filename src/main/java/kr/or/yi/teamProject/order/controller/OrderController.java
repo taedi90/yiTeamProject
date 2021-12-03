@@ -31,6 +31,7 @@ import kr.or.yi.teamProject.order.service.OrderItemService;
 import kr.or.yi.teamProject.order.service.OrderService;
 import kr.or.yi.teamProject.product.controller.ItemController;
 import kr.or.yi.teamProject.product.dto.Item;
+import kr.or.yi.teamProject.product.dto.ItemPager;
 import kr.or.yi.teamProject.product.dto.Option;
 import kr.or.yi.teamProject.product.mapper.OptionMapper;
 import kr.or.yi.teamProject.product.service.ItemService;
@@ -67,6 +68,7 @@ public class OrderController {
 	public String insertOrder(@RequestBody List<Map<String, Object>> list, Model model, Authentication authentication) {
 		
 		log.info("=====================insertOrder========================");
+		log.info("======================list======================="+list);
 		
 		
 		// 로그인 정보 가져오기
@@ -195,7 +197,7 @@ public class OrderController {
 	     order.setName(updateData.get("name").toString());
 	     order.setPhone(updateData.get("phone").toString());
 	     order.setOrderNo(Long.parseLong(updateData.get("orderNo").toString()));
-	     order.setStatus("걸제대기");
+	     order.setStatus("결제대기");
 	     
 	     Long orderNo = Long.parseLong(updateData.get("orderNo").toString());
 	     
@@ -209,6 +211,31 @@ public class OrderController {
 	     
 	     return"";
 	}
+	
+	
+
+	// 주문 페이지
+	@GetMapping("/order-List")
+	public String orderList(Model model) {
+		
+		List<OrderDetail> list= orderDetailMapper.ordetDetailList();
+
+		for(Order i : list) {
+			log.info(i.toString());
+		}
+		
+		
+		model.addAttribute("orderDetail", list);
+		log.info(list.toString());
+
+		return "/manage/content/order/order-list";
+	}
+
+
+	
+	
+	
+	
 
 
 }
