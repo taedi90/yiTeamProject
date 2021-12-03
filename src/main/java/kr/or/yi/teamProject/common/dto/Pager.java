@@ -19,6 +19,7 @@ public class Pager {
     private String category; //카테고리
     private String keyword; //검색 키워드
     private String order; //정렬 순서
+    private String param; //기타
 
     //DB 조회 결과
     private int startRecord; // 페이지 시작 레코드(인덱스)

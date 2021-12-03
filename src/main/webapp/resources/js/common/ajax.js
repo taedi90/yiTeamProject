@@ -20,8 +20,9 @@ function ajax(url = '', // url(필수) : 호출 할 url
     }else if(type == "multipart"){
         //data = data;
     } else{
-        contentType = "application/x-www-form-urlencoded";
-        data = new URLSearchParams(Object.entries(data)).toString();
+        contentType = "application/x-www-form-urlencoded; charset=utf-8;";
+        url = url + "?" + new URLSearchParams(Object.entries(data)).toString();
+        data = null;
     }
 
 
