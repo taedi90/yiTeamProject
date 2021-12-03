@@ -46,23 +46,7 @@ public class PaymentMapperTest {
         log.info("종료 후 DB 내역 --->");
         paymentArrayList = selectPaymentList();
     }
-    
-    @Test
-	public void testInsertPaymentOrder() {
-		log.info("=== 결제정보 생성 ===");
-		payment = new Payment();
-						
-		payment.setOrder(Order.builder().orderNo(1L).build());
-		
-		
-						
-		mapper.insertPaymentOrder(payment);
-
-		log.info("=========================");
-		log.info(payment.toString());
-		log.info("=========================");	
-
-	}
+   
     
     // orderNo에 따른 결제 번호 수정
  	//@Test

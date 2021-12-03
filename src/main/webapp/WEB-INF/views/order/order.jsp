@@ -202,6 +202,12 @@
     <script src="${path}/js/common/modal.js" defer></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="${path}/js/order/add-address.js" defer></script>
+    <script src="${path}/js/order/payment.js" defer></script>
+	<script src="${path}/js/payment/payment.js" defer></script>
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+	<script src="${path}/js/payment/iamport.js" defer></script>
 
 
 
