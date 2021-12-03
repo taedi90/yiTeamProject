@@ -1,0 +1,81 @@
+.mypage_order_list h1{
+    font-size: var(--font-xl);
+    padding: 0 0 2.5rem;
+    letter-spacing: -0.1rem;
+}
+
+.order_list{
+    padding: 0rem 0;
+    text-align: center;
+    font-size: var(--font-base);
+    border: 1px solid rgb(73, 73, 73);
+}
+
+.postDesc{
+    display: flex;
+    justify-content: space-between;
+    background-color:  #EFEFEF;
+    margin-top: 0;
+    HEIGHT: 4rem;
+    align-items: center;
+    padding-left: 2rem;
+    padding-right: 2rem;	
+    font-size: revert;
+}
+
+.order_show{
+	display: flex;
+    justify-content: space-between;
+    height: 10rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.order_show div{
+	margin-top: 0.5rem;
+	text-align: initial;
+}
+
+.post_con{
+	display: flex;
+    justify-content: space-between;
+    width: 98.2rem;
+}
+
+.postContainer{
+	 display: flex;
+	 justify-content: space-between;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.order_items{
+	width: 70rem;
+    display: flex;
+    text-align: left;
+    margin-left: 1rem;
+}
+
+.order_item_info{
+	width: 70rem;
+}
+
+
+.after_payment_btn{
+	width: 30rem;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.go_order{
+	width: 30rem;
+    align-self: center;
+    justify-content: center;
+}
+
+.order_item_option,.order_item_option_price{
+	font-size: var(--font-sm);
+	color: var(--txt-color-3);
+}
