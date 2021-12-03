@@ -68,6 +68,7 @@
        <collection property="paymentList" ofType="kr.or.yi.teamProject.payment.dto.Payment">
        		<id property="paymentNo" column="payment_no"/>
        		<result property="amount" column="amount"/>
+       		<result property="method" column="method"/>
        </collection>
     </resultMap> 
 
@@ -80,7 +81,8 @@
 			   oi.`price_coupon`,
 			   o.`order_no` ,
 			   o.`username` ,
-			   o.`non_username`,
+			   o.`reg_date`,
+			   o.`status`,
 			   op.`option_price`,
 			   op.`name` as `op_name`,
 			   i.`item_no`,
@@ -89,7 +91,8 @@
 			   i.`discount`,
 			   i.`image`,
 			   pay.`payment_no`,
-      		   pay.`amount` 		   
+      		   pay.`amount`, 		   
+      		   pay.`method`	   
 		FROM `order` o join `order_item` oi on oi.`order_no` =  o.`order_no`
 		left outer join `member` m on o.username = m.username 
 		left outer join `option` op on oi.option_no = op.option_no 
@@ -97,6 +100,37 @@
 		left outer join item i on i.item_no = op.item_no 
 		left outer join `payment` as pay on pay.`order_no` = o.`order_no`
 		where o.`order_no` = #{orderNo}
+ 	</select>
+
+
+ <!-- selectOrderListByMember -->
+ 	<select id="orderDetailSelectList" parameterType="kr.or.yi.teamProject.user.dto.Member" resultMap="orderDetailMap">			       
+		SELECT oi.`order_item_no`,
+	           oi.`price_item`,
+			   oi.`price_option`,			 
+			   oi.`option_no`, 
+			   oi.`price_coupon`,
+			   o.`order_no` ,
+			   o.`username` ,
+			   o.`reg_date`,
+			   o.`status`,
+			   op.`option_price`,
+			   op.`name` as `op_name`,
+			   i.`item_no`,
+			   i.`name` as `i_name`,
+			   i.`price`,
+			   i.`discount`,
+			   i.`image`,
+			   pay.`payment_no`,
+      		   pay.`amount`		   
+		FROM `order` o join `order_item` oi on oi.`order_no` =  o.`order_no`
+		left outer join `member` m on o.username = m.username 
+		left outer join `option` op on oi.option_no = op.option_no 
+		left outer join coupon_history ch on oi.issue_number = ch.issue_number 
+		left outer join item i on i.item_no = op.item_no 
+		left outer join `payment` as pay on pay.`order_no` = o.`order_no`
+		where o.`username` = #{username}
+		order by o.`reg_date` desc
  	</select>
 
  <!-- selectOrderList -->
@@ -129,9 +163,10 @@
 		order by o.`reg_date` desc
  	</select>
 
- <!-- selectOrderListByMember -->
- 	<select id="orderDetailSelectList" parameterType="kr.or.yi.teamProject.user.dto.Member" resultMap="orderDetailMap">			       
-		SELECT oi.`order_item_no`,
+
+    <select id="selectOrderList" parameterType="kr.or.yi.teamProject.common.dto.Pager"
+            resultMap="orderDetailMap">
+        SELECT oi.`order_item_no`,
 	           oi.`price_item`,
 			   oi.`price_option`,			 
 			   oi.`option_no`, 
@@ -140,6 +175,7 @@
 			   o.`username` ,
 			   o.`reg_date`,
 			   o.`status`,
+			   m.`name`,
 			   op.`option_price`,
 			   op.`name` as `op_name`,
 			   i.`item_no`,
@@ -149,17 +185,57 @@
 			   i.`image`,
 			   pay.`payment_no`,
       		   pay.`amount`,
-      		   COUNT(oi.`order_no`) as `cnt` 		   
-		FROM `order` o join `order_item` oi on oi.`order_no` =  o.`order_no`
-		left outer join `member` m on o.username = m.username 
-		left outer join `option` op on oi.option_no = op.option_no 
-		left outer join coupon_history ch on oi.issue_number = ch.issue_number 
-		left outer join item i on i.item_no = op.item_no 
-		left outer join `payment` as pay on pay.`order_no` = o.`order_no`
-		where o.`username` = #{username}
-		group by o.`order_no`
-		order by o.`reg_date` desc
- 	</select>
+      		   COUNT(o.`order_no`) as `cnt`  
+         FROM `order` o
+         JOIN `order_item` oi on oi.`order_no` =  o.`order_no`
+		LEFT OUTER JOIN `member` m on o.username = m.username 
+		LEFT OUTER JOIN `option` op on oi.option_no = op.option_no 
+		LEFT OUTER JOIN item i on i.item_no = op.item_no 
+		LEFT OUTER JOIN `payment` as pay on pay.`order_no` = o.`order_no`
+        WHERE `publish` = true AND `hide` = false
+        <if test="category != null and category != ''">
+            AND `category_no` = #{category}
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND `name` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        group by o.`order_no`
+        ORDER BY o.`reg_date` ${order}
+        LIMIT #{startRecord}, #{amount}
+    </select>
+
+  <select id="getInfoForPaging" parameterType="kr.or.yi.teamProject.common.dto.Pager"
+            resultType="kr.or.yi.teamProject.common.dto.Pager">
+        <![CDATA[
+        SELECT `total_records`,
+               `final_page_no`,
+               `start_page`,
+               if(@final_page > @end_page, @end_page, @final_page) `end_page`,
+               @start_page - 1 `prev`,
+               if(@final_page > @end_page, @end_page + 1, 0) `next`,
+               (#{pageNo} - 1) * #{amount} `start_record`,
+               #{amount} `amount`,
+               #{pageNo} `page_no`,
+               #{order} `order`,
+               #{linkCount} `link_count`,
+               #{category} `category`,
+               #{keyword} `keyword`
+        FROM (SELECT @total_recode := COUNT(*) `total_records`,
+            @final_page := CEIL(COUNT(*) / #{amount}) `final_page_no`,
+            @start_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + 1 `start_page`,
+            @end_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + #{linkCount}
+            FROM `order`
+        ]]>
+            <where>
+                <if test="category != null and category != ''">
+                    `category_no` = #{category}
+                </if>
+                <if test="keyword != null and keyword != ''">
+                    AND `name` LIKE CONCAT('%', #{keyword}, '%')
+                </if>
+            </where>
+            ) a
+    </select>
 
 
  	

@@ -3,6 +3,7 @@ package kr.or.yi.teamProject.order.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.yi.teamProject.common.dto.Pager;
 import kr.or.yi.teamProject.order.dto.Order;
 import kr.or.yi.teamProject.order.dto.OrderItem;
 import kr.or.yi.teamProject.order.mapper.OrderDetailMapper;
@@ -22,6 +23,18 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	@Override
 	public Order selectDetailOrder(Order order) {
 		return orderDetailMapper.selectDetailOrder(order);
+	}
+
+
+
+	@Override
+	public Pager selectOrderList(Pager pager) {
+		
+		pager = orderDetailMapper.getInfoForPaging(pager);
+		
+		pager.setRecords(orderDetailMapper.selectOrderList(pager));
+		
+		return pager;
 	}
 
 

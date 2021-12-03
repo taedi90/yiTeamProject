@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.yi.teamProject.config.RootConfig;
 import kr.or.yi.teamProject.order.dto.Order;
+import kr.or.yi.teamProject.order.dto.OrderDetail;
 import kr.or.yi.teamProject.order.dto.OrderItem;
 import kr.or.yi.teamProject.product.dto.Category;
 import kr.or.yi.teamProject.product.dto.Item;
@@ -63,7 +64,7 @@ public class OrderDetailMapperTest {
 		 
 		log.info(member.toString());
 		
-		List<Order> orderDetailSelectList = mapper.orderDetailSelectList(member);
+		List<OrderDetail> orderDetailSelectList = mapper.orderDetailSelectList(member);
 		
 		log.info(orderDetailSelectList.toString());
 	}
@@ -72,7 +73,7 @@ public class OrderDetailMapperTest {
 	public void _01_selectOrderList() {
 		log.info("=== List로 조회 ===");
 	
-		List<Order> orderDetailSelectList = mapper.ordetDetailList();
+		List<OrderDetail> orderDetailSelectList = mapper.ordetDetailList();
 		
 		for(Order i : orderDetailSelectList) {
 			log.info(i.toString());
