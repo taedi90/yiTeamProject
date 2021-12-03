@@ -13,7 +13,6 @@ public interface PaymentMapper {
 	List<Payment> selectPaymentUid(Payment payment);
 	ArrayList<Payment> selectPaymentList();
 	
-	int insertPaymentOrder(Payment payment);
 	int updatePaymentOrder(Payment payment);
 	
 	int insertPayment(Payment payment);

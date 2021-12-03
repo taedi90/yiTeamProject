@@ -63,13 +63,7 @@
     </select>
 
 	
-	
-	<insert id="insertPaymentOrder" parameterType="kr.or.yi.teamProject.payment.dto.Payment">
-    	<![CDATA[
-        INSERT INTO `payment` (`order_no`)
-        VALUES (#{order.orderNo})
-        ]]>
-    </insert>
+
 	
 	<update id="updatePaymentOrder" parameterType="kr.or.yi.teamProject.payment.dto.Payment">
         UPDATE `payment`

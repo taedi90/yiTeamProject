@@ -1,0 +1,8 @@
+.payment_succes{
+	border : 1px solid black;
+	width : 100%;
+	text-align : center;
+	padding: 5rem 0;
+	font-size:var(--font-base);
+
+}
