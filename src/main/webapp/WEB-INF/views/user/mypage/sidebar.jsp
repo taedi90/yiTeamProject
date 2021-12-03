@@ -6,7 +6,7 @@
             <h3>쇼핑정보</h3>
             <ul>
                 <li><a href=""> 장바구니 </a></li>
-                <li><a href=""> 주문 내역 </a></li>
+                <li><a href='mypage?section=order&func=detail'> 주문 내역 </a></li>
                 <li><a href=""> 쿠폰 내역 </a></li>
                 <li><a href=""> 포인트 내역 </a></li>
                 <li><a href=""> 배송현황 </a></li>

@@ -72,12 +72,12 @@
         </div>
     </div>
 
-    <div class="menu_item">
-        <div class="icon_holder" data-tooltip="매출 조회">
+    <div class="menu_item" onclick="window.location.href = '?section=order&func=list'">
+        <div class="icon_holder" data-tooltip="주문 조회">
             <img src="${path}/img/manage/icon/sale.png" alt="">
         </div>
         <div class="description_holder">
-            매출 조회
+            주문 조회
         </div>
     </div>
 
