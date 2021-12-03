@@ -1,11 +1,13 @@
 package kr.or.yi.teamProject.user.controller;
 
 import kr.or.yi.teamProject.common.enums.CommonResult;
+import kr.or.yi.teamProject.security.dto.CustomUser;
 import kr.or.yi.teamProject.user.dto.Member;
 import kr.or.yi.teamProject.user.dto.PrivacyAgreement;
 import kr.or.yi.teamProject.user.dto.PrivacyPolicy;
 import kr.or.yi.teamProject.user.enums.RegisterResult;
 import kr.or.yi.teamProject.user.enums.SendConfirmMailResult;
+import kr.or.yi.teamProject.user.mapper.MemberMapper;
 import kr.or.yi.teamProject.user.mapper.PrivacyAgreementMapper;
 import kr.or.yi.teamProject.user.mapper.PrivacyPolicyMapper;
 import kr.or.yi.teamProject.user.service.MemberService;
@@ -14,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -199,6 +204,31 @@ public class MemberController {
 
         if(targetUrl != null){
             request.getSession().setAttribute("targetUrl", targetUrl);
+        }
+
+        return CommonResult.FAILURE;
+    }
+
+    // 정보변경
+
+
+    // 회원탈퇴
+    @PostMapping("/deactivate-member")
+    @ResponseBody
+    public CommonResult withDraw(Authentication authentication,
+                                @RequestBody Map<String, String> map,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
+        CustomUser user = (CustomUser) authentication.getPrincipal();
+        Member member = user.getMember();
+
+        member.setPassword(map.get("password"));
+
+        CommonResult result = memberService.withDraw(member);
+
+        if(result.isSuccess()) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+            return CommonResult.SUCCESS;
         }
 
         return CommonResult.FAILURE;

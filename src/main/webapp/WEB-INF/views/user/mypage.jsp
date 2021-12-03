@@ -12,39 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
     <title>마이페이지</title>
     <link rel="stylesheet" href="${path}/css/common/main.css">
+    <link rel="stylesheet" href="${path}/css/user/mypage.css">
     <link rel="stylesheet" href="${path}/css/user/mypage_content.css">
-    <link rel="stylesheet" href="${path}/css/user/mypage_publish.css">
 </head>
 <body>
 
 <div id="wrap">
     <%@ include file="../division/common/header.jsp" %>
     <%@ include file="../division/common/nav.jsp" %>
-
-
-    <nav class="mypage_nav">
-        <div class="mypage_nav_left">
-            <ul>
-                <li>MY PAGE</li>
-                |
-                <li>LOGOUT</li>
-            </ul>
-        </div>
-
-        <div class="welcome">
-            <P><sec:authentication property="principal.member.name"/> 님 어서오세요.</P>
-        </div>
-
-        <div class="mypage_nav_menu">
-            <ul>
-                <li>Q&A</li>
-                <li>NOTICE</li>
-                <li>FAQ</li>
-                <li>EVENT</li>
-            </ul>
-        </div>
-    </nav>
-
 
     <!-- content -->
     <div class="content">

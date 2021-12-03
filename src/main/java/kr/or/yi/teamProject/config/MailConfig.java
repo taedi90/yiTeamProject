@@ -28,8 +28,10 @@ public class MailConfig {
         properties.put("mail.transport.protocol", "smtps");
         properties.put("mail.smtp.starttls.enable", true);
         properties.put("mail.smtp.starttls.required", true);
-        properties.put("mail.smtp.ssl.trust", true);
+        properties.put("mail.smtp.ssl.enable", true);
+        properties.put("mail.smtp.ssl.trust", "smtp.daum.net");
         properties.put("mail.debug", true);
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(env.getProperty("mailSender.host"));

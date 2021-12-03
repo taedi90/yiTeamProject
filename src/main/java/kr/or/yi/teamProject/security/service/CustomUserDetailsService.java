@@ -34,7 +34,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 Member.builder().username(username).build()
         );
 
-
         if(member == null) {
             throw new InternalAuthenticationServiceException("아이디를 다시 확인해 주세요.");
         }

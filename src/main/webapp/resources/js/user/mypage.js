@@ -19,12 +19,22 @@ function cbkDeactivateMember() {
 }
 
 function applyDeactivation(elem) {
-    const data = document.querySelector('#modal_password_confirm').value;
+    const data = {password: document.querySelector('#modal_password_confirm').value};
     const modalWindow = elem.closest('#modal_confirm');
     if (modalWindow) {
         closeModal(modalWindow);
     }
     console.log(modalWindow);
-    // ajax('deactivate-member', data, cbkDeactivationResult);
+
+    ajax('deactivate-member', data, cbkDeactivationResult);
 }
 
+function cbkDeactivationResult(result) {
+    result = JSON.parse(result);
+    console.log(result);
+    if(result.success){
+        console.log("성공");
+    }else{
+        console.log("실패");
+    }
+}

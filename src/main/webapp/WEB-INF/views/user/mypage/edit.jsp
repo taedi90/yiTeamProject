@@ -59,24 +59,28 @@
             <div class="value_col">${requestScope.result.regDate}</div>
         </div>
 
-        <div class="row">
-            <h3>비밀번호 변경</h3>
-        </div>
+        <sec:authentication property="principal.member.social" var="social"/>
+        <c:if test="${social ne true}">
+            <div class="row">
+                <h3>비밀번호 변경</h3>
+            </div>
 
-        <div class="row">
-            <div class="key_col">기존 비밀번호</div>
-            <div class="value_col"><input type="password" class="register_input" name="password"></div>
-        </div>
+            <div class="row">
+                <div class="key_col">기존 비밀번호</div>
+                <div class="value_col"><input type="password" class="register_input" name="password"></div>
+            </div>
 
-        <div class="row">
-            <div class="key_col">변경 비밀번호</div>
-            <div class="value_col"><input type="password" class="register_input" name="password"></div>
-        </div>
+            <div class="row">
+                <div class="key_col">변경 비밀번호</div>
+                <div class="value_col"><input type="password" class="register_input" name="password"></div>
+            </div>
 
-        <div class="row">
-            <div class="key_col">비밀번호 확인</div>
-            <div class="value_col"><input type="password" class="register_input" name="password"></div>
-        </div>
+            <div class="row">
+                <div class="key_col">비밀번호 확인</div>
+                <div class="value_col"><input type="password" class="register_input" name="password"></div>
+            </div>
+        </c:if>
+
 
         <div class="row">
             <h3>연락처 변경</h3>
