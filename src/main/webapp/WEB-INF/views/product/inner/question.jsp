@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<link rel="stylesheet" href="${path}/css/manage/product/product-list.css">
 
 <%-- 질문이 담길 테이블 --%>
 <table id="question_table">
