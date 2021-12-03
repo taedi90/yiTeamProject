@@ -16,7 +16,7 @@
       </c:if>
       <c:if test="${result != null}">
       
-      <!-- 기본내용 -->
+      <!-- 기본내용 -->     
 			<div id="post${result.orderNo}" class="postCard" >
 			<!-- 주문일자, 주문상태 -->
 				<div class="postDesc" data-no="${i.getNo()}" onclick="postClick(this.dataset.no)">
@@ -24,6 +24,7 @@
 					<div id="status">주문상태 : ${result.status}
 					</div>                 
                 </div>
+                
             <!-- 이름, 수량, 금액 , 주문하기버튼 -->
               <div class="order_show">
               	<div>
@@ -38,11 +39,11 @@
               		<span class="number_of_prizes"></span></div>
               		<c:set var="amount" value="0" scope="page"></c:set>
 					<c:forEach var="payment" items="${result.paymentList}">				
-					<c:set var="amount" value="${amount+ payment.amount}" scope="page"></c:set>
+					<c:set var="amount" value="${payment.amount}" scope="page"></c:set>
 					</c:forEach> 								
             		<div>${amount}원</div>
               	</div>
-              	<div class="go_order"><button class="go_order_btn"  onclick="window.location.href = 'orderupdate?orderNo=${result.orderNo}'">결제하기</button></div>
+              	<div class="go_order"><button class="go_order_btn"  onclick="window.location.href = 'order?orderNo=${result.orderNo}'">결제하기</button></div>
               </div>
             </div>
   

@@ -42,7 +42,14 @@
                 <tr>               	
                		<td><input type="checkbox" class="checkbox"></td>
 					<td  onclick="window.location.href = 'manage?section=order&func=detail&orderNo=${orderDetail.orderNo}'">${orderDetail.orderNo}</td>
-					<td>${orderDetail.cnt}</td> 
+					<td>	
+						<c:if test="${orderDetail.cnt % 2 == 0}">
+						<fmt:formatNumber type="number"  pattern="#,###" value="${orderDetail.cnt/2} " />					
+						</c:if>
+						<c:if test="${orderDetail.cnt % 2 != 0}">
+							${orderDetail.cnt}
+						</c:if>
+					</td> 
 					
 					<c:set var="amount" value="0" scope="page"></c:set>
 					<c:forEach var="payment" items="${orderDetail.paymentList}">				

@@ -17,10 +17,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.yi.teamProject.common.dto.Pager;
 import kr.or.yi.teamProject.config.RootConfig;
 import kr.or.yi.teamProject.order.dto.Order;
 import kr.or.yi.teamProject.order.dto.OrderDetail;
 import kr.or.yi.teamProject.order.dto.OrderItem;
+import kr.or.yi.teamProject.order.service.OrderDetailService;
 import kr.or.yi.teamProject.product.dto.Category;
 import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.dto.Option;
@@ -38,7 +40,9 @@ public class OrderDetailMapperTest {
 	private OrderDetailMapper mapper;
 	private Order dto;
 	
-
+	@Autowired
+	OrderDetailService service;
+	
 	@After
 	public void tearDown() {
 		System.out.println();
@@ -69,7 +73,7 @@ public class OrderDetailMapperTest {
 		log.info(orderDetailSelectList.toString());
 	}
 
-	@Test
+//	@Test
 	public void _01_selectOrderList() {
 		log.info("=== List로 조회 ===");
 	
@@ -80,6 +84,17 @@ public class OrderDetailMapperTest {
 		}
 		
 		log.info(orderDetailSelectList.toString());
+	}
+	
+	
+	@Test
+	public void _02_selectOrderList() {
+		log.info("=== List로 조회 ===");
+		
+		Pager pager = new Pager();
+		Pager newPager =  service.selectOrderList(pager);
+		
+		log.info(newPager.toString());
 	}
 	
 	
