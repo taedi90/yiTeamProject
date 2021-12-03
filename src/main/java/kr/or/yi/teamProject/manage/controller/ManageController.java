@@ -1,9 +1,12 @@
 package kr.or.yi.teamProject.manage.controller;
 
+import kr.or.yi.teamProject.common.dto.Pager;
 import kr.or.yi.teamProject.common.enums.CommonResult;
 import kr.or.yi.teamProject.product.dto.Item;
 import kr.or.yi.teamProject.product.dto.ItemPager;
+import kr.or.yi.teamProject.product.dto.Question;
 import kr.or.yi.teamProject.product.service.ItemService;
+import kr.or.yi.teamProject.product.service.QuestionService;
 import kr.or.yi.teamProject.security.dto.CustomUser;
 import kr.or.yi.teamProject.user.dto.Member;
 import kr.or.yi.teamProject.user.dto.MemberPager;
@@ -19,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 
 /**
@@ -159,6 +164,33 @@ public class ManageController {
 
         model.addAttribute("result", pager);
         model.addAttribute("url", "content/admin/admin-list.jsp");
+
+        return "manage/manage";
+    }
+
+    @Setter(onMethod_ = @Autowired)
+    QuestionService questionService;
+
+    //질문답변 관리 페이지
+    @Secured("ROLE_ADMIN")
+    @GetMapping(params = {"section=question","func=list"})
+    public String getQuestionList(Pager pager, Model model) {
+
+        pager = questionService.selectQuestionList(pager);
+
+        model.addAttribute("result", pager);
+        model.addAttribute("url", "content/question/question-list.jsp");
+
+        return "manage/manage";
+    }
+
+    //질문답변 작성 페이지
+    @Secured("ROLE_ADMIN")
+    @GetMapping(params = {"section=question","func=detail"})
+    public String getQuestionList(@RequestParam("questionNo") String questionNo, Model model) {
+
+        model.addAttribute("result", questionService.selectQuestion(questionNo));
+        model.addAttribute("url", "content/question/question-detail.jsp");
 
         return "manage/manage";
     }

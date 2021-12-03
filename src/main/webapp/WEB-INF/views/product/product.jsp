@@ -155,8 +155,12 @@
                 <div id="tab_product_information">
                 	${result.text}
                 </div>
-                <div id="tab_product_review"></div>
-                <div id="tab_product_question"></div>
+                <div id="tab_product_review">
+
+				</div>
+                <div id="tab_product_question">
+					<%@ include file="inner/question.jsp" %>
+				</div>
 
             </div>
 		
