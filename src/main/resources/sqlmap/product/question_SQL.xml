@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper 클래스 경로 -->
+<mapper namespace="kr.or.yi.teamProject.product.mapper.QuestionMapper">
+    <insert id="insertQuestion" parameterType="kr.or.yi.teamProject.product.dto.Question">
+        INSERT INTO `question`(`username`, `item_no`, `title`, `secret`, `text`)
+        VALUES (#{member.username}, #{item.itemNo}, #{title}, #{secret}, #{text})
+    </insert>
+
+    <update id="updateQuestion" parameterType="kr.or.yi.teamProject.product.dto.Question">
+        UPDATE `question`
+        SET `answer_reg_date` = CURRENT_TIMESTAMP
+            <if test="answerTitle != null">
+                ,`answer_title` = #{answerTitle}
+            </if>
+            <if test="answerText != null">
+                ,`answer_text` = #{answerText}
+            </if>
+            <if test="answerId != null">
+                ,`answer_id` = #{answerId}
+            </if>
+        WHERE `question_no` = #{questionNo}
+    </update>
+
+    <delete id="deleteQuestion">
+        DELETE FROM `question`
+        WHERE `question_no` = #{questionNo}
+    </delete>
+
+    <resultMap id="questionMap" type="kr.or.yi.teamProject.product.dto.Question">
+        <id property="questionNo" column="question_no" />
+        <result property="title" column="title"/>
+        <result property="secret" column="secret"/>
+        <result property="text" column="text"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="answerTitle" column="answer_title"/>
+        <result property="answerText" column="answer_text"/>
+        <result property="answerId" column="answer_id"/>
+        <result property="answerRegDate" column="answer_reg_date"/>
+        <association property="member" javaType="kr.or.yi.teamProject.user.dto.Member">
+            <id property="username" column="username" />
+            <id property="name" column="m_name" />
+            <id property="regDate" column="m_reg_date" />
+        </association>
+        <association property="item" javaType="kr.or.yi.teamProject.product.dto.Item">
+            <id property="itemNo" column="item_no"/>
+            <result property="image" column="image"/>
+        </association>
+    </resultMap>
+
+    <select id="selectQuestion" resultMap="questionMap">
+        SELECT q.`question_no`, q.`title`, q.`question_no`, q.`title`, q.`secret`, q.`text`, q.`reg_date`,
+               q.`answer_title`,q.`answer_text`,q.`answer_id`,q.`answer_reg_date`,
+               m.`username`,m.`name` m_name,m.`reg_date` m_reg_date,i.`item_no`, i.`image`
+        FROM (SELECT * FROM `question`
+        WHERE `question_no` = #{questionNo}
+        ) q
+        LEFT OUTER JOIN `member` m ON q.`username` = m.`username`
+        LEFT OUTER JOIN `item` i ON q.`item_no` = i.`item_no`
+    </select>
+
+    <select id="selectQuestionList" parameterType="kr.or.yi.teamProject.common.dto.Pager"
+            resultMap="questionMap">
+        SELECT q.`question_no`, q.`title`, q.`question_no`, q.`title`, q.`secret`, q.`text`, q.`reg_date`,
+        q.`answer_title`,q.`answer_text`,q.`answer_id`,q.`answer_reg_date`,
+        m.`username`,m.`name` m_name,m.`reg_date` m_reg_date,i.`item_no`, i.`image`
+        FROM (SELECT * FROM `question`
+        <where>
+            <if test="category == true">
+                `answer_reg_date` IS NOT NULL
+            </if>
+            <if test="category == false">
+                `answer_reg_date` IS NULL
+            </if>
+            <if test="param != null">
+                AND `item_no` = #{param}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND `title` LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+        ORDER by `question_no` ${order}
+        LIMIT #{startRecord}, #{amount}
+        ) q
+        LEFT OUTER JOIN `member` m ON q.`username` = m.`username`
+        LEFT OUTER JOIN `item` i ON q.`item_no` = i.`item_no`
+    </select>
+
+    <select id="getInfoForPaging" parameterType="kr.or.yi.teamProject.common.dto.Pager"
+            resultType="kr.or.yi.teamProject.common.dto.Pager">
+        <![CDATA[
+        SELECT `total_records`,
+               `final_page_no`,
+               `start_page`,
+               if(@final_page > @end_page, @end_page, @final_page) `end_page`,
+               @start_page - 1 `prev`,
+               if(@final_page > @end_page, @end_page + 1, 0) `next`,
+               (#{pageNo} - 1) * #{amount} `start_record`,
+               #{amount} `amount`,
+               #{pageNo} `page_no`,
+               #{order} `order`,
+               #{linkCount} `link_count`,
+               #{category} `category`,
+               #{keyword} `keyword`,
+               #{param} `param`
+        FROM (SELECT @total_recode := COUNT(*) `total_records`,
+            @final_page := CEIL(COUNT(*) / #{amount}) `final_page_no`,
+            @start_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + 1 `start_page`,
+            @end_page := truncate(((#{pageNo} - 1) / #{linkCount}), 0) * #{linkCount} + #{linkCount}
+            FROM `question`
+        ]]>
+        <where>
+            <if test="category == true">
+                `answer_reg_date` IS NOT NULL
+            </if>
+            <if test="category == false">
+                `answer_reg_date` IS NULL
+            </if>
+            <if test="param != null">
+                AND `item_no` = #{param}
+            </if>
+            <if test="keyword != null and keyword != ''">
+                AND `title` LIKE CONCAT('%', #{keyword}, '%')
+            </if>
+        </where>
+        ) a
+    </select>
+
+</mapper>

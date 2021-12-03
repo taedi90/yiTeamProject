@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <div class="menu_item">
+    <div class="menu_item" onclick="window.location.href = '?section=question&func=list'">
         <div class="icon_holder" data-tooltip="질문 답변">
             <img src="${path}/img/manage/icon/question.png" alt="">
         </div>
