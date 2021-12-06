@@ -12,8 +12,8 @@
             <div class="footer_member">
 
                 <p>영남인재교육원</p>
-                <p>조장 : 김태수</p>
-                <p>조원 : 서승아, 유한빈</p>
+                <p>조장 : <a href="https://github.com/taedi90">김태수</a></p>
+                <p>조원 : <a href="https://github.com/seungaseo01">서승아</a>, <a href="https://github.com/Yu-hanbin">유한빈</a></p>
 
             </div>
 

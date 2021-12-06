@@ -15,7 +15,7 @@
 
             <ul>
                 <li  class="main_menu">
-                    <a href="#">About</a>
+                    <a href="https://github.com/taedi90/yiTeamProject">About</a>
                 </li>
 
                 <li  class="main_menu">

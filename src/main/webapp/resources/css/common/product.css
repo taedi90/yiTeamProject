@@ -368,7 +368,6 @@ border:none ! important;
 #tab_product_information{
     display: block;
     height: 150rem;
-    border: 1px solid red;
     text-align:center;
     justify-content:center;
 }
@@ -376,13 +375,11 @@ border:none ! important;
 #tab_product_review{
     display: none;
     height: 70rem;
-    border: 1px solid blue;
 }
 
 #tab_product_question{
     display: none;
     height: 100rem;
-    border: 1px solid green;
 }
 
 
