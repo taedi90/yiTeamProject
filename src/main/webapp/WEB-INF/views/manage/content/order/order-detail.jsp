@@ -40,7 +40,7 @@
             <div class="key_col">결제 금액</div>           
            		<c:set var="amount" value="0" scope="page"></c:set>
 				<c:forEach var="payment" items="${result.paymentList}">				
-					<c:set var="amount" value="${amount+ payment.amount}" scope="page"></c:set>
+					<c:set var="amount" value="${payment.amount}" scope="page"></c:set>
 				</c:forEach> 								
             <div class="value_col">${amount}원</div>
         </div>
@@ -69,12 +69,6 @@
         </c:forEach> 
  </div>      
 
-    <sec:authorize access="isAuthenticated()">
-        <sec:authentication var="username" property="principal.username"/>
-        <c:if test="${username eq requestScope.result.member.username}">
-            <button onclick="window.location.href = 'manage?section=product&func=edit&itemNo=${requestScope.result.itemNo}'">수정하기</button>
-        </c:if>
-    </sec:authorize>
 
     <button onclick="history.go(-1)">뒤로가기</button>
 

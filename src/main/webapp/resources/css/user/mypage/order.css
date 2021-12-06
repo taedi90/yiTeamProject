@@ -9,6 +9,7 @@
     text-align: center;
     font-size: var(--font-base);
     border: 1px solid rgb(73, 73, 73);
+    margin-bottom: 2rem;
 }
 
 .postDesc{
@@ -21,6 +22,11 @@
     padding-left: 2rem;
     padding-right: 2rem;	
     font-size: revert;
+}
+
+.product_info{
+	min-width: 40rem;
+	margin-bottom: 1rem;	
 }
 
 .order_show{
@@ -51,6 +57,7 @@
 }
 
 .order_items{
+	min-width : 40rem;
 	width: 70rem;
     display: flex;
     text-align: left;
@@ -58,11 +65,13 @@
 }
 
 .order_item_info{
+	min-width : 60rem;
 	width: 70rem;
 }
 
 
 .after_payment_btn{
+	min-width : 15rem;
 	width: 30rem;
 	display: flex;
     align-items: center;
@@ -70,6 +79,7 @@
 }
 
 .go_order{
+	min-width : 10rem;
 	width: 30rem;
     align-self: center;
     justify-content: center;
