@@ -13,10 +13,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 
@@ -36,8 +38,6 @@ public class RootConfig {
 
     @Value("${db.driverClassName}")
     private String dsDriver;
-    @Value("${db.url}")
-    private String dsUrl;
     @Value("${db.username}")
     private String dsUsername;
     @Value("${db.password}")
@@ -72,7 +72,7 @@ public class RootConfig {
     public DataSource dataSourceSpied() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(dsDriver);
-        dataSource.setUrl(dsUrl);
+        dataSource.setUrl(System.getenv("JDBC_URL"));
         dataSource.setUsername(dsUsername);
         dataSource.setPassword(dsPassword);
 
