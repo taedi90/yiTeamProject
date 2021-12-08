@@ -257,7 +257,7 @@ public class MemberServiceImpl implements MemberService {
             sendMail.setText(new StringBuffer().append("<h1>이메일 인증</h1>")
                     .append("<p>가입해 주셔서 감사합니다.</p>")
                     .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-                    .append("<a href='http://localhost:8080/shop/email-confirm?id=")
+                    .append("<a href='http://web.taedi.net/shop/email-confirm?id=")
                     .append(member.getUsername())
                     .append("&confirm=")
                     .append(authKey)
