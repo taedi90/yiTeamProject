@@ -42,7 +42,7 @@ Spring Framework 를 활용하여 쇼핑몰 사이트를 제작해 보았습니�
 
 ### 🗃 모듈화
 
-[Ajax](https://log.taedi.net/vanillajs-ajax-module/), [모달창](https://log.taedi.net/vanillajs-modal-window/), [페이 처리](http://localhost:1313/spring-mybatis-paging/), 이미지 리사이즈 등 반복적으로 사용되는 기능에 대한 모듈화를 진행하여 코드 중복을 줄이고 유지보수에 신경 썼습니다.
+[Ajax](https://log.taedi.net/vanillajs-ajax-module/), [모달창](https://log.taedi.net/vanillajs-modal-window/), [페이징 처리](http://localhost:1313/spring-mybatis-paging/), 이미지 리사이즈 등 반복적으로 사용되는 기능에 대한 모듈화를 진행하여 코드 중복을 줄이고 유지보수에 신경 썼습니다.
 
 ### 📬 이메일 인증
 
