@@ -6,7 +6,7 @@ Spring MVC 쇼핑몰 프로젝트
 [프로젝트 소개](#프로젝트-소개)  
 [적용해본 것](#적용해본-것)  
 [주요 기능](#주요-기능)  
-[데모 링크](#데모-링크)  
+[링크](#링크)  
 [외부 리소스](#외부-리소스)
 
 ## 프로젝트 소개
@@ -110,9 +110,9 @@ Spring Framework 를 활용하여 쇼핑몰 사이트를 제작해 보았습니�
 
 ![스크린샷 2021-12-07 오전 8.54.04.png](images/pic-0006.png)
 
-## 데모 링크
-
-- [https://web.taedi.net/shop/](https://web.taedi.net/shop/)
+## 링크
+- [프로젝트 사이트](https://web.taedi.net/shop/)
+- [프로젝트 후기](https://log.taedi.net/yi-teamproject-log-1/)
 
 ## 외부 리소스
 
